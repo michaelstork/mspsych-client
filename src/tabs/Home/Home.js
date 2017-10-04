@@ -1,5 +1,6 @@
 import React from 'react';
 import Panel from '../../components/Panel/Panel';
+import axios from 'axios';
 import './Home.css';
 
 class Home extends React.Component {
@@ -11,10 +12,16 @@ class Home extends React.Component {
 	}
 
 	componentDidMount() {
-		fetch('http://mspsych.localhost/api/news').then(data => {
-			console.log(data.json);
+		// fetch('http://mspsych.localhost/api/news')
+		// 	.then((resp) => resp.json())
+		// 	.then(data => {
+		// 		console.log(data);
+		// 	});
+
+		axios.get('/api/news').then(response => {
+			console.log(response.data);
 			this.setState({
-				news: data.json
+				news: response.data
 			});
 		});
 	}
