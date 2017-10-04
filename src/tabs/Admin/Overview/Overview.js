@@ -2,7 +2,7 @@ import React from 'react';
 import './Overview.css';
 
 const Overview = (props) => (
-	<h3>Overview</h3>
+	<h2>Overview</h2>
 )
 
 export default Overview;

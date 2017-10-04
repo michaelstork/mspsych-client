@@ -2,7 +2,7 @@ import React from 'react';
 import './Photos.css';
 
 const Photos = (props) => (
-	<h3>Photos</h3>
+	<h2>Photos</h2>
 )
 
 export default Photos;

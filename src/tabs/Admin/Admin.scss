@@ -1,0 +1,27 @@
+
+.admin-panel-container {
+	display:flex;
+	width:1200px;
+	margin:48px auto;
+}
+
+.admin-nav {
+	display:flex;
+	flex-direction:column;
+	margin-top:24px;
+	font-size:0.8em;
+	font-weight:600;
+
+	a + a {
+		margin-top:18px;
+	}
+
+	a.active-nav-item {
+		color:#d7288c;
+	}
+}
+
+.admin-panel {
+	width:1000px;
+	margin-top:0;
+}

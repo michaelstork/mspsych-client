@@ -2,7 +2,7 @@ import React from 'react';
 import './Spreadsheets.css';
 
 const Spreadsheets = (props) => (
-	<h3>Spreadsheets</h3>
+	<h2>Spreadsheets</h2>
 )
 
 export default Spreadsheets;
