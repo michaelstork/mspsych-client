@@ -12,14 +12,7 @@ class Home extends React.Component {
 	}
 
 	componentDidMount() {
-		// fetch('http://mspsych.localhost/api/news')
-		// 	.then((resp) => resp.json())
-		// 	.then(data => {
-		// 		console.log(data);
-		// 	});
-
 		axios.get('/api/news').then(response => {
-			console.log(response.data);
 			this.setState({
 				news: response.data
 			});
