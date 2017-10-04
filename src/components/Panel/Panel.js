@@ -2,7 +2,7 @@ import React from 'react';
 import './Panel.css';
 
 const Panel = (props) => (
-	<section className={props.className + ' panel'}>
+	<section className={'panel' + (props.className ? ' ' + props.className : '')}>
 		{props.children}
 	</section>
 )
