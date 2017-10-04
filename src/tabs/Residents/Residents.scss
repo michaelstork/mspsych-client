@@ -1,0 +1,26 @@
+
+.file-groups {
+	
+}
+
+.file-group {
+	flex:0 0 50%;
+}
+
+.file-group h3 {
+	margin:12px 0;
+	font-size:1.1em;
+}
+
+.file-group ul {
+	font-size:0.85em;
+	margin:12px 16px;
+}
+
+.file-group + .file-group {
+	margin-top:32px;
+}
+
+.file-group li + li {
+	margin-top:6px;
+}
