@@ -1,3 +1,4 @@
+@import 'includes/variables';
 
 .panel {
 	width:1200px;
@@ -10,41 +11,8 @@
 }
 
 .panel h2 {
-	padding:4px 0 8px 0;
-	
-	border-bottom:1px solid #f0f2f1;
+	padding:4px 0 8px 0;	
+	border-bottom:1px solid $gray;
 	font-size:1.3em;
 	margin-bottom:24px;
 }
-
-// .panel nav {
-// 	padding:4px 0 8px 0;
-// 	border-bottom:1px solid #f0f2f1;
-// 	margin-bottom:24px;
-// 	display:flex;
-// 	text-transform:uppercase;
-// 	letter-spacing:0.5px;
-// 	color:#d7288c;
-// 	font-size:0.8em;
-// 	font-weight:600;
-// 	-webkit-font-smoothing:antialiased;
-// }
-
-// .panel nav a {
-// 	display:block;
-// 	position:relative;
-// }
-
-// .panel nav a + a {
-// 	margin-left:48px;
-// }
-
-// .panel nav a.active-nav-link:after {
-// 	content:'';
-// 	position:absolute;
-// 	height:2px;
-// 	left:-4px;
-// 	right:-4px;
-// 	bottom:-8px;
-// 	background-color:#d7288c;
-// }

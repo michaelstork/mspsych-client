@@ -1,8 +1,9 @@
+@import 'includes/variables';
 
 header {
 	height:68px;
 	background-color:#FFF;
-	border-bottom:1px solid #EEE;
+	border-bottom:1px solid $gray;
 	position:relative;
 	padding-top:10px;
 	padding-right:240px;
@@ -23,7 +24,7 @@ header {
 header:before {
 	content:'';
 	height:10px;
-	background-color:#d7288c;
+	background-color:$pink;
 	position:absolute;
 	top:0;
 	left:0;
@@ -35,7 +36,7 @@ header h1 {
 	display:flex;
 	align-items:center;
 	height:100%;
-	border-right:1px solid #f0f2f1;
+	border-right:1px solid $gray;
 	padding:10px 20px 8px 20px;
 	box-sizing:border-box;
 	letter-spacing:1px;
@@ -50,7 +51,7 @@ header nav {
 	text-transform:uppercase;
 	letter-spacing:0.5px;
 	font-size:0.8em;
-	color:#00adef;
+	color:$blue;
 
 	a {
 		display:block;
@@ -68,6 +69,6 @@ header nav {
 		left:-4px;
 		right:-4px;
 		bottom:-8px;
-		background-color:#00adef;
+		background-color:$blue;
 	}
 }
