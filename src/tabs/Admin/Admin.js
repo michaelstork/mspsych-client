@@ -3,12 +3,12 @@ import {Route, Switch, Redirect} from 'react-router-dom'
 import Panel from '../../components/Panel/Panel';
 import {NavLink} from 'react-router-dom'
 import './Admin.css';
-import Overview from './content/Overview';
-import Users from './content/Users';
-import Spreadsheets from './content/Spreadsheets';
-import Photos from './content/Photos';
-import Documents from './content/Documents';
-import News from './content/News';
+import Overview from './Overview/Overview';
+import Users from './Users/Users';
+import Spreadsheets from './Spreadsheets/Spreadsheets';
+import Photos from './Photos/Photos';
+import Documents from './Documents/Documents';
+import News from './News/News';
 
 const Admin = (props) => (
 	<Panel>
@@ -31,7 +31,5 @@ const Admin = (props) => (
 		</Switch>
 	</Panel>
 )
-
-
 
 export default Admin;

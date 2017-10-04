@@ -59,14 +59,14 @@ header nav {
 	a + a {
 		margin-left:48px;
 	}
-}
 
-header nav a.active-nav-item:after {
-	content:'';
-	position:absolute;
-	height:2px;
-	left:-4px;
-	right:-4px;
-	bottom:-8px;
-	background-color:#00adef;
+	a.active-nav-item:after {
+		content:'';
+		position:absolute;
+		height:2px;
+		left:-4px;
+		right:-4px;
+		bottom:-8px;
+		background-color:#00adef;
+	}
 }

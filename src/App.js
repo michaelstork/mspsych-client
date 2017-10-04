@@ -15,15 +15,13 @@ class App extends Component {
             <Router>
                 <div>
                     <Header />
-                    <div className="app-content">
-                        <Switch>
-                            <Route exact path="/" component={Home} />
-                            <Route path="/residents" component={Residents} />
-                            <Route path="/evaluations" component={Evaluations} />
-                            <Route path="/account" component={Account} />
-                            <Route path="/admin" component={Admin} />
-                        </Switch>
-                    </div>
+                    <Switch>
+                        <Route exact path="/" component={Home} />
+                        <Route path="/residents" component={Residents} />
+                        <Route path="/evaluations" component={Evaluations} />
+                        <Route path="/account" component={Account} />
+                        <Route path="/admin" component={Admin} />
+                    </Switch>
                 </div>
             </Router>
         );
