@@ -9,7 +9,7 @@ const Header = (props) => (
 			<NavLink exact activeClassName="active-nav-item" to="/">Home</NavLink>
 			<NavLink activeClassName="active-nav-item" to="/residents">Residents</NavLink>
 			<NavLink activeClassName="active-nav-item" to="/evaluations">Student Evaluations</NavLink>
-			<NavLink activeClassName="active-nav-item" to="/account">Account</NavLink>
+			<NavLink className="account" activeClassName="active-nav-item" to="/account">Account</NavLink>
 			<NavLink activeClassName="active-nav-item" to="/admin">Admin</NavLink>
 		</nav>
 	</header>
