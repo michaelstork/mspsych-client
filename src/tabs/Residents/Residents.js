@@ -25,13 +25,13 @@ class Residents extends React.Component {
 				<h2>Files for Residents</h2>
 				<div className="file-groups">
 					{this.state.categories.map(category => 
-						<div className="file-group" key={category.document_category_id}>
-							<h3>{category.document_category_title}</h3>
+						<div className="file-group" key={category.id}>
+							<h3>{category.title}</h3>
 							<ul>
 								{category.document.map(file =>
-									<li key={file.document_id}>
-										<a target="_blank" href={'/api/storage/documents/' + file.document_filename}>
-											{file.document_title}
+									<li key={file.id}>
+										<a target="_blank" href={'/api/storage/documents/' + file.filename}>
+											{file.title}
 										</a>
 									</li>
 								)}

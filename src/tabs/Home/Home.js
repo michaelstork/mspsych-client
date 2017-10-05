@@ -26,12 +26,12 @@ class Home extends React.Component {
 				<h2>News &amp; Information</h2>
 				<div>
 					{this.state.news.map(item =>
-						<div className="news-item" key={item.news_id}>
-							<h4>{item.news_title}</h4>
+						<div className="news-item" key={item.id}>
+							<h4>{item.title}</h4>
 							<p className="news-item-author">
-								{item.user.user_email} on <Moment format="dddd\, MMM Do \a\t h:mm A">{item.news_created}</Moment>
+								{item.user.email} on <Moment format="dddd\, MMM Do \a\t h:mm A">{item.created_at}</Moment>
 							</p>
-							<p className="news-item-content" dangerouslySetInnerHTML={{__html: item.news_content}} />
+							<p className="news-item-content" dangerouslySetInnerHTML={{__html: item.content}} />
 						</div>
 					)}
 				</div>
