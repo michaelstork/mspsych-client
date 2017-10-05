@@ -1,6 +1,6 @@
 import React from 'react';
 import Panel from '../../components/Panel/Panel';
-import axios from 'axios';
+import axios from '../../connection/axios';
 import './Home.css';
 import Moment from 'react-moment';
 
@@ -17,6 +17,8 @@ class Home extends React.Component {
 			this.setState({
 				news: response.data
 			});
+		}).catch(error => {
+			console.log(error);
 		});
 	}
 
