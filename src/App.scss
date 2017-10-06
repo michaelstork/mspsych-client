@@ -9,3 +9,48 @@ body {
 .app-container {
 	padding:0 18px;
 }
+
+button {
+	color:#FFF;
+	background-color:$blue;
+	height:32px;
+	border-radius:2px;
+	box-shadow:$panelShadow;
+	padding:0 18px;
+	box-sizing:border-box;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	font-size:0.8em;
+	font-weight:600;
+	letter-spacing:0.5px;
+	-webkit-font-smoothing:antialiased;
+	text-transform:uppercase;
+	cursor:pointer;
+	border:none;
+	outline:none;
+}
+
+.input-container {
+	display:flex;
+	justify-content:space-between;
+	align-items:center;
+
+	label {
+		font-size:0.8em;
+		font-weight:600;
+		-webkit-font-smoothing:antialiased;
+	}
+
+	input,
+	select {
+		font-size:0.8em;
+		height:32px;
+		padding:0 6px;
+		box-sizing:border-box;
+	}
+
+	& + .input-container {
+		margin-top:12px;
+	}
+}
