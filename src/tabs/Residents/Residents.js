@@ -1,7 +1,7 @@
 import React from 'react';
 import Panel from '../../components/Panel/Panel';
 import './Residents.css';
-import axios from 'axios';
+import axios from '../../connection/axios';
 
 class Residents extends React.Component {
 	constructor(props) {
