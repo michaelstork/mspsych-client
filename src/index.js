@@ -3,30 +3,51 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import {createStore} from 'redux';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
+import thunkMiddleware from 'redux-thunk'
 
 
 
 
 
-const initialState = {
-	user: null
-};
+// function user(state = null, action) {
+// 	console.log(state);
+// 	switch (action.type) {
+// 		case 'LOGIN':
+// 			return Object.assign({}, state, action.payload);
+// 		case 'LOGOUT':
+// 			return null;
+// 		default:
+// 			return state;
+// 	}
+// }
 
-function auth(state = initialState, action) {
-	console.log(action);
+// let store = createStore(combineReducers({
+// 	user: user,
+// 	stuff: stuff,
+// 	applyMiddleware: applyMiddleware(
+// 		thunkMiddleware
+// 	)
+// }));
+
+function auth(state = {user: null, inProgress: false}, action) {
 	switch (action.type) {
-		case 'LOGIN':
-			return Object.assign({}, state, {user: action.payload});
-		case 'LOGOUT':
-			return Object.assign({}, state, {user: null});
+		case 'REQUEST_AUTH':
+			console.log('REQUEST_AUTH');
+			return Object.assign({}, state, {inProgress: true});
+		case 'RECEIVE_AUTH':
+			console.log('RECEIVE_AUTH', action.payload);
+			return Object.assign({}, state, {inProgress: false, user: action.payload});
+		case 'AUTH_ERROR':
+			console.log('AUTH_ERROR', action.payload);
+			return Object.assign({}, state, {inProgress: false, user: null});
 		default:
 			return state;
 	}
 }
 
-let store = createStore(auth);
+let store = createStore(auth, applyMiddleware(thunkMiddleware));
 
 ReactDOM.render(
 	<Provider store={store}>
