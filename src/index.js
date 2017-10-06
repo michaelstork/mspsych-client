@@ -8,30 +8,13 @@ import {Provider} from 'react-redux';
 import thunkMiddleware from 'redux-thunk'
 
 
-
-
-
-// function user(state = null, action) {
-// 	console.log(state);
-// 	switch (action.type) {
-// 		case 'LOGIN':
-// 			return Object.assign({}, state, action.payload);
-// 		case 'LOGOUT':
-// 			return null;
-// 		default:
-// 			return state;
-// 	}
-// }
-
-// let store = createStore(combineReducers({
-// 	user: user,
-// 	stuff: stuff,
-// 	applyMiddleware: applyMiddleware(
-// 		thunkMiddleware
-// 	)
-// }));
-
-function auth(state = {user: null, inProgress: false}, action) {
+function authReducer(
+	state = {
+		user: null,
+		inProgress: false
+	},
+	action
+) {
 	switch (action.type) {
 		case 'REQUEST_AUTH':
 			console.log('REQUEST_AUTH');
@@ -47,7 +30,7 @@ function auth(state = {user: null, inProgress: false}, action) {
 	}
 }
 
-let store = createStore(auth, applyMiddleware(thunkMiddleware));
+let store = createStore(authReducer, applyMiddleware(thunkMiddleware));
 
 ReactDOM.render(
 	<Provider store={store}>
