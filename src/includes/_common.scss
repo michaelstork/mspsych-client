@@ -15,3 +15,14 @@ ul {
 	margin:0;
 	list-style-position:inside;
 }
+
+button {
+	outline:none;
+	border:none;
+}
+
+input, select, textarea {
+	&:focus {
+		outline:none;
+	}
+}
