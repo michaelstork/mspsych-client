@@ -10,7 +10,8 @@ import thunkMiddleware from 'redux-thunk'
 
 const initialState = {
 	user: null,
-	inProgress: false
+	inProgress: false,
+	logoutMessage: null
 };
 
 function authReducer(state = initialState, action) {
@@ -22,7 +23,7 @@ function authReducer(state = initialState, action) {
 		case 'AUTH_ERROR':
 			return Object.assign({}, state, {inProgress: false, user: null});
 		case 'LOGOUT':
-			return Object.assign({}, state, {inProgress: false, user: null});
+			return Object.assign({}, state, {inProgress: false, user: null, logoutMessage: action.payload});
 		default:
 			return state;
 	}

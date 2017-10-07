@@ -11,6 +11,7 @@ class AccountContainer extends React.Component {
 			user={this.props.user}
 			authenticate={this.props.actions.authenticate}
 			logout={this.props.actions.logout}
+			logoutMessage={this.props.logoutMessage}
 			update={this.props.actions.update}
 			{...this.props} />
 	}

@@ -48,6 +48,9 @@ class LoginForm extends React.Component {
 	render() {
 		return (
 			<form onSubmit={this.handleSubmit} name="login">
+				{this.props.logoutMessage
+					? <p className="message">{this.props.logoutMessage}</p>
+					: ''}
 				<div className="input-container">
 					<label>Email:</label>
 					<input type="email" name="email" value={this.state.email} onChange={this.handleChange} />

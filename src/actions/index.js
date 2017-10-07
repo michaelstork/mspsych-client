@@ -16,8 +16,8 @@ function authError(errorMessage) {
     return {type: 'AUTH_ERROR', payload: errorMessage};
 }
 
-function logout() {
-    return {type: 'LOGOUT'};
+function logout(message) {
+    return {type: 'LOGOUT', payload: message};
 }
 
 
@@ -65,9 +65,9 @@ export default {
             });
         }
     },
-    logout: function() {
+    logout: function(message) {
         return function (dispatch) {
-            dispatch(logout());
+            dispatch(logout(message));
             localStorage.removeItem('mspsychToken');
         }
     }

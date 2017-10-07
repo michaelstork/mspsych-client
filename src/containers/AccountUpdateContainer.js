@@ -47,10 +47,7 @@ class AccountUpdateContainer extends React.Component {
 			}
 		)
 		.then(response => {
-			this.setState(Object.assign({}, this.state, {message: response.data.message}));
-			setTimeout(() => {
-				this.props.actions.logout();
-			}, 1500);
+			this.props.actions.logout(response.data.message);
 		})
 		.catch(error => {
 			this.setState(Object.assign({}, this.state, {message: error.response.data.message}));
