@@ -6,73 +6,29 @@ import Header from './partials/Header/Header';
 import Home from './tabs/Home/Home';
 import Residents from './tabs/Residents/Residents';
 import Evaluations from './tabs/Evaluations/Evaluations';
-import Account from './tabs/Account/Account';
+import AccountContainer from './containers/AccountContainer';
 import Admin from './tabs/Admin/Admin';
 
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 
-import actions from './actions';
+const App = (props) => (
+    <Router>
+        <div>
+            <Header user={props.user} />
+            <div className="app-container">
+                <Switch>
+                    <Route path="/" exact component={Home} />
+                    <Route path="/residents" component={Residents} />
+                    <Route path="/evaluations" component={Evaluations} />
+                    <Route path="/account" component={AccountContainer} />
+                    {props.user && props.user.isAdmin
+                        ? <Route path="/admin" component={Admin} />
+                        : <Redirect to="/account" />
+                    }
+                    <Redirect to="/" />
+                </Switch>
+            </div>
+        </div>
+    </Router>
+)
 
-
-class App extends React.Component {
-
-    componentWillMount() {
-        const token = localStorage.getItem('mspsychToken');
-        if (!token) return;
-        
-        this.props.actions
-            .reauthenticate()
-            .then(response => {
-                console.log('reauthentication successful');
-            }).catch(response => {
-                console.log('reauthentication failed:', response.data.message);
-            });
-    }
-
-    isAdmin() {
-        return this.props.user && this.props.user.isAdmin;
-    }
-
-    render() {
-        return (
-            <Router>
-                <div>
-                    <Header user={this.props.user} />
-                    <div className="app-container">
-                        <Switch>
-                            <Route exact path="/" render={() => <Home user={this.props.user} {...this.props} />} />
-                            <Route path="/residents" component={Residents} />
-                            <Route path="/evaluations" component={Evaluations} />
-                            <Route path="/account" render={() => 
-                                <Account
-                                    user={this.props.user}
-                                    authenticate={this.props.actions.authenticate}
-                                    logout={this.props.actions.logout}
-                                    {...this.props} />
-                            }/>
-                            {this.props.user && this.props.user.isAdmin
-                                ? <Route path="/admin" component={Admin} />
-                                : <Redirect to="/account" />
-                            }
-                            <Redirect to="/" />
-                        </Switch>
-                    </div>
-                </div>
-            </Router>
-        )
-    }
-}
-
-
-const mapStateToProps = state => {
-    return state;
-}
-
-function mapDispatchToProps(dispatch) {
-    return {
-        actions: bindActionCreators(actions, dispatch)
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
