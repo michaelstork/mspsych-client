@@ -20,6 +20,10 @@ function logout(message) {
     return {type: 'LOGOUT', payload: message};
 }
 
+function clearLogoutMessage() {
+    return {type: 'CLEAR_LOGOUT_MESSAGE'};
+}
+
 
 /**
  * Actions
@@ -70,5 +74,6 @@ export default {
             dispatch(logout(message));
             localStorage.removeItem('mspsychToken');
         }
-    }
+    },
+    clearLogoutMessage: clearLogoutMessage
 };

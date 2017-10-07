@@ -24,6 +24,8 @@ function authReducer(state = initialState, action) {
 			return Object.assign({}, state, {inProgress: false, user: null});
 		case 'LOGOUT':
 			return Object.assign({}, state, {inProgress: false, user: null, logoutMessage: action.payload});
+		case 'CLEAR_LOGOUT_MESSAGE':
+			return Object.assign({}, state, {logoutMessage: null});
 		default:
 			return state;
 	}

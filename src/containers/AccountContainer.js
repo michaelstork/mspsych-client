@@ -6,6 +6,10 @@ import Account from '../tabs/Account/Account';
 
 class AccountContainer extends React.Component {
 
+	componentWillUnmount() {
+		this.props.actions.clearLogoutMessage();
+	}
+
 	render() {
 		return <Account
 			user={this.props.user}
