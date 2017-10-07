@@ -1,3 +1,4 @@
+@import '../../includes/variables';
 
 .panel.account-panel {
 	width:400px;
@@ -6,5 +7,47 @@
 
 .account-panel .user-email {
 	font-size:0.8em;
-	margin-bottom:24px;
+	margin-bottom:12px;
+}
+
+.account-home a {
+	color:$blue;
+	font-size:0.8em;
+	text-decoration:underline;
+}
+
+.account-panel button {
+	margin:24px 0 0 0;
+
+	&.cancel {
+		background-color:$pink;
+	}
+}
+
+.account-update .message {
+	font-size:0.8em;
+	margin-bottom:18px;
+}
+
+form[name="passwordUpdate"] {
+	label {
+		flex:0 0 35%;
+	}
+
+	input {
+		flex:1 0 65%;
+	}
+}
+
+.account-update .button-container {
+	display:flex;
+	justify-content:space-between;
+	
+	& > * {
+		flex:0 0 48%;
+	}
+
+	a button {
+		width:100%;
+	}
 }
