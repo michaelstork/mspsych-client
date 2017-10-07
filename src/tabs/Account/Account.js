@@ -10,8 +10,8 @@ const Account = (props) => (
 	<Panel className="account-panel">
 		<h2>{props.user ? 'Account' : 'Login'}</h2>
 		{!props.user
-			? <LoginForm authenticate={props.authenticate} logoutMessage={props.logoutMessage} {...props} />
-			: <AccountContent logout={props.logout} email={props.user.email} {...props} />
+			? <LoginForm authenticate={props.authenticate} logoutMessage={props.logoutMessage} />
+			: <AccountContent logout={props.logout} email={props.user.email} match={props.match} />
 		}
 	</Panel>
 )

@@ -21,7 +21,7 @@ const AccountUpdate = (props) => (
 			</div>
 			<div className="button-container">
 				<Link to='/account'>
-					<button className="cancel">Cancel</button>
+					<button type="button" className="cancel">Cancel</button>
 				</Link>
 				<button type="submit">Submit</button>
 			</div>
