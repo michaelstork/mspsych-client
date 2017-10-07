@@ -1,14 +1,8 @@
 import React from 'react';
-import {Route, Switch, Link} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import AccountUpdateContainer from '../../containers/AccountUpdateContainer';
+import AccountHome from '../../partials/Account/AccountHome';
 
-const AccountHome = (props) => (
-	<div className="account-home">
-		<p className="user-email">{props.email}</p>
-		<Link to={props.match.url + '/update'}>Update Password</Link>
-		<button onClick={props.logout}>Logout</button>
-	</div>
-)
 
 const AccountContent = (props) => (
 	<Switch>

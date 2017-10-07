@@ -11,7 +11,7 @@ import thunkMiddleware from 'redux-thunk'
 const initialState = {
 	user: null,
 	inProgress: false,
-	logoutMessage: null
+	logoutMessage: ''
 };
 
 function authReducer(state = initialState, action) {
