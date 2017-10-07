@@ -57,7 +57,6 @@ export default {
             )
             .then(response => {
                 dispatch(receiveAuth(response.data));
-                console.log(response.data);
                 return response;
             }).catch(error => {
                 localStorage.removeItem('mspsychToken');
