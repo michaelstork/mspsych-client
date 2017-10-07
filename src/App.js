@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import {HashRouter as Router, Route, Switch} from 'react-router-dom'
+import React from 'react';
+import {HashRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
 
 import './App.css';
 import Header from './partials/Header/Header';
@@ -9,81 +9,60 @@ import Evaluations from './tabs/Evaluations/Evaluations';
 import Account from './tabs/Account/Account';
 import Admin from './tabs/Admin/Admin';
 
-import axios from './connection/axios';
-
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-class App extends Component {
-    constructor(props) {
-        super(props);
+import actions from './actions';
+
+
+class App extends React.Component {
+
+    componentWillMount() {
+        const token = localStorage.getItem('mspsychToken');
+        if (!token) return;
+        
+        this.props.actions
+            .reauthenticate()
+            .then(response => {
+                console.log('reauthentication successful');
+            }).catch(response => {
+                console.log('reauthentication failed:', response.data.message);
+            });
+    }
+
+    isAdmin() {
+        return this.props.user && this.props.user.isAdmin;
     }
 
     render() {
         return (
             <Router>
                 <div>
-                    <Header inProgress={this.props.inProgress} authenticate={this.props.actions.authenticate} user={this.props.user} />
-                    
+                    <Header user={this.props.user} />
                     <div className="app-container">
                         <Switch>
-                            <Route exact path="/" component={Home} />
+                            <Route exact path="/" render={() => <Home user={this.props.user} {...this.props} />} />
                             <Route path="/residents" component={Residents} />
                             <Route path="/evaluations" component={Evaluations} />
-                            <Route path="/account" component={Account} />
-                            <Route path="/admin" component={Admin} />
+                            <Route path="/account" render={() => 
+                                <Account
+                                    user={this.props.user}
+                                    authenticate={this.props.actions.authenticate}
+                                    logout={this.props.actions.logout}
+                                    {...this.props} />
+                            }/>
+                            {this.props.user && this.props.user.isAdmin
+                                ? <Route path="/admin" component={Admin} />
+                                : <Redirect to="/account" />
+                            }
+                            <Redirect to="/" />
                         </Switch>
                     </div>
                 </div>
             </Router>
-        );
+        )
     }
 }
-
-function requestAuth() {
-    return {type: 'REQUEST_AUTH'};
-}
-
-function receiveAuth(user) {
-    return {type: 'RECEIVE_AUTH', payload: user};
-}
-
-function authError(errorMessage) {
-    return {type: 'AUTH_ERROR', payload: errorMessage};
-}
-
-const actions = {
-    authenticate: function(email, password) {
-        console.log('calling authenticate');
-        return function (dispatch) {
-            dispatch(requestAuth());
-
-            return axios.post(
-                '/api/authenticate',
-                {
-                    email: email,
-                    password: password
-                }
-            )
-            .then(response => {
-                console.log('request success, dispatching receiveAuth with result');
-                dispatch(receiveAuth(response.data))
-            })
-            .catch(error => {
-                console.log('request error, disaptching authError');
-                dispatch(authError(error.message));
-            });
-
-        }
-    }
-};
-
-
-
-
-
-
-
 
 
 const mapStateToProps = state => {

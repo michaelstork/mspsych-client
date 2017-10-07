@@ -12,15 +12,15 @@ class Home extends React.Component {
 		};
 	}
 
-	// componentDidMount() {
-	// 	axios.get('/api/news').then(response => {
-	// 		this.setState({
-	// 			news: response.data
-	// 		});
-	// 	}).catch(error => {
-	// 		console.log(error);
-	// 	});
-	// }
+	componentDidMount() {
+		axios.get('/api/news').then(response => {
+			this.setState({
+				news: response.data
+			});
+		}).catch(error => {
+			console.log(error.message);
+		});
+	}
 
 	render() {
 		return (

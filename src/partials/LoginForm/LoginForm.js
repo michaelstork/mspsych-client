@@ -1,10 +1,12 @@
 import React from 'react';
 import './LoginForm.css';
+import {withRouter} from 'react-router';
 
 
 class LoginForm extends React.Component {
 	constructor(props) {
 		super(props);
+
 		this.state = {
 			email: '',
 			password: ''
@@ -29,7 +31,18 @@ class LoginForm extends React.Component {
 
 	handleSubmit(event) {
 		event.preventDefault();
-		//...
+		this.props.authenticate(
+			this.state.email,
+			this.state.password
+		).then((response) => {
+			this.props.history.push('/');
+		}).catch(response => {
+			if (response.status === 404) {
+				console.log('invalid credentials');
+			} else if (response.status === 401) {
+				console.log('something went wrong');
+			}
+		});
 	}
 
 	render() {
@@ -49,4 +62,4 @@ class LoginForm extends React.Component {
 	}
 }
 
-export default LoginForm;
+export default withRouter(LoginForm);

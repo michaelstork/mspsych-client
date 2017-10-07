@@ -4,18 +4,15 @@ import './Header.css';
 
 const Header = (props) => (
 	<header>
-		<h1>{props.inProgress ? 'requesting...' : (props.user ? props.user.email : 'MSPsych')}</h1>
+		<h1>MSPsych</h1>
 		<nav>
 			<NavLink exact activeClassName="active-nav-item" to="/">Home</NavLink>
 			<NavLink activeClassName="active-nav-item" to="/residents">Residents</NavLink>
 			<NavLink activeClassName="active-nav-item" to="/evaluations">Student Evaluations</NavLink>
 			<NavLink className="account" activeClassName="active-nav-item" to="/account">Account</NavLink>
-			<NavLink activeClassName="active-nav-item" to="/admin">Admin</NavLink>
-			<a onClick={() => props.authenticate('michael@mstork.info', 'hockey11')}>Request</a>
+			{(props.user && props.user.isAdmin) ? <NavLink activeClassName="active-nav-item" to="/admin">Admin</NavLink> : ''}
 		</nav>
 	</header>
 )
-
-
 
 export default Header;
