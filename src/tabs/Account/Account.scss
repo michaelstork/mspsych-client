@@ -16,12 +16,8 @@
 	text-decoration:underline;
 }
 
-.account-panel button {
+.account-home button {
 	margin:24px 0 0 0;
-
-	&.cancel {
-		background-color:$pink;
-	}
 }
 
 .account-update .message {
@@ -42,9 +38,18 @@ form[name="passwordUpdate"] {
 .account-update .button-container {
 	display:flex;
 	justify-content:space-between;
+	margin-top:24px;
 	
 	& > * {
 		flex:0 0 48%;
+	}
+
+	button {
+		margin-top:0;
+	}
+
+	button.cancel {
+		background-color:$pink;
 	}
 
 	a button {
