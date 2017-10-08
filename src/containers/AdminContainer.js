@@ -4,11 +4,6 @@ import {Redirect} from 'react-router-dom'
 import Admin from '../tabs/Admin/Admin';
 
 class AdminContainer extends React.Component {
-	
-	constructor(props) {
-		super(props);
-		console.log(props);
-	}
 
 	render() {
 		return (
