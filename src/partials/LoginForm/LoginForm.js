@@ -9,7 +9,8 @@ class LoginForm extends React.Component {
 
 		this.state = {
 			email: '',
-			password: ''
+			password: '',
+			message: ''
 		};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -38,9 +39,10 @@ class LoginForm extends React.Component {
 			this.props.history.push('/');
 		}).catch(response => {
 			if (response.status === 404) {
-				console.log('invalid credentials');
+				this.setState(Object.assign({}, this.state, {message: 'Invalid email or password'}));
 			} else if (response.status === 401) {
 				console.log('something went wrong');
+				this.setState(Object.assign({}, this.state, {message: 'Something went wrong, please try again'}));
 			}
 		});
 	}
@@ -48,7 +50,7 @@ class LoginForm extends React.Component {
 	render() {
 		return (
 			<form onSubmit={this.handleSubmit} name="login">
-				<p className="message">{this.props.logoutMessage}</p>
+				<p className="message">{this.props.logoutMessage || this.state.message}</p>
 				<div className="input-container">
 					<label>Email:</label>
 					<input type="email" name="email" value={this.state.email} onChange={this.handleChange} tabIndex="1" />
