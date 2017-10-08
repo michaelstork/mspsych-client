@@ -8,7 +8,10 @@ class AppContainer extends React.Component {
 
 	componentWillMount() {
 	    const token = localStorage.getItem('mspsychToken');
-	    if (!token) return;
+	    
+	    if (!token) {
+	    	this.props.actions.logout();
+	    }
 	    
 	    this.props.actions
 	        .reauthenticate()

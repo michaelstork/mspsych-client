@@ -7,7 +7,7 @@ import Home from './tabs/Home/Home';
 import Residents from './tabs/Residents/Residents';
 import Evaluations from './tabs/Evaluations/Evaluations';
 import AccountContainer from './containers/AccountContainer';
-import Admin from './tabs/Admin/Admin';
+import AdminContainer from './containers/AdminContainer';
 
 
 const App = (props) => (
@@ -20,10 +20,7 @@ const App = (props) => (
                     <Route path="/residents" component={Residents} />
                     <Route path="/evaluations" component={Evaluations} />
                     <Route path="/account" component={AccountContainer} />
-                    {props.user && props.user.isAdmin
-                        ? <Route path="/admin" component={Admin} />
-                        : <Redirect to="/account" />
-                    }
+                    <Route path="/admin" component={AdminContainer} />
                     <Redirect to="/" />
                 </Switch>
             </div>

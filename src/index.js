@@ -10,7 +10,7 @@ import thunkMiddleware from 'redux-thunk'
 
 const initialState = {
 	user: null,
-	inProgress: false,
+	inProgress: true,
 	logoutMessage: ''
 };
 
