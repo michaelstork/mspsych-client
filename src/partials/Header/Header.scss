@@ -2,7 +2,7 @@
 
 header {
 	height:68px;
-	min-width:1236px;
+	min-width:936px;
 	background-color:#FFF;
 	border-bottom:1px solid $gray;
 	position:relative;
@@ -58,7 +58,7 @@ header nav {
 	}
 
 	a + a {
-		margin-left:48px;
+		margin-left:28px;
 	}
 
 	a.active-nav-item:after {
