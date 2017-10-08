@@ -51,11 +51,11 @@ class LoginForm extends React.Component {
 				<p className="message">{this.props.logoutMessage}</p>
 				<div className="input-container">
 					<label>Email:</label>
-					<input type="email" name="email" value={this.state.email} onChange={this.handleChange} />
+					<input type="email" name="email" value={this.state.email} onChange={this.handleChange} tabIndex="1" />
 				</div>
 				<div className="input-container">
 					<label>Password:</label>
-					<input type="password" name="password" value={this.state.password} onChange={this.handleChange} />
+					<input type="password" name="password" value={this.state.password} onChange={this.handleChange} tabIndex="2" />
 				</div>
 				<button type="submit">Submit</button>
 			</form>
