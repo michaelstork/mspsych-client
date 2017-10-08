@@ -9,14 +9,13 @@ import Evaluations from './tabs/Evaluations/Evaluations';
 import AccountContainer from './containers/AccountContainer';
 import AdminContainer from './containers/AdminContainer';
 
-
 const App = (props) => (
     <Router>
         <div>
             <Header user={props.user} />
             <div className="app-container">
                 <Switch>
-                    <Route path="/" exact component={Home} />
+                    <Route path="/" exact render={() => <Home user={props.user} />} />
                     <Route path="/residents" component={Residents} />
                     <Route path="/evaluations" component={Evaluations} />
                     <Route path="/account" component={AccountContainer} />

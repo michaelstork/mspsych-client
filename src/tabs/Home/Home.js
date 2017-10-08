@@ -22,6 +22,15 @@ class Home extends React.Component {
 		});
 	}
 
+	deleteNews(id) {
+		axios.delete('/api/news/'+id)
+			.then(response => {
+				this.setState({news: this.state.news.filter(item => item.id !== id)});
+			}).catch(error => {
+				console.log(error);
+			})
+	}
+
 	render() {
 		return (
 			<Panel className="news-panel">
@@ -29,6 +38,10 @@ class Home extends React.Component {
 				<div>
 					{this.state.news.map(item =>
 						<div className="news-item" key={item.id}>
+							{this.props.user && this.props.user.isAdmin
+								? <span onClick={() => this.deleteNews(item.id)}>Delete</span>
+								: ''
+							}
 							<h4>{item.title}</h4>
 							<p className="news-item-author">
 								{item.user.email} on <Moment format="dddd\, MMM Do \a\t h:mm A">{item.created_at}</Moment>
