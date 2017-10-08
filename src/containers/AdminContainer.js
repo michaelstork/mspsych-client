@@ -10,10 +10,6 @@ class AdminContainer extends React.Component {
 		console.log(props);
 	}
 
-	componentWillMount() {
-		console.log((this.props.user && this.props.user.isAdmin) || this.props.inProgress);
-	}
-
 	render() {
 		return (
 			((this.props.user && this.props.user.isAdmin) || this.props.inProgress)
