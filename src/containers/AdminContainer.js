@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import {Redirect} from 'react-router-dom'
 import Admin from '../tabs/Admin/Admin';
 

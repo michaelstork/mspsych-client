@@ -11,6 +11,7 @@ class AppContainer extends React.Component {
 	    
 	    if (!token) {
 	    	this.props.actions.logout();
+	    	return;
 	    }
 	    
 	    this.props.actions
