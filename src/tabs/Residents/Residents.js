@@ -2,6 +2,7 @@ import React from 'react';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
 import Panel from '../../components/Panel/Panel';
+import FileGroup from '../../partials/Residents/FileGroup';
 import './Residents.css';
 import axios from '../../connection/axios';
 
@@ -23,24 +24,13 @@ class Residents extends React.Component {
 
 	render() {
 		return (
-			<Panel className="residents-panel">
+			<Panel className="residents-panel with-items">
 				<h2>Files for Residents</h2>
 				<div className="file-groups">
 					<TransitionGroup>
 						{this.state.categories.map(category => 
 							<CSSTransition timeout={200} classNames="fade" key={category.id}>
-								<div className="file-group">
-									<h3>{category.title}</h3>
-									<ul>
-										{category.document.map(file =>
-											<li key={file.id}>
-												<a target="_blank" href={'/api/storage/documents/' + file.filename}>
-													{file.title}
-												</a>
-											</li>
-										)}
-									</ul>
-								</div>
+								<FileGroup category={category} />
 							</CSSTransition>
 						)}
 					</TransitionGroup>
