@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import actions from '../actions';
+import actions from '../actions/authActions';
 import App from '../App';
 
 class AppContainer extends React.Component {
