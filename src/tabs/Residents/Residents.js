@@ -10,8 +10,13 @@ class Residents extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			categories: []
+			categories: [],
+			showUpload: false,
+			showCategory: true
 		};
+
+		this.toggleUpload = this.toggleUpload.bind(this);
+		this.toggleCreateCategory = this.toggleCreateCategory.bind(this);
 	}
 
 	componentDidMount() {
@@ -22,15 +27,59 @@ class Residents extends React.Component {
 		});
 	}
 
+	uploadFile(categoryId) {
+		console.log(categoryId);
+	}
+
+	toggleUpload() {
+		this.setState(Object.assign({}, this.state, {showUpload: !this.state.showUpload,}));
+	}
+
+	toggleCreateCategory() {
+		this.setState(Object.assign({}, this.state, {showCreateCategory: !this.state.showCreateCategory,}));
+	}
+
+	renderUploadButton() {
+		return (
+			<div onClick={() => {!this.state.showCreateCategory && this.toggleUpload()}} disabled={this.state.showCreateCategory}>
+				<span>Upload File</span>
+				<i className="material-icons">
+					{this.state.showUpload
+						? 'remove_circle'
+						: 'cloud_circle'
+					}
+				</i>
+			</div>
+		);
+	}
+
+	renderCreateCategoryButton() {
+		return (
+			<div onClick={() => {!this.state.showUpload && this.toggleCreateCategory()}} disabled={this.state.showUpload}>
+				<span>Create Category</span>
+				<i className="material-icons">
+					{this.state.showCreateCategory
+						? 'remove_circle'
+						: 'add_circle'
+					}
+				</i>
+			</div>
+		);
+	}
+
 	render() {
 		return (
 			<Panel className="residents-panel with-items">
-				<h2>Files for Residents</h2>
+				<h2>
+					<span>Files for Residents</span>
+					{this.props.user && this.props.user.isAdmin && this.renderCreateCategoryButton()}
+					{this.props.user && this.props.user.isAdmin && this.renderUploadButton()}
+				</h2>
 				<div className="file-groups">
 					<TransitionGroup>
 						{this.state.categories.map(category => 
 							<CSSTransition timeout={200} classNames="fade" key={category.id}>
-								<FileGroup category={category} />
+								<FileGroup category={category} user={this.props.user} upload={this.uploadFile} />
 							</CSSTransition>
 						)}
 					</TransitionGroup>

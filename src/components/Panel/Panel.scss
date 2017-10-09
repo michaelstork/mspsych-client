@@ -20,12 +20,39 @@
 	align-items:center;
 }
 
-.panel h2 i {
-	color:$blue;
+.panel h2 > i,
+.panel h2 > div {
 	margin-left:auto;
 	position:relative;
 	top:4px;
 	cursor:pointer;
+
+	&[disabled] {
+		opacity:0.4;
+		cursor:default;
+	}
+}
+
+.panel h2 i {
+	color:$blue;
+}
+
+.panel h2 > div {
+	display:flex;
+	align-items:center;
+	margin-left:auto;
+	position:relative;
+	top:4px;
+	cursor:pointer;
+	font-size:0.7rem;
+
+	span {
+		margin-right:6px;
+	}
+
+	& + div {
+		margin-left:12px;
+	}
 }
 
 .panel-content {

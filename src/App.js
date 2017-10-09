@@ -16,7 +16,7 @@ const App = (props) => (
             <div className="app-container">
                 <Switch>
                     <Route path="/" exact render={() => <Home user={props.user} />} />
-                    <Route path="/residents" component={Residents} />
+                    <Route path="/residents" render={() => <Residents user={props.user} />} />
                     <Route path="/evaluations" component={Evaluations} />
                     <Route path="/account" component={AccountContainer} />
                     <Route path="/admin" component={AdminContainer} />
