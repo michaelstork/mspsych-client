@@ -32,7 +32,7 @@ class CreateNews extends React.Component {
 
 	render() {
 		return (
-			<div className="create-news news-item">
+			<div className="create-news news-item panel-item">
 				<form onSubmit={this.handleSubmit} name="createNews">
 					<div className="input-container">
 						<label>Title:</label>

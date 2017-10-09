@@ -2,7 +2,7 @@ import React from 'react';
 import Moment from 'react-moment';
 
 const NewsItem = (props) => (
-	<div className="news-item">
+	<div className="news-item panel-item">
 		{props.user && props.user.isAdmin
 			&& <i onClick={() => props.delete(props.item.id)} className="material-icons">clear</i>}
 		<h4>{props.item.title}</h4>

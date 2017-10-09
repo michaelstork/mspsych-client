@@ -84,12 +84,12 @@ class Home extends React.Component {
 
 	render() {
 		return (
-			<Panel className="news-panel">
+			<Panel className="with-items">
 				<h2>
 					<span>News &amp; Information</span>
 					{this.props.user && this.props.user.isAdmin && this.renderCreateButton()}
 				</h2>
-				<div className="news-panel-content">
+				<div className="news-panel-content panel-content">
 					<CSSTransition
 						in={this.state.showCreate}
 						classNames="toggle-create"
