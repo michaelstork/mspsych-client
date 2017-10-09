@@ -10,6 +10,7 @@
 	display:flex;
 	flex-direction:column;
 	align-items:flex-start;
+	position:relative;
 
 	background-color:#FFF;
 	box-shadow:$panelShadow;
@@ -29,6 +30,19 @@
 	padding-right:12px;
 }
 
+.news-item i {
+	position:absolute;
+	top:8px;
+	right:8px;
+	color:#CDCDCD;
+	cursor:pointer;
+	transition:transform 0.15s $standardCurve;
+
+	&:hover {
+		transform:scale(1.25);
+	}
+}
+
 .news-item .news-item-author {
 	font-size:0.65em;
 	margin-top:8px;
@@ -37,4 +51,26 @@
 .news-item .news-item-content {
 	font-size:0.85em;
 	margin-top:12px;
+}
+
+.news-item {
+
+	&.fade-enter {
+		opacity: 0;
+	}
+
+	&.fade-enter.fade-enter-active {
+		opacity: 1;
+		transition: opacity 300ms ease-in;
+	}
+
+	&.fade-exit {
+		opacity: 1;
+	}
+
+	&.fade-exit.fade-exit-active {
+		opacity: 0;
+		transition: opacity 300ms ease-in;
+	}
+
 }
