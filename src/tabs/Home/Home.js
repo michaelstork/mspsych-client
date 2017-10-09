@@ -43,7 +43,7 @@ class Home extends React.Component {
 				<div>
 					<TransitionGroup>
 						{this.state.news.map((item) =>
-							<CSSTransition {...this.props} timeout={300} classNames="fade" in={this.state.show} key={item.id}>
+							<CSSTransition timeout={200} classNames="fade" key={item.id}>
 								<div className="news-item">
 									{this.props.user && this.props.user.isAdmin
 										&& <i onClick={() => this.deleteNews(item.id)} className="material-icons">clear</i>}
