@@ -29,6 +29,34 @@ button {
 	cursor:pointer;
 	border:none;
 	outline:none;
+
+	transition: opacity 0.15s ease-out;
+
+	&[disabled] {
+		opacity:0.4;
+	}
+}
+
+.button-container {
+	display:flex;
+	justify-content:space-between;
+	margin-top:24px;
+	
+	& > * {
+		flex:0 0 48%;
+	}
+
+	button {
+		margin-top:0;
+	}
+
+	button.cancel {
+		background-color:$pink;
+	}
+
+	a button {
+		width:100%;
+	}
 }
 
 .input-container {
@@ -44,10 +72,20 @@ button {
 
 	input,
 	select {
-		font-size:0.8em;
 		height:32px;
 		padding:0 6px;
+	}
+
+	textarea {
+		padding:6px;
+	}
+
+	input,
+	select,
+	textarea {
+		font-size:0.8em;
 		box-sizing:border-box;
+		border:1px solid #DEDEDE;
 	}
 
 	& + .input-container {

@@ -6,6 +6,10 @@
 	box-shadow:none;
 }
 
+.news-panel-content {
+	position:relative;
+}
+
 .news-item {
 	display:flex;
 	flex-direction:column;
@@ -15,6 +19,7 @@
 	background-color:#FFF;
 	box-shadow:$panelShadow;
 	padding:18px;
+	box-sizing:border-box;
 
 	& + & {
 		margin-top:24px;
@@ -36,10 +41,10 @@
 	right:8px;
 	color:#CDCDCD;
 	cursor:pointer;
-	transition:transform 0.15s $standardCurve;
+	transition:color 0.15s ease-in-out;
 
 	&:hover {
-		transform:scale(1.25);
+		color:#666;
 	}
 }
 
@@ -53,24 +58,114 @@
 	margin-top:12px;
 }
 
+/**
+ * Transitions
+ */
+
 .news-item {
 
 	&.fade-enter {
-		opacity: 0;
+		opacity:0;
 	}
 
 	&.fade-enter.fade-enter-active {
-		opacity: 1;
-		transition: opacity 200ms ease-in;
+		opacity:1;
+		transition:opacity 250ms ease-in;
 	}
 
 	&.fade-exit {
-		opacity: 1;
+		opacity:1;
 	}
 
 	&.fade-exit.fade-exit-active {
-		opacity: 0;
-		transition: opacity 200ms ease-in;
+		opacity:0;
+		transition:opacity 250ms ease-in;
 	}
 
+}
+
+
+/**
+ * Admin create news
+ */
+
+$createNewsHeight:210px;
+
+.news-panel h2 i {
+	color:$blue;
+	margin-left:auto;
+	position:relative;
+	top:4px;
+	cursor:pointer;
+}
+
+.create-news.news-item {
+	margin-bottom:24px;
+	height:$createNewsHeight;
+}
+
+form[name="createNews"] {
+	width:100%;
+
+	label {
+		flex:0 0 15%;
+	}
+
+	input[type="text"],
+	textarea {
+		flex:0 0 85%;
+	}
+
+	textarea {
+		height:80px;
+		resize:none;
+	}
+
+	.input-container.textarea label {
+		margin-bottom:auto;
+	}
+
+	.button-container {
+		width:25%;
+		margin-left:auto;
+		margin-top:18px;
+	}
+}
+
+/**
+ * Admin create news transition
+ */
+
+.create-news.news-item {
+
+	&.toggle-create-enter {
+		opacity:0;
+	}
+
+
+	&.toggle-create-enter.toggle-create-enter-active {
+		opacity:1;
+		transition:opacity 150ms ease-in 350ms;
+
+		& + div {
+			transition:transform 350ms $standardCurve;
+			transform:translateY($createNewsHeight + 24px);
+			position:absolute;
+			top:0;
+		}
+	}
+
+	&.toggle-create-exit {
+		opacity:1;
+	}
+
+	&.toggle-create-exit.toggle-create-exit-active {
+		opacity:0;
+		transition:opacity 150ms ease-in;
+
+		& + div {
+			transition:transform 350ms $standardCurve 150ms;
+			transform:translateY(-1 * ($createNewsHeight + 24px));
+		}
+	}
 }

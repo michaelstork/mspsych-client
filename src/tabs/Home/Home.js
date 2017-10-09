@@ -3,18 +3,23 @@ import CSSTransition from 'react-transition-group/CSSTransition';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
 
 import Panel from '../../components/Panel/Panel';
+import CreateNews from '../../partials/News/CreateNews';
+import NewsItem from '../../partials/News/NewsItem';
 import axios from '../../connection/axios';
 import './Home.css';
-import Moment from 'react-moment';
-
 
 
 class Home extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			news: []
+			news: [],
+			showCreate: false
 		};
+
+		this.toggleCreate = this.toggleCreate.bind(this);
+		this.createNews   = this.createNews.bind(this);
+		this.deleteNews   = this.deleteNews.bind(this);
 	}
 
 	componentDidMount() {
@@ -28,31 +33,74 @@ class Home extends React.Component {
 	}
 
 	deleteNews(id) {
-		axios.delete('/api/news/'+id)
-			.then(response => {
-				this.setState({news: this.state.news.filter(item => item.id !== id)});
-			}).catch(error => {
-				console.log(error);
-			})
+		if (!window.confirm('Are you sure you want to delete this item?')) return;
+
+		axios.delete('/api/news/'+id).then(response => {
+			this.setState(Object.assign(
+				{},
+				this.state,
+				{
+					news: this.state.news.filter(item => item.id !== id),
+					showCreate: false
+				}
+			));
+		}).catch(error => {
+			console.log(error);
+		})
+	}
+
+	createNews(title, content) {
+		axios.post(
+			'/api/news',
+			{
+				title: title,
+				content: content
+			}
+		).then(response => {
+			const news = this.state.news.slice();
+			news.unshift(response.data);
+			this.setState(Object.assign({}, this.state, {news: news, showCreate: false}));
+		}).catch(error => {
+			console.log(error);
+		});
+	}
+
+	toggleCreate() {
+		this.setState(Object.assign({}, this.state, {showCreate: !this.state.showCreate}));
+	}
+
+	renderCreateButton() {
+		return (
+			<i onClick={this.toggleCreate} className="material-icons">
+				{this.state.showCreate
+					? 'remove_circle'
+					: 'add_circle'
+				}
+			</i>
+		);
 	}
 
 	render() {
 		return (
 			<Panel className="news-panel">
-				<h2>News &amp; Information</h2>
-				<div>
+				<h2>
+					<span>News &amp; Information</span>
+					{this.props.user && this.props.user.isAdmin && this.renderCreateButton()}
+				</h2>
+				<div className="news-panel-content">
+					<CSSTransition
+						in={this.state.showCreate}
+						classNames="toggle-create"
+						mountOnEnter={true}
+						unmountOnExit={true}
+						timeout={500}>
+						<CreateNews create={this.createNews} cancel={this.toggleCreate} />
+					</CSSTransition>
+
 					<TransitionGroup>
 						{this.state.news.map((item) =>
-							<CSSTransition timeout={200} classNames="fade" key={item.id}>
-								<div className="news-item">
-									{this.props.user && this.props.user.isAdmin
-										&& <i onClick={() => this.deleteNews(item.id)} className="material-icons">clear</i>}
-									<h4>{item.title}</h4>
-									<p className="news-item-author">
-										{item.user.email} on <Moment format="dddd\, MMM Do \a\t h:mm A">{item.created_at}</Moment>
-									</p>
-									<p className="news-item-content" dangerouslySetInnerHTML={{__html: item.content}} />
-								</div>
+							<CSSTransition timeout={250} classNames="fade" key={item.id}>
+								<NewsItem item={item} user={this.props.user} delete={this.deleteNews} />
 							</CSSTransition>
 						)}
 					</TransitionGroup>

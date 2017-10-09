@@ -34,25 +34,3 @@ form[name="passwordUpdate"] {
 		flex:1 0 65%;
 	}
 }
-
-.account-update .button-container {
-	display:flex;
-	justify-content:space-between;
-	margin-top:24px;
-	
-	& > * {
-		flex:0 0 48%;
-	}
-
-	button {
-		margin-top:0;
-	}
-
-	button.cancel {
-		background-color:$pink;
-	}
-
-	a button {
-		width:100%;
-	}
-}
