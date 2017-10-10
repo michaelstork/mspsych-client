@@ -104,6 +104,11 @@ button {
 		box-sizing:border-box;
 		border:1px solid #DEDEDE;
 		border-radius:4px;
+
+		&[disabled] {
+			opacity:0.4;
+			cursor:default;
+		}
 	}
 
 	& + .input-container {

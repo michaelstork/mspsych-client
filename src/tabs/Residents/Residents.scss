@@ -19,16 +19,25 @@
 	margin-top:32px;
 }
 
-.file-group li {
-	height:20px;
+.file-group ul {
+	list-style-type:none;
 }
 
-.file-group ul.isAdmin li {
+.file-group li {
+	height:20px;
 	display:flex;
 	align-items:center;
 }
 
-.file-group li > i {
+.file-group li a i { // filetype icon
+	color:#888;
+	font-size:0.9rem;
+	margin-right:2px;
+	position:relative;
+	top:1px;
+}
+
+.file-group li > i { // delete link
 	color:#CDCDCD;
 	transition:color 0.15s ease-out;
 	font-size:1.1rem;
@@ -44,6 +53,11 @@
 
 .file-group li + li {
 	margin-top:6px;
+}
+
+.file-group li a {
+	display:flex;
+	align-items:center;
 }
 
 
@@ -142,7 +156,7 @@ form[name="createCategory"] {
  * Admin upload file
  */
 
-$uploadFileHeight:194px;
+$uploadFileHeight:238px;
 
 .upload-file {
 	margin-bottom:24px;
@@ -157,6 +171,7 @@ form[name="uploadFile"] {
 	}
 
 	input[type="text"],
+	input[type="url"],
 	select {
 		flex:0 0 85%;
 	}

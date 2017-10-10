@@ -3,7 +3,7 @@ import CSSTransition from 'react-transition-group/CSSTransition';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
 import Panel from '../../components/Panel/Panel';
 import CreateCategory from '../../partials/Residents/CreateCategory';
-import UploadFile from '../../partials/Residents/UploadFile';
+import CreateFile from '../../partials/Residents/CreateFile';
 import FileGroup from '../../partials/Residents/FileGroup';
 import './Residents.css';
 import axios from '../../connection/axios';
@@ -22,7 +22,10 @@ class Residents extends React.Component {
 		this.createCategory       = this.createCategory.bind(this);
 		this.deleteCategory       = this.deleteCategory.bind(this);
 		this.uploadFile           = this.uploadFile.bind(this);
+		this.createLink           = this.createLink.bind(this);
 		this.deleteFile           = this.deleteFile.bind(this);
+
+		this.handleCreateDocumentResponse = this.handleCreateDocumentResponse.bind(this);
 	}
 
 	componentDidMount() {
@@ -30,6 +33,21 @@ class Residents extends React.Component {
 			this.setState({
 				categories: response.data
 			});
+		});
+	}
+
+	createLink(title, categoryId, url) {
+		axios.post(
+			'/api/documents',
+			{
+				title: title,
+				categoryId: categoryId,
+				url: url
+			}
+		)
+		.then(this.handleCreateDocumentResponse)
+		.catch(error => {
+			console.log(error);
 		});
 	}
 
@@ -47,15 +65,17 @@ class Residents extends React.Component {
 					'Content-Type': 'multipart/form-data'
 				}
 			}
-		).then(response => {
-			const file = response.data;
-			const categories = this.state.categories.slice();
-			const category = categories.find(category => category.id === file.category_id);
-			category.document.push(file);
-			this.setState(Object.assign({}, this.state, {categories: categories, showUpload: false}));
-		}).catch(error => {
+		).then(this.handleCreateDocumentResponse).catch(error => {
 			console.log(error);
 		});
+	}
+
+	handleCreateDocumentResponse(response) {
+		const document = response.data;
+		const categories = this.state.categories.slice();
+		const category = categories.find(category => category.id === document.category_id);
+		category.document.push(document);
+		this.setState(Object.assign({}, this.state, {categories: categories, showUpload: false}));
 	}
 
 	deleteFile(id) {
@@ -115,11 +135,11 @@ class Residents extends React.Component {
 	renderUploadButton() {
 		return (
 			<div onClick={() => {!this.state.showCreateCategory && this.toggleUpload()}} disabled={this.state.showCreateCategory}>
-				<span>Upload File</span>
+				<span>Create Document</span>
 				<i className="material-icons">
 					{this.state.showUpload
 						? 'remove_circle'
-						: 'cloud_circle'
+						: 'note_add'
 					}
 				</i>
 			</div>
@@ -133,7 +153,7 @@ class Residents extends React.Component {
 				<i className="material-icons">
 					{this.state.showCreateCategory
 						? 'remove_circle'
-						: 'add_circle'
+						: 'create_new_folder'
 					}
 				</i>
 			</div>
@@ -144,7 +164,7 @@ class Residents extends React.Component {
 		return (
 			<Panel className="residents-panel with-items">
 				<h2>
-					<span>Files for Residents</span>
+					<span>Documents for Residents</span>
 					{this.props.user && this.props.user.isAdmin && this.renderCreateCategoryButton()}
 					{this.props.user && this.props.user.isAdmin && this.renderUploadButton()}
 				</h2>
@@ -164,7 +184,7 @@ class Residents extends React.Component {
 						mountOnEnter={true}
 						unmountOnExit={true}
 						timeout={500}>
-						<UploadFile upload={this.uploadFile} cancel={this.toggleUpload} categories={this.state.categories} />
+						<CreateFile upload={this.uploadFile} createLink={this.createLink} cancel={this.toggleUpload} categories={this.state.categories} />
 					</CSSTransition>
 
 					<TransitionGroup>

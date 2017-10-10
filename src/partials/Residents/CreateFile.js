@@ -1,11 +1,12 @@
 import React from 'react';
 
-class UploadFile extends React.Component {
+class CreateFile extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			title: '',
 			categoryId: '',
+			url: '',
 			file: null
 		};
 
@@ -24,6 +25,9 @@ class UploadFile extends React.Component {
 			case 'categoryId':
 				this.setState(Object.assign({}, this.state, {categoryId: event.target.value}));
 				break;
+			case 'url':
+				this.setState(Object.assign({}, this.state, {url: event.target.value}));
+				break;
 			default:
 				return;
 		}
@@ -35,11 +39,21 @@ class UploadFile extends React.Component {
 
 	handleSubmit(event) {
 		event.preventDefault();
-		this.props.upload(
-			this.state.title,
-			this.state.categoryId,
-			this.state.file
-		);
+		
+		if (this.state.url.length) {
+			this.props.createLink(
+				this.state.title,
+				this.state.categoryId,
+				this.state.url
+			);
+		} else if (this.state.file) {
+			this.props.upload(
+				this.state.title,
+				this.state.categoryId,
+				this.state.file
+			);
+		}
+
 	}
 
 	render() {
@@ -60,12 +74,26 @@ class UploadFile extends React.Component {
 						</select>
 					</div>
 					<div className="input-container">
+						<label>URL:</label>
+						<input type="url" name="url" onChange={this.handleChange} disabled={this.state.file} tabIndex="4" />
+					</div>
+					<div className="input-container">
 						<label>Select File:</label>
-						<input type="file" name="document" ref={(ref) => this.fileInput = ref} onChange={this.handleFileSelect} />
+						<input
+							type="file"
+							name="document"
+							ref={(ref) => this.fileInput = ref}
+							onChange={this.handleFileSelect}
+							disabled={this.state.url.length}
+							tabIndex="3" />
 					</div>
 					<div className="button-container">
 						<button onClick={this.props.cancel} className="cancel" type="button">Cancel</button>
-						<button type="submit" disabled={!this.state.title.length || !this.state.categoryId.length || !this.state.file}>
+						<button type="submit"
+							disabled={
+								(!this.state.file && !this.state.url.length)
+								|| !this.state.categoryId.length
+								|| !this.state.title.length}>
 							Upload
 						</button>
 					</div>
@@ -75,4 +103,4 @@ class UploadFile extends React.Component {
 	}
 }
 
-export default UploadFile;
+export default CreateFile;
