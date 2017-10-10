@@ -21,6 +21,8 @@ class Residents extends React.Component {
 		this.toggleCreateCategory = this.toggleCreateCategory.bind(this);
 		this.createCategory       = this.createCategory.bind(this);
 		this.deleteCategory       = this.deleteCategory.bind(this);
+		this.uploadFile           = this.uploadFile.bind(this);
+		this.deleteFile           = this.deleteFile.bind(this);
 	}
 
 	componentDidMount() {
@@ -31,12 +33,52 @@ class Residents extends React.Component {
 		});
 	}
 
-	uploadFile(categoryId) {
-		console.log('upload file to category: '+categoryId);
+	uploadFile(title, categoryId, file) {
+		const formData = new FormData();
+		formData.append('title', title);
+		formData.append('categoryId', categoryId);
+		formData.append('document', file);
+
+		axios.post(
+			'/api/documents',
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
+			}
+		).then(response => {
+			const file = response.data;
+			const categories = this.state.categories.slice();
+			const category = categories.find(category => category.id === file.category_id);
+			category.document.push(file);
+			this.setState(Object.assign({}, this.state, {categories: categories, showUpload: false}));
+		}).catch(error => {
+			console.log(error);
+		});
+	}
+
+	deleteFile(id) {
+		if (!window.confirm('Are you sure you want to delete this file?')) return;
+
+		axios.delete('/api/documents/'+id).then(response => {
+			const categories = this.state.categories.slice();
+
+			this.setState(Object.assign(
+				{},
+				this.state,
+				{categories: categories.map(category => {
+					category.document = category.document.filter(file => file.id !== id);
+					return category;
+				})}
+			));
+		}).catch(error => {
+			console.log(error);
+		})
 	}
 
 	deleteCategory(id) {
-		if (!window.confirm('Are you sure you want to delete this category and all it\'s files?')) return;
+		if (!window.confirm('Are you sure you want to delete this category and all its files?')) return;
 
 		axios.delete('/api/document-categories/'+id).then(response =>
 			this.setState(Object.assign(
@@ -128,7 +170,7 @@ class Residents extends React.Component {
 					<TransitionGroup>
 						{this.state.categories.map(category => 
 							<CSSTransition timeout={200} classNames="fade" key={category.id}>
-								<FileGroup category={category} user={this.props.user} delete={this.deleteCategory} />
+								<FileGroup category={category} user={this.props.user} deleteCategory={this.deleteCategory} deleteFile={this.deleteFile} />
 							</CSSTransition>
 						)}
 					</TransitionGroup>

@@ -19,6 +19,29 @@
 	margin-top:32px;
 }
 
+.file-group li {
+	height:20px;
+}
+
+.file-group ul.isAdmin li {
+	display:flex;
+	align-items:center;
+}
+
+.file-group li > i {
+	color:#CDCDCD;
+	transition:color 0.15s ease-out;
+	font-size:1.1rem;
+	margin-right:6px;
+	cursor:pointer;
+	position:relative;
+	top:1px;
+
+	&:hover {
+		color:#666;
+	}
+}
+
 .file-group li + li {
 	margin-top:6px;
 }
@@ -119,7 +142,7 @@ form[name="createCategory"] {
  * Admin upload file
  */
 
-$uploadFileHeight:162px;
+$uploadFileHeight:206px;
 
 .upload-file {
 	margin-bottom:24px;

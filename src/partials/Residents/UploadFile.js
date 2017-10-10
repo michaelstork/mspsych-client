@@ -5,11 +5,15 @@ class UploadFile extends React.Component {
 		super(props);
 		this.state = {
 			title: '',
-			categoryId: ''
+			categoryId: '',
+			file: null
 		};
 
-		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleChange     = this.handleChange.bind(this);
+		this.handleSubmit     = this.handleSubmit.bind(this);
+		this.handleFileSelect = this.handleFileSelect.bind(this);
+
+		this.fileInput = null;
 	}
 
 	handleChange(event) {
@@ -25,9 +29,17 @@ class UploadFile extends React.Component {
 		}
 	}
 
+	handleFileSelect(event) {
+		this.setState(Object.assign({}, this.state, {file: this.fileInput.files[0]}));
+	}
+
 	handleSubmit(event) {
 		event.preventDefault();
-		// this.props.upload(this.state.title);
+		this.props.upload(
+			this.state.title,
+			this.state.categoryId,
+			this.state.file
+		);
 	}
 
 	render() {
@@ -47,9 +59,15 @@ class UploadFile extends React.Component {
 							)}
 						</select>
 					</div>
+					<div className="input-container">
+						<label>Select Files:</label>
+						<input type="file" name="document" ref={(ref) => this.fileInput = ref} onChange={this.handleFileSelect} />
+					</div>
 					<div className="button-container">
 						<button onClick={this.props.cancel} className="cancel" type="button">Cancel</button>
-						<button type="submit" disabled={!this.state.title.length}>Create</button>
+						<button type="submit" disabled={!this.state.title.length || !this.state.categoryId.length || !this.state.file}>
+							Upload
+						</button>
 					</div>
 				</form>
 			</div>
