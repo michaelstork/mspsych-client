@@ -57,6 +57,10 @@
 
 .panel-content {
 	position:relative;
+
+	& > div {
+		width:100%;
+	}
 }
 
 .panel.with-items {

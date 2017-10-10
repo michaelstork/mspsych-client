@@ -77,6 +77,15 @@ button {
 		padding:0 6px;
 	}
 
+	input {
+		background-color:#FFF;
+	}
+
+	select {
+		background-color:#F9F9F9;
+		border-radius:0;
+	}
+
 	textarea {
 		padding:6px;
 	}
@@ -87,6 +96,7 @@ button {
 		font-size:0.8em;
 		box-sizing:border-box;
 		border:1px solid #DEDEDE;
+		border-radius:4px;
 	}
 
 	& + .input-container {

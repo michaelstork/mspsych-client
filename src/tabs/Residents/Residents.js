@@ -2,6 +2,8 @@ import React from 'react';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
 import Panel from '../../components/Panel/Panel';
+import CreateCategory from '../../partials/Residents/CreateCategory';
+import UploadFile from '../../partials/Residents/UploadFile';
 import FileGroup from '../../partials/Residents/FileGroup';
 import './Residents.css';
 import axios from '../../connection/axios';
@@ -12,11 +14,13 @@ class Residents extends React.Component {
 		this.state = {
 			categories: [],
 			showUpload: false,
-			showCategory: true
+			showCreateCategory: false
 		};
 
-		this.toggleUpload = this.toggleUpload.bind(this);
+		this.toggleUpload         = this.toggleUpload.bind(this);
 		this.toggleCreateCategory = this.toggleCreateCategory.bind(this);
+		this.createCategory       = this.createCategory.bind(this);
+		this.deleteCategory       = this.deleteCategory.bind(this);
 	}
 
 	componentDidMount() {
@@ -28,7 +32,34 @@ class Residents extends React.Component {
 	}
 
 	uploadFile(categoryId) {
-		console.log(categoryId);
+		console.log('upload file to category: '+categoryId);
+	}
+
+	deleteCategory(id) {
+		if (!window.confirm('Are you sure you want to delete this category and all it\'s files?')) return;
+
+		axios.delete('/api/document-categories/'+id).then(response =>
+			this.setState(Object.assign(
+				{},
+				this.state,
+				{categories: this.state.categories.filter(category => category.id !== id)}
+			))
+		).catch(error => {
+			console.log(error);
+		})
+	}
+
+	createCategory(title) {
+		axios.post(
+			'/api/document-categories',
+			{title: title}
+		).then(response => {
+			const categories = this.state.categories.slice();
+			categories.unshift(response.data);
+			this.setState(Object.assign({}, this.state, {categories: categories, showCreateCategory: false}));
+		}).catch(error => {
+			console.log(error);
+		});
 	}
 
 	toggleUpload() {
@@ -75,11 +106,29 @@ class Residents extends React.Component {
 					{this.props.user && this.props.user.isAdmin && this.renderCreateCategoryButton()}
 					{this.props.user && this.props.user.isAdmin && this.renderUploadButton()}
 				</h2>
-				<div className="file-groups">
+				<div className="residents-panel-content panel-content">
+					<CSSTransition
+						in={this.state.showCreateCategory}
+						classNames="toggle-create"
+						mountOnEnter={true}
+						unmountOnExit={true}
+						timeout={500}>
+						<CreateCategory create={this.createCategory} cancel={this.toggleCreateCategory} />
+					</CSSTransition>
+
+					<CSSTransition
+						in={this.state.showUpload}
+						classNames="toggle-upload"
+						mountOnEnter={true}
+						unmountOnExit={true}
+						timeout={500}>
+						<UploadFile upload={this.uploadFile} cancel={this.toggleUpload} categories={this.state.categories} />
+					</CSSTransition>
+
 					<TransitionGroup>
 						{this.state.categories.map(category => 
 							<CSSTransition timeout={200} classNames="fade" key={category.id}>
-								<FileGroup category={category} user={this.props.user} upload={this.uploadFile} />
+								<FileGroup category={category} user={this.props.user} delete={this.deleteCategory} />
 							</CSSTransition>
 						)}
 					</TransitionGroup>

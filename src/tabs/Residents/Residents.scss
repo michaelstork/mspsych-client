@@ -2,7 +2,7 @@
 
 
 .file-group {
-	flex:0 0 50%;
+	width:100%;
 }
 
 .file-group h3 {
@@ -44,4 +44,140 @@
 		transition: opacity 200ms ease-in;
 	}
 
+}
+
+
+
+/**
+ * Admin create category
+ */
+
+$createCategoryHeight:118px;
+
+.create-category {
+	margin-bottom:24px;
+	height:$createCategoryHeight;
+}
+
+form[name="createCategory"] {
+	width:100%;
+
+	label {
+		flex:0 0 10%;
+	}
+
+	input[type="text"],
+	textarea {
+		flex:0 0 90%;
+	}
+
+	.button-container {
+		width:25%;
+		margin-left:auto;
+		margin-top:18px;
+	}
+}
+
+/**
+ * Admin create category transitions
+ */
+
+.create-category {
+
+	&.toggle-create-enter {
+		opacity:0;
+	}
+
+	&.toggle-create-enter.toggle-create-enter-active {
+		opacity:1;
+		transition:opacity 150ms ease-in 350ms;
+
+		& + div {
+			transition:transform 350ms $standardCurve;
+			transform:translateY($createCategoryHeight + 24px);
+			position:absolute;
+			top:0;
+		}
+	}
+
+	&.toggle-create-exit {
+		opacity:1;
+	}
+
+	&.toggle-create-exit.toggle-create-exit-active {
+		opacity:0;
+		transition:opacity 150ms ease-in;
+
+		& + div {
+			transition:transform 350ms $standardCurve 150ms;
+			transform:translateY(-1 * ($createCategoryHeight + 24px));
+		}
+	}
+}
+
+/**
+ * Admin upload file
+ */
+
+$uploadFileHeight:162px;
+
+.upload-file {
+	margin-bottom:24px;
+	height:$uploadFileHeight;
+}
+
+form[name="uploadFile"] {
+	width:100%;
+
+	label {
+		flex:0 0 15%;
+	}
+
+	input[type="text"],
+	select {
+		flex:0 0 85%;
+	}
+
+	.button-container {
+		width:25%;
+		margin-left:auto;
+		margin-top:18px;
+	}
+}
+
+/**
+ * 	Admin upload file transitions
+ */
+
+.upload-file {
+
+	&.toggle-upload-enter {
+		opacity:0;
+	}
+
+	&.toggle-upload-enter.toggle-upload-enter-active {
+		opacity:1;
+		transition:opacity 150ms ease-in 350ms;
+
+		& + div {
+			transition:transform 350ms $standardCurve;
+			transform:translateY($uploadFileHeight + 24px);
+			position:absolute;
+			top:0;
+		}
+	}
+
+	&.toggle-upload-exit {
+		opacity:1;
+	}
+
+	&.toggle-upload-exit.toggle-upload-exit-active {
+		opacity:0;
+		transition:opacity 150ms ease-in;
+
+		& + div {
+			transition:transform 350ms $standardCurve 150ms;
+			transform:translateY(-1 * ($uploadFileHeight + 24px));
+		}
+	}
 }

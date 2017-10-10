@@ -41,10 +41,7 @@ class Home extends React.Component {
 			this.setState(Object.assign(
 				{},
 				this.state,
-				{
-					news: this.state.news.filter(item => item.id !== id),
-					showCreate: false
-				}
+				{news: this.state.news.filter(item => item.id !== id)}
 			));
 		}).catch(error => {
 			console.log(error);
