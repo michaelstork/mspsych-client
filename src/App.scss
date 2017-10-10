@@ -47,6 +47,10 @@ button {
 		flex:0 0 48%;
 	}
 
+	& > *:only-child {
+		flex:0 0 100%;
+	}
+
 	button {
 		margin-top:0;
 	}
@@ -113,5 +117,9 @@ button {
 
 	& + .input-container {
 		margin-top:12px;
+	}
+
+	&.textarea label {
+		margin-bottom:auto;
 	}
 }

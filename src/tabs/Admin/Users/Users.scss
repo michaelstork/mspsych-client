@@ -1,0 +1,29 @@
+
+form[name="addUsers"] {
+	width:100%;
+	margin-top:18px;
+
+	label {
+		flex:0 0 15%;
+	}
+
+	textarea {
+		flex:0 0 85%;
+		height:64px;
+		resize:none;
+	}
+
+	p {
+		width:85%;
+		margin-left:15%;
+		font-size:0.75em;
+		color:#888;
+		margin-bottom:4px;
+	}
+
+	.button-container {
+		width:14%;
+		margin-left:auto;
+		margin-top:18px;
+	}
+}
