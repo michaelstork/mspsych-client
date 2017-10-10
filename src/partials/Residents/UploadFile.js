@@ -60,7 +60,7 @@ class UploadFile extends React.Component {
 						</select>
 					</div>
 					<div className="input-container">
-						<label>Select Files:</label>
+						<label>Select File:</label>
 						<input type="file" name="document" ref={(ref) => this.fileInput = ref} onChange={this.handleFileSelect} />
 					</div>
 					<div className="button-container">
