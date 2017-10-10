@@ -14,6 +14,8 @@ ul {
 	padding:0;
 	margin:0;
 	list-style-position:inside;
+	border:none;
+	outline:none;
 }
 
 button {
@@ -22,7 +24,10 @@ button {
 }
 
 input, select, textarea {
-	&:focus {
+	&:focus,
+	&:required {
 		outline:none;
+		border:none;
+		box-shadow:none;
 	}
 }
