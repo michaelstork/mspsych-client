@@ -81,6 +81,12 @@ button {
 		background-color:#FFF;
 	}
 
+	input[type="file"] {
+		border:none;
+		height:auto;
+		margin-right:auto;
+	}
+
 	select {
 		background-color:#F9F9F9;
 		border-radius:0;
