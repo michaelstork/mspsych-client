@@ -88,7 +88,7 @@ class Users extends React.Component {
 			<section>
 				<h2>User Management</h2>
 				<div className="panel-content">
-					<div className="panel-item users-list-panel">
+					<div className="panel-item list-panel-item">
 						<header>
 							<input type="text" onChange={this.handleSearch} value={this.state.search} placeholder="Search" />
 						</header>

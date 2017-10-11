@@ -56,7 +56,7 @@ class ManageUsers extends React.Component {
 
 	render() {
 		return (
-			<div className="users-list-container">
+			<div className="list-panel-container">
 				<ul>
 					{this.props.users.map(user =>
 						<li onClick={() => this.selectUser(user)}

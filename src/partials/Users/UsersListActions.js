@@ -30,10 +30,10 @@ function renderDeleteUser(props) {
 }
 
 const UsersListActions = (props) => (
-	<div className="users-list-actions">
+	<div className="list-panel-actions">
+		{props.selectedUser && renderDeleteUser(props)}
 		{renderSelectedUser(props.selectedUser)}
 		{props.selectedUser && renderPasswordReset(props)}
-		{props.selectedUser && renderDeleteUser(props)}
 	</div>
 );
 

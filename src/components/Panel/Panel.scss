@@ -157,3 +157,89 @@
  	width:100%;
  	height:32px;
  }
+
+
+ /**
+  * List Panel Item
+  */
+ 
+ .list-panel-item {
+	padding:0;
+ }
+
+ .list-panel-container {
+ 	width:100%;
+ 	display:flex;
+ }
+
+ .list-panel-container ul {
+ 	font-size:0.75em;
+ 	list-style-type:none;
+ 	overflow-y:scroll;
+ 	
+ 	height:400px;
+ 	flex:0 0 40%;
+ 	min-width:40%;
+ }
+
+ .list-panel-container li {
+ 	padding:0 12px;
+ 	box-sizing:border-box;
+ 	box-shadow:0 1px 1px rgba(0,0,0,0.1);
+ 	transition:background-color 0.1s ease-out;
+ 	cursor:pointer;
+ 	
+ 	span {
+ 		display:block;
+ 		width:100%;
+ 		height:40px;
+ 		line-height:44px;
+ 		overflow:hidden;
+ 		text-overflow:ellipsis;
+ 	}
+
+ 	&:hover,
+ 	&.selected {
+ 		background-color:#EFEFEF;
+ 	}
+ }
+
+ .list-panel-actions {
+ 	padding:40px 0 18px 0;
+ 	box-sizing:border-box;
+ 	flex:0 0 60%;
+ 	position:relative;
+ }
+
+ .list-panel-actions .selected-user {
+ 	display:flex;
+ 	align-items:center;
+ 	position:absolute;
+ 	top:0;
+ 	left:0;
+ 	width:100%;
+ 	height:40px;
+ 	padding:0 12px;
+ 	box-sizing:border-box;
+
+ 	border-bottom:1px solid $gray;
+ 	font-size:0.8em;
+ 	color:$blue;
+ 	font-weight:600;
+ 	-webkit-font-smoothing:antialiased;
+
+ 	i {
+ 		margin-right:4px;
+ 	}
+
+ 	span {
+ 		overflow:hidden;
+ 		text-overflow:ellipsis;
+ 		height:100%;
+ 		line-height:40px;
+ 	}
+ }
+
+
+
+
