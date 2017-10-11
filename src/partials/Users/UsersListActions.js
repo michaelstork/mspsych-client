@@ -2,7 +2,7 @@ import React from 'react';
 
 function renderSelectedUser(user) {
 	return (
-		<div className="selected-user">
+		<div className="selected-item">
 			<i className="material-icons">account_circle</i>
 			<span>{user ? user.email : 'Select User'}</span>
 		</div>
@@ -31,9 +31,9 @@ function renderDeleteUser(props) {
 
 const UsersListActions = (props) => (
 	<div className="list-panel-actions">
-		{props.selectedUser && renderDeleteUser(props)}
 		{renderSelectedUser(props.selectedUser)}
 		{props.selectedUser && renderPasswordReset(props)}
+		{props.selectedUser && renderDeleteUser(props)}
 	</div>
 );
 
