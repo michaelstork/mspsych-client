@@ -47,9 +47,13 @@ class ManageUsers extends React.Component {
 	}
 
 	handleDelete() {
-		this.props.deleteUser(
+		const promise = this.props.deleteUser(
 			this.state.selectedUser.id
-		).then(response => {
+		);
+
+		if (!promise) return;
+
+		promise.then(response => {
 			this.setState(Object.assign({}, this.state, {selectedUser: null}));
 		});
 	}

@@ -18,9 +18,13 @@ class ManageStudents extends React.Component {
 	}
 
 	handleDelete() {
-		this.props.deleteStudent(
+		const promise = this.props.deleteStudent(
 			this.state.selectedStudent.id
-		).then(response => {
+		);
+
+		if (!promise) return;
+
+		promise.then(response => {
 			this.setState(Object.assign({}, this.state, {selectedStudent: null}));
 		});
 	}
