@@ -17,7 +17,10 @@ class CreateUsers extends React.Component {
 
 	handleSubmit(event) {
 		event.preventDefault();
-		this.props.create(this.state.users);
+		this.props.create(this.state.users)
+			.then(response => {
+				this.setState(Object.assign({}, this.state, {users: []}));
+			});
 	}
 
 	render() {

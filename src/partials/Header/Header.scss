@@ -1,6 +1,6 @@
 @import 'includes/variables';
 
-header {
+.main-header {
 	height:68px;
 	min-width:936px;
 	background-color:#FFF;
@@ -21,7 +21,7 @@ header {
 	display:flex;
 }
 
-header:before {
+.main-header:before {
 	content:'';
 	height:10px;
 	background-color:$pink;
@@ -32,7 +32,7 @@ header:before {
 	box-shadow:0 1px 1px rgba(0,0,0,0.2);
 }
 
-header h1 {
+.main-header h1 {
 	display:flex;
 	align-items:center;
 	height:100%;
@@ -43,7 +43,7 @@ header h1 {
 	font-size:1.2em;
 }
 
-header nav {
+.main-header nav {
 	display:flex;
 	align-items:flex-end;
 	padding:0 32px 8px 32px;
