@@ -3,7 +3,7 @@ import CSSTransition from 'react-transition-group/CSSTransition';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
 import Panel from '../../components/Panel/Panel';
 import CreateCategory from '../../partials/Residents/CreateCategory';
-import CreateFile from '../../partials/Residents/CreateFile';
+import CreateDocument from '../../partials/Residents/CreateDocument';
 import FileGroup from '../../partials/Residents/FileGroup';
 import './Residents.css';
 import axios from '../../connection/axios';
@@ -184,7 +184,7 @@ class Residents extends React.Component {
 						mountOnEnter={true}
 						unmountOnExit={true}
 						timeout={500}>
-						<CreateFile upload={this.uploadFile} createLink={this.createLink} cancel={this.toggleUpload} categories={this.state.categories} />
+						<CreateDocument upload={this.uploadFile} createLink={this.createLink} cancel={this.toggleUpload} categories={this.state.categories} />
 					</CSSTransition>
 
 					<TransitionGroup>

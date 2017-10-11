@@ -1,6 +1,6 @@
 import React from 'react';
 
-class CreateFile extends React.Component {
+class CreateDocument extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -94,7 +94,7 @@ class CreateFile extends React.Component {
 								(!this.state.file && !this.state.url.length)
 								|| !this.state.categoryId.length
 								|| !this.state.title.length}>
-							Upload
+							Create
 						</button>
 					</div>
 				</form>
@@ -103,4 +103,4 @@ class CreateFile extends React.Component {
 	}
 }
 
-export default CreateFile;
+export default CreateDocument;
