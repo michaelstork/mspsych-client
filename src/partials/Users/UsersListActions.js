@@ -15,7 +15,7 @@ function renderPasswordReset(props) {
 		<form name="resetUserPassword" onSubmit={props.handleSubmit}>
 			<div className="input-container">
 				<label>Reset Password:</label>
-				<input type="text" name="newPassword" value={props.defaultPassword} onChange={props.handleChange} required />
+				<input type="text" placeholder="New Password" value={props.defaultPassword} onChange={props.handleChange} required />
 			</div>
 			<button type="submit">Reset</button>
 		</form>
