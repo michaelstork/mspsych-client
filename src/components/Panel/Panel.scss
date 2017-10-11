@@ -232,6 +232,13 @@
  		margin-right:4px;
  	}
 
+ 	i.delete {
+ 		margin-left:auto;
+ 		margin-right:0;
+ 		color:$pink;
+ 		cursor:pointer;
+ 	}
+
  	span {
  		overflow:hidden;
  		text-overflow:ellipsis;

@@ -1,10 +1,11 @@
 import React from 'react';
 
-function renderSelectedUser(user) {
+function renderSelectedUser(props) {
 	return (
 		<div className="selected-item">
 			<i className="material-icons">account_circle</i>
-			<span>{user ? user.email : 'Select User'}</span>
+			<span>{props.selectedUser ? props.selectedUser.email : 'Select User'}</span>
+			{props.selectedUser && <i onClick={() => props.handleDelete()} className="material-icons delete">delete</i>}
 		</div>
 	);
 }
@@ -21,19 +22,10 @@ function renderPasswordReset(props) {
 	);
 }
 
-function renderDeleteUser(props) {
-	return (
-		<div className="delete-user">
-			<button onClick={() => props.handleDelete()}>Delete User</button>
-		</div>
-	);
-}
-
 const UsersListActions = (props) => (
 	<div className="list-panel-actions">
-		{renderSelectedUser(props.selectedUser)}
+		{renderSelectedUser(props)}
 		{props.selectedUser && renderPasswordReset(props)}
-		{props.selectedUser && renderDeleteUser(props)}
 	</div>
 );
 

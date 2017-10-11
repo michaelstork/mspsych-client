@@ -1,26 +1,18 @@
 import React from 'react';
 
-function renderSelectedStudent(student) {
+function renderSelectedStudent(props) {
 	return (
 		<div className="selected-item">
 			<i className="material-icons">school</i>
-			<span>{student ? student.name : 'Select Student'}</span>
-		</div>
-	);
-}
-
-function renderDeleteStudent(props) {
-	return (
-		<div className="delete-student">
-			<button onClick={() => props.handleDelete()}>Delete Student</button>
+			<span>{props.selectedStudent ? props.selectedStudent.name : 'Select Student'}</span>
+			{props.selectedStudent && <i onClick={() => props.handleDelete()} className="material-icons delete">delete</i>}
 		</div>
 	);
 }
 
 const StudentsListActions = (props) => (
 	<div className="list-panel-actions">
-		{renderSelectedStudent(props.selectedStudent)}
-		{props.selectedStudent && renderDeleteStudent(props)}
+		{renderSelectedStudent(props)}
 	</div>
 );
 
