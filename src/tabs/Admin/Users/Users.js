@@ -10,23 +10,29 @@ class Users extends React.Component {
 		super(props);
 
 		this.state = {
-			users: []
+			users: [],
+			search: ''
 		};
 
-		this.createUsers   = this.createUsers.bind(this);
-		this.deleteUser    = this.deleteUser.bind(this);
+		this.createUsers  = this.createUsers.bind(this);
+		this.deleteUser   = this.deleteUser.bind(this);
+		this.handleSearch = this.handleSearch.bind(this);
+
+		this.searchTimeout = null;
 	}
 
 	componentDidMount() {
 		this.getUsers();
 	}
 
-	getUsers() {
+	getUsers(search = null) {
 		axios.get(
-			'/api/users'
+			'/api/users' + (search ? '?email='+search : '')
 		)
 		.then(response => {
-			this.setState(Object.assign({}, this.state, {users: response.data}));
+			const state = {users: response.data};
+			if (search === null) state.search = '';
+			this.setState(Object.assign({}, this.state, state));
 		})
 		.catch(error => {
 			console.log(error);
@@ -34,6 +40,8 @@ class Users extends React.Component {
 	}
 
 	createUsers(users) {
+		this.getUsers();
+
 		return axios.post(
 			'/api/users',
 			{users: users}
@@ -66,6 +74,15 @@ class Users extends React.Component {
 		});
 	}
 
+	handleSearch(event) {
+		window.clearTimeout(this.searchTimeout);
+		this.setState(Object.assign({}, this.state, {search: event.target.value}));
+		
+		this.searchTimeout = window.setTimeout(() => {
+			this.getUsers(this.state.search);
+		}, 350);
+	}
+
 	render() {
 		return (
 			<section>
@@ -73,7 +90,7 @@ class Users extends React.Component {
 				<div className="panel-content">
 					<div className="panel-item users-list-panel">
 						<header>
-							<input type="text" placeholder="Search" />
+							<input type="text" onChange={this.handleSearch} value={this.state.search} placeholder="Search" />
 						</header>
 						<ManageUsers users={this.state.users} deleteUser={this.deleteUser} />
 					</div>
