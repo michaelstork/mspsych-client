@@ -2,8 +2,9 @@ import React from 'react';
 import axios from '../../../connection/axios';
 import './Students.css';
 
-import CreateStudents from '../../../partials/Students/CreateStudents';
 import ManageStudents from '../../../partials/Students/ManageStudents';
+import CreateStudents from '../../../partials/Students/CreateStudents';
+import BatchCreateStudents from '../../../partials/Students/BatchCreateStudents';
 
 class Students extends React.Component {
 	constructor(props) {
@@ -19,6 +20,7 @@ class Students extends React.Component {
 		this.updatePhoto    = this.updatePhoto.bind(this);
 		this.handleSearch   = this.handleSearch.bind(this);
 		this.uploadPhoto    = this.uploadPhoto.bind(this);
+		this.uploadZip      = this.uploadZip.bind(this);
 
 		this.searchTimeout = null;
 	}
@@ -93,6 +95,26 @@ class Students extends React.Component {
 		});
 	}
 
+	uploadZip(file) {
+		const formData = new FormData();
+		formData.append('zip', file);
+
+		return axios.post(
+			'/api/students/batch',
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
+			}
+		).then(response => {
+			this.getStudents();
+			return response;
+		}).catch(error => {
+			console.log(error);
+		})
+	}
+
 	updatePhoto(updated) {
 		const students = this.state.students.slice();
 		const student = students.find(student => student.id === updated.id);
@@ -123,6 +145,7 @@ class Students extends React.Component {
 							delete={this.deleteStudent}
 							upload={this.uploadPhoto} />
 					</div>
+					<BatchCreateStudents upload={this.uploadZip} />
 					<CreateStudents create={this.createStudents} />
 				</div>
 			</section>

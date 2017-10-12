@@ -58,7 +58,6 @@ form[name="uploadPhoto"] {
 
 	button {
 		margin-left:auto;
-		flex:0 0 132px;
 	}
 }
 
@@ -71,4 +70,33 @@ form[name="uploadPhoto"] {
 	background-size:cover;
 	background-position:center center;
 	background-repeat:no-repeat;
+}
+
+form[name="uploadZip"] {
+	width:100%;
+	margin-top:18px;
+
+	.input-container {
+		margin-bottom:24px;
+	}
+
+	label {
+		flex:0 0 15%;
+	}	
+
+	input {
+		flex:0 0 auto;
+	}
+
+	p {
+		font-size:0.75em;
+		color:#888;
+		margin-bottom:4px;
+	}
+
+	.button-container {
+		width:14%;
+		margin-left:auto;
+		margin-top:18px;
+	}
 }
