@@ -11,6 +11,7 @@ class BatchCreateStudents extends React.Component {
 		this.handleFileSelect = this.handleFileSelect.bind(this);
 
 		this.fileInput = null;
+		this.form = null
 	}
 
 	handleFileSelect(event) {
@@ -19,13 +20,17 @@ class BatchCreateStudents extends React.Component {
 
 	handleSubmit(event) {
 		event.preventDefault();
-		this.props.upload(this.state.file);
+		this.props.upload(this.state.file)
+			.then(response => {
+				this.setState(Object.assign({}, this.state, {file: null}));
+				this.form.reset();
+			});
 	}
 
 	render() {
 		return (
 			<div className="upload-zip panel-item">
-				<form onSubmit={this.handleSubmit} name="uploadZip">
+				<form onSubmit={this.handleSubmit} name="uploadZip" ref={(ref) => this.form = ref}>
 					<div className="input-container">
 						<label>Upload Archive:</label>
 						<input
