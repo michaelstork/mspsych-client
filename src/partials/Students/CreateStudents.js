@@ -29,7 +29,7 @@ class CreateStudents extends React.Component {
 		return (
 			<div className="panel-item">
 				<form name="addStudents" onSubmit={this.handleSubmit}>
-					<p>Enter a list of comma-separated names</p>
+					<p>Enter a list of comma-separated student names</p>
 					<div className="input-container textarea">
 						<label>Add Students:</label>
 						<textarea name="students" value={this.state.students} onChange={this.handleChange} required></textarea>

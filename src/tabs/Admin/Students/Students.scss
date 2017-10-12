@@ -15,11 +15,9 @@ form[name="addStudents"] {
 	}
 
 	p {
-		width:85%;
-		margin-left:15%;
 		font-size:0.75em;
 		color:#888;
-		margin-bottom:4px;
+		margin-bottom:24px;
 	}
 
 	.button-container {
@@ -76,12 +74,8 @@ form[name="uploadZip"] {
 	width:100%;
 	margin-top:18px;
 
-	.input-container {
-		margin-bottom:24px;
-	}
-
 	label {
-		flex:0 0 15%;
+		flex:0 0 24%;
 	}	
 
 	input {
@@ -91,7 +85,7 @@ form[name="uploadZip"] {
 	p {
 		font-size:0.75em;
 		color:#888;
-		margin-bottom:4px;
+		margin-bottom:24px;
 	}
 
 	.button-container {

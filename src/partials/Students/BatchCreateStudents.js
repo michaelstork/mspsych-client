@@ -31,15 +31,15 @@ class BatchCreateStudents extends React.Component {
 		return (
 			<div className="upload-zip panel-item">
 				<form onSubmit={this.handleSubmit} name="uploadZip" ref={(ref) => this.form = ref}>
+					<p>Upload a .zip file containing student photos, with filenames corresponding to the students' names.</p>
 					<div className="input-container">
-						<label>Upload Archive:</label>
+						<label>Upload Photo Archive:</label>
 						<input
 							type="file"
 							name="zip"
 							ref={(ref) => this.fileInput = ref}
 							onChange={this.handleFileSelect} />
 					</div>
-					<p>Upload a .zip file containing student photos, with filenames corresponding to the students' names.</p>
 					<div className="button-container">
 						<button type="submit" disabled={!this.state.file}>Upload</button>
 					</div>

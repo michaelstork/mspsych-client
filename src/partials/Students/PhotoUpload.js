@@ -34,7 +34,7 @@ class PhotoUpload extends React.Component {
 		return (
 			<form onSubmit={this.handleSubmit} name="uploadPhoto" ref={(ref) => this.form = ref}>
 				<div className="input-container photo-upload-container">
-					<label>Upload Photo:</label>
+					<label>Upload New Photo:</label>
 					<div>
 						<input
 							type="file"
