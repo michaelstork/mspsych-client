@@ -1,4 +1,5 @@
 import React from 'react';
+import StudentsList from './StudentsList';
 import StudentsListActions from './StudentsListActions';
 
 class ManageStudents extends React.Component {
@@ -40,16 +41,10 @@ class ManageStudents extends React.Component {
 	render() {
 		return (
 			<div className="list-panel-container">
-				<ul>
-					{this.props.students.map(student =>
-						<li onClick={() => this.selectStudent(student)}
-							className={this.state.selectedStudent === student ? 'selected' : ''}
-							key={student.id}>
-							<span>{student.name}</span>
-						</li>
-					)}
-				</ul>
-				
+				<StudentsList
+					students={this.props.students}
+					select={this.selectStudent}
+					selected={this.state.selectedStudent} />
 				<StudentsListActions
 					student={this.state.selectedStudent}
 					delete={this.handleDelete}
