@@ -4,7 +4,7 @@ const StudentsList = (props) => (
 	<ul>
 		{props.students.map(student =>
 			<li onClick={() => props.select(student)}
-				className={props.selectedStudent === student ? 'selected' : ''}
+				className={props.selected === student ? 'selected' : ''}
 				key={student.id}>
 				<span>{student.name}</span>
 			</li>

@@ -14,18 +14,18 @@ function renderSelectedStudent(props) {
 }
 
 function renderStudentPhoto(props) {
-	return props.student && <StudentPhoto student={props.student} />;
+	return <StudentPhoto student={props.student} />;
 }
 
 function renderPhotoUpload(props) {
-	return props.student && <PhotoUpload id={props.student.id} upload={props.upload} />
+	return <PhotoUpload id={props.student.id} upload={props.upload} />
 }
 
 const StudentsListActions = (props) => (
 	<div className="list-panel-actions">
 		{renderSelectedStudent(props)}
-		{renderStudentPhoto(props)}
-		{renderPhotoUpload(props)}
+		{props.student && renderStudentPhoto(props)}
+		{props.student && renderPhotoUpload(props)}
 	</div>
 )
 
