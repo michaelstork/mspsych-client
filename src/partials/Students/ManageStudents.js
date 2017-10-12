@@ -1,6 +1,5 @@
 import React from 'react';
-import PhotoUpload from './PhotoUpload';
-import StudentPhoto from './StudentPhoto';
+import StudentsListActions from './StudentsListActions';
 
 class ManageStudents extends React.Component {
 	constructor(props) {
@@ -38,17 +37,6 @@ class ManageStudents extends React.Component {
 		});
 	}
 
-	renderSelectedStudent() {
-		return (
-			<div className="selected-item">
-				<i className="material-icons">school</i>
-				<span>{this.state.selectedStudent ? this.state.selectedStudent.name : 'Select Student'}</span>
-				{this.state.selectedStudent
-					&& <i onClick={() => this.handleDelete()} className="material-icons delete">delete</i>}
-			</div>
-		);
-	}
-
 	render() {
 		return (
 			<div className="list-panel-container">
@@ -61,14 +49,11 @@ class ManageStudents extends React.Component {
 						</li>
 					)}
 				</ul>
-
-				<div className="list-panel-actions">
-					{this.renderSelectedStudent()}
-					{this.state.selectedStudent
-						&& <StudentPhoto student={this.state.selectedStudent} />}
-					{this.state.selectedStudent
-						&& <PhotoUpload id={this.state.selectedStudent.id} upload={this.handleUpload} />}
-				</div>
+				
+				<StudentsListActions
+					student={this.state.selectedStudent}
+					delete={this.handleDelete}
+					upload={this.handleUpload} />
 			</div>
 		);
 	}
