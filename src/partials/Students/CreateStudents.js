@@ -17,10 +17,12 @@ class CreateStudents extends React.Component {
 
 	handleSubmit(event) {
 		event.preventDefault();
-		this.props.create(this.state.students)
-			.then(response => {
-				this.setState(Object.assign({}, this.state, {students: []}));
-			});
+		this.props.create(
+			this.state.students
+		)
+		.then(response => {
+			this.setState(Object.assign({}, this.state, {students: []}));
+		});
 	}
 
 	render() {

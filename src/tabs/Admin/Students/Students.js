@@ -16,7 +16,9 @@ class Students extends React.Component {
 
 		this.createStudents = this.createStudents.bind(this);
 		this.deleteStudent  = this.deleteStudent.bind(this);
+		this.updatePhoto    = this.updatePhoto.bind(this);
 		this.handleSearch   = this.handleSearch.bind(this);
+		this.uploadPhoto    = this.uploadPhoto.bind(this);
 
 		this.searchTimeout = null;
 	}
@@ -36,21 +38,16 @@ class Students extends React.Component {
 		})
 		.catch(error => {
 			console.log(error);
-		})
+		});
 	}
 
 	createStudents(students) {
-		this.getStudents();
-
 		return axios.post(
 			'/api/students',
 			{students: students}
 		)
 		.then(response => {
-			const students = this.state.students;
-			Array.prototype.push.apply(students, response.data); 
-			this.setState(Object.assign({}, this.state, {students: students}));
-
+			this.getStudents();
 			return response;
 		})
 		.catch(error => {
@@ -61,7 +58,9 @@ class Students extends React.Component {
 	deleteStudent(id) {
 		if (!window.confirm('Are you sure you want to delete this student?')) return;
 
-		return axios.delete('/api/students/'+id).then(response => {
+		return axios.delete(
+			'/api/students/'+id
+		).then(response => {
 			this.setState(Object.assign(
 				{},
 				this.state,
@@ -72,6 +71,33 @@ class Students extends React.Component {
 		}).catch(error => {
 			console.log(error);
 		});
+	}
+
+	uploadPhoto(id, file) {
+		const formData = new FormData();
+		formData.append('photo', file);
+
+		return axios.post(
+			'/api/students/'+id,
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
+			}
+		).then(response => {
+			this.updatePhoto(response.data);
+			return response;
+		}).catch(error => {
+			console.log(error);
+		});
+	}
+
+	updatePhoto(updated) {
+		const students = this.state.students.slice();
+		const student = students.find(student => student.id === updated.id);
+		student.photo = updated.photo;
+		this.setState(Object.assign({}, this.state, {students: students}));
 	}
 
 	handleSearch(event) {
@@ -92,7 +118,10 @@ class Students extends React.Component {
 						<header>
 							<input type="text" onChange={this.handleSearch} value={this.state.search} placeholder="Search" />
 						</header>
-						<ManageStudents students={this.state.students} deleteStudent={this.deleteStudent} />
+						<ManageStudents
+							students={this.state.students}
+							delete={this.deleteStudent}
+							upload={this.uploadPhoto} />
 					</div>
 					<CreateStudents create={this.createStudents} />
 				</div>

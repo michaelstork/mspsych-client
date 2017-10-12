@@ -1,5 +1,6 @@
 import React from 'react';
-import StudentsListActions from './StudentsListActions';
+import PhotoUpload from './PhotoUpload';
+import StudentPhoto from './StudentPhoto';
 
 class ManageStudents extends React.Component {
 	constructor(props) {
@@ -11,6 +12,7 @@ class ManageStudents extends React.Component {
 
 		this.selectStudent = this.selectStudent.bind(this);
 		this.handleDelete  = this.handleDelete.bind(this);
+		this.handleUpload  = this.handleUpload.bind(this);
 	}
 
 	selectStudent(student) {
@@ -18,7 +20,7 @@ class ManageStudents extends React.Component {
 	}
 
 	handleDelete() {
-		const promise = this.props.deleteStudent(
+		const promise = this.props.delete(
 			this.state.selectedStudent.id
 		);
 
@@ -27,6 +29,24 @@ class ManageStudents extends React.Component {
 		promise.then(response => {
 			this.setState(Object.assign({}, this.state, {selectedStudent: null}));
 		});
+	}
+
+	handleUpload(id, file) {
+		return this.props.upload(id, file).then(response => {
+			const selected = this.props.students.find(student => student.id === response.data.id);
+			this.selectStudent(selected);
+		});
+	}
+
+	renderSelectedStudent() {
+		return (
+			<div className="selected-item">
+				<i className="material-icons">school</i>
+				<span>{this.state.selectedStudent ? this.state.selectedStudent.name : 'Select Student'}</span>
+				{this.state.selectedStudent
+					&& <i onClick={() => this.handleDelete()} className="material-icons delete">delete</i>}
+			</div>
+		);
 	}
 
 	render() {
@@ -42,9 +62,13 @@ class ManageStudents extends React.Component {
 					)}
 				</ul>
 
-				<StudentsListActions
-					selectedStudent={this.state.selectedStudent}
-					handleDelete={() => this.handleDelete()}/>
+				<div className="list-panel-actions">
+					{this.renderSelectedStudent()}
+					{this.state.selectedStudent
+						&& <StudentPhoto student={this.state.selectedStudent} />}
+					{this.state.selectedStudent
+						&& <PhotoUpload id={this.state.selectedStudent.id} upload={this.handleUpload} />}
+				</div>
 			</div>
 		);
 	}
