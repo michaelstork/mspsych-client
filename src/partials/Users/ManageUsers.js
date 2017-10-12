@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from '../../connection/axios';
+import UsersList from './UsersList';
 import UsersListActions from './UsersListActions';
 
 class ManageUsers extends React.Component {
@@ -61,16 +62,10 @@ class ManageUsers extends React.Component {
 	render() {
 		return (
 			<div className="list-panel-container">
-				<ul>
-					{this.props.users.map(user =>
-						<li onClick={() => this.selectUser(user)}
-							className={this.state.selectedUser === user ? 'selected' : ''}
-							key={user.id}>
-							<span>{user.email}</span>
-						</li>
-					)}
-				</ul>
-
+				<UsersList
+					users={this.props.users}
+					select={this.selectUser}
+					selected={this.state.selectedUser} />
 				<UsersListActions
 					selectedUser={this.state.selectedUser}
 					defaultPassword={this.state.defaultPassword}
