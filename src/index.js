@@ -17,7 +17,7 @@ const initialState = {
 function authReducer(state = initialState, action) {
 	switch (action.type) {
 		case 'REQUEST_AUTH':
-			return Object.assign({}, state, {inProgress: true});
+			return Object.assign({}, state, {inProgress: true, logoutMessage: ''});
 		case 'RECEIVE_AUTH':
 			return Object.assign({}, state, {inProgress: false, user: action.payload});
 		case 'AUTH_ERROR':

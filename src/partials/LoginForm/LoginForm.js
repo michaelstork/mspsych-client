@@ -40,7 +40,7 @@ class LoginForm extends React.Component {
 		}).catch(response => {
 			if (response.status === 404) {
 				this.setState(Object.assign({}, this.state, {message: 'Invalid email or password'}));
-			} else if (response.status === 401) {
+			} else {
 				console.log('something went wrong');
 				this.setState(Object.assign({}, this.state, {message: 'Something went wrong, please try again'}));
 			}
