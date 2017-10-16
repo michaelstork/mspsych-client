@@ -1,0 +1,52 @@
+@import '../../../includes/variables';
+
+.assigned-evals {
+	display:flex;
+	flex-wrap:wrap;
+}
+
+.eval-card {
+	font-size:0.8em;
+	font-weight:bold;
+	-webkit-font-smoothing:antialiased;
+	text-align:center;
+
+	
+	box-shadow:$panelShadow;
+	background-color:#FFF;
+	margin-bottom:2%;
+
+	flex:0 0 23.5%;
+	height:240px;
+	position:relative;
+
+	box-sizing:border-box;
+	padding:12px;
+
+	.student-photo {
+		background-repeat:no-repeat;
+		background-size:cover;
+		background-position:center center;
+		background-color:#EEE;
+
+		width:108px;
+		height:164px;
+		margin:12px auto;
+	}
+}
+
+.eval-card + .eval-card:not(:nth-of-type(4n+1)) {
+	margin-left:2%;
+}
+
+.eval-types-panel-item {
+	font-size:0.85rem;
+
+	li + li {
+		margin-top:8px;
+	}
+
+	li a {
+		white-space:nowrap;
+	}
+}

@@ -1,7 +1,6 @@
 import React from 'react';
-import {Route, Switch, Redirect} from 'react-router-dom'
+import {Route, Switch, Redirect, NavLink} from 'react-router-dom'
 import Panel from '../../components/Panel/Panel';
-import {NavLink} from 'react-router-dom'
 import './Admin.css';
 
 import Overview from './Overview/Overview';

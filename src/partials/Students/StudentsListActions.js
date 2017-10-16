@@ -1,6 +1,6 @@
 import React from 'react';
 import PhotoUpload from './PhotoUpload';
-import StudentPhoto from './StudentPhoto';
+import StudentPhoto from '../../components/StudentPhoto';
 
 function renderSelectedStudent(props) {
 	return (
