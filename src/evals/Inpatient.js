@@ -93,6 +93,7 @@ class Inpatient extends React.Component {
 								onChange={this.handleInfoItemChange}
 								name="date"
 								value={this.state.date}
+								readOnly
 								required />
 						</div>
 					</div>

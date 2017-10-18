@@ -5,6 +5,8 @@ import './Evaluations.css';
 
 import EvalsHome from './EvalsHome/EvalsHome';
 import EvalForm from './EvalForm/EvalForm';
+import CompletedEvals from './CompletedEvals/CompletedEvals';
+import CompletedEval from './CompletedEval/CompletedEval';
 
 class Evaluations extends React.Component {
 
@@ -23,6 +25,14 @@ class Evaluations extends React.Component {
 					<Route path={this.props.match.url + '/form/:typeId'}
 						render={(props) =>
 							<EvalForm match={props.match} user={this.props.user} />
+						} />
+					<Route path={this.props.match.url + '/completed/:evalId'}
+						render={(props) =>
+							<CompletedEval match={props.match} user={this.props.user} />
+						} />
+					<Route path={this.props.match.url + '/completed'}
+						render={(props) =>
+							<CompletedEvals match={props.match} user={this.props.user} />
 						} />
 				</Switch>
 			</Panel>

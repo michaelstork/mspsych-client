@@ -127,3 +127,21 @@ button {
 		margin-bottom:auto;
 	}
 }
+
+.counter {
+	width:32px;
+	height:32px;
+	line-height:32px;
+	border-radius:16px;
+	background-color:$blue;
+	color:#FFF;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	text-align:center;
+	font-size:0.85rem;
+}
+
+.counter.warning {
+	background-color:$pink;
+}

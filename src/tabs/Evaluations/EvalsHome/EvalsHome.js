@@ -10,7 +10,8 @@ class EvalsHome extends React.Component {
 
 		this.state = {
 			types: [],
-			assigned: []
+			assigned: [],
+			stats: {}
 		};
 	}
 
@@ -31,7 +32,7 @@ class EvalsHome extends React.Component {
 				this.state,
 				{
 					types: response.data.types,
-					completedCount: response.data.completedCount,
+					stats: response.data.stats,
 					assigned: response.data.assigned
 				}
 			));
@@ -43,6 +44,35 @@ class EvalsHome extends React.Component {
 	render() {
 		return (
 			<section>
+				<div className="panel-content">
+					<div className="panel-item eval-stats-panel-item">
+
+						<div>
+							<span>Total Evaluations Completed:</span>
+							<div className="counter">{this.state.stats.completedCount}</div>
+							<Link to={this.props.match.url + '/completed'}>
+								<span>View Completed Evaluations</span>
+							</Link>
+						</div>
+
+						{this.state.stats.completedCount >= 4 &&
+							<div>
+								<span>Evaluations Marked top 25%:</span>
+								<div className={(this.state.stats.top25Percent > 25 ? 'warning ' : '') + 'counter'}>1</div>
+								<label><span>{this.state.stats.top25Percent}%</span> - Should not exceed 25%</label>
+							</div>
+						}
+
+						{this.state.stats.completedCount >= 10 &&
+							<div>
+								<span>Evaluations Marked top 10%:</span>
+								<div className={(this.state.stats.top10Percent > 10 ? 'warning ' : '') + 'counter'}>1</div>
+								<label><span>{this.state.stats.top10Percent}%</span> - Should not exceed 10%</label>
+							</div>
+						}
+						
+					</div>
+				</div>
 				<h2>Assigned Evaluations</h2>
 				<div className="panel-content">
 					<div className="assigned-evals">

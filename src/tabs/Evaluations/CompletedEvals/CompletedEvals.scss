@@ -1,0 +1,21 @@
+
+.completed-evals {
+
+	a > div {
+		display:flex;
+		align-items:center;
+		justify-content:space-between;
+		width:100%;
+		margin-bottom:8px;
+	}
+
+	.student-name {
+		font-weight:bold;
+		-webkit-font-smoothing:antialiased;
+	}
+
+	.eval-date,
+	.eval-type {
+		font-size:0.8em;
+	}
+}

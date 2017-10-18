@@ -5,6 +5,45 @@
 	flex-wrap:wrap;
 }
 
+.eval-stats-panel-item {
+
+	& > div {
+		width:460px;
+		display:flex;
+		align-items:center;
+		justify-content:space-between;
+
+		& + div {
+			margin-top:12px;
+		}
+	}
+
+	span {
+		font-size:0.85rem;
+	}
+
+	.counter {
+		margin:0 24px;
+	}
+
+	.counter.warning + label,
+	.counter.warning + a {
+		color:$pink;
+	}
+
+	label,
+	a,
+	a span {
+		font-size:0.75rem;
+		width:185px;
+	}
+
+	a {
+		color:$blue;
+		text-decoration:underline;
+	}
+}
+
 .eval-card {
 	font-size:0.8em;
 	font-weight:bold;
