@@ -15,8 +15,6 @@ class Inpatient extends React.Component {
 			items: {}
 		};
 
-		console.log(this.props);
-
 		this.handleInfoItemChange = this.handleInfoItemChange.bind(this);
 		this.handleItemChange = this.handleItemChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -73,15 +71,29 @@ class Inpatient extends React.Component {
 					<div className="panel-item eval-info">
 						<div className="input-container">
 							<label>Student:</label>
-							<input type="text" onChange={this.handleInfoItemChange} name="student" value={this.state.student} readOnly={form.student} required />
+							<input type="text"
+								onChange={this.handleInfoItemChange}
+								name="student"
+								value={this.state.student}
+								readOnly={form.student}
+								required />
 						</div>
 						<div className="input-container">
 							<label>Evaluator:</label>
-							<input type="text" onChange={this.handleInfoItemChange} name="evaluator" value={this.state.evaluator} readOnly required />
+							<input type="text"
+								onChange={this.handleInfoItemChange}
+								name="evaluator"
+								value={this.state.evaluator}
+								readOnly
+								required />
 						</div>
 						<div className="input-container">
 							<label>Date:</label>
-							<input type="text" onChange={this.handleInfoItemChange} name="date" value={this.state.date} required />
+							<input type="text"
+								onChange={this.handleInfoItemChange}
+								name="date"
+								value={this.state.date}
+								required />
 						</div>
 					</div>
 					{this.props.form.type.item_categories.map(category =>
@@ -107,7 +119,9 @@ class Inpatient extends React.Component {
 											{item.options.filter(option => option.value !== null).map(option =>
 												<div key={option.id}
 													onClick={() => this.handleItemChange(item.id, option.value)}
-													className={(this.state.items[item.id] === option.value ? 'selected ' : '') + 'eval-item-option'}>
+													className={
+														(this.state.items[item.id] === option.value ? 'selected ' : '') + 'eval-item-option'
+													}>
 													{option.content}
 												</div>
 											)}
@@ -115,7 +129,9 @@ class Inpatient extends React.Component {
 									}
 									{item.type === 'text' &&
 										<div className="eval-item-textarea input-container">
-											<textarea onChange={(event) => this.handleItemChange(item.id, event.target.value)} required></textarea>
+											<textarea required
+												onChange={(event) => this.handleItemChange(item.id, event.target.value)}>
+											</textarea>
 										</div>
 									}
 								</div>

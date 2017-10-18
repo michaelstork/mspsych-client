@@ -71,6 +71,29 @@ class EvalsHome extends React.Component {
 						</ul>
 					</div>
 				</div>
+				<h2>Evaluations in Word Format</h2>
+				<div className="panel-content">
+					<div className="panel-item eval-types-panel-item">
+						<p>For download and submission by email OR printing</p>
+						<ul>
+							<li>
+								<a href="/api/storage/forms/Inpatient Attending Eval (2015-2016) (Word 97-2003).doc">Inpatient Evaluation (Attending)</a>
+							</li>
+							<li>
+								<a href="/api/storage/forms/Inpatient Resident Eval (2015-2016) (Word 97-2003).doc">Inpatient Evaluation (Fellow/Resident)</a>
+							</li>
+							<li>
+								<a href="/api/storage/forms/Selective Eval (2015-2016) (Word 97-2003).doc">Selective Evaluation</a>
+							</li>
+							<li>
+								<a href="/api/storage/forms/Oral Exam FINAL (2016-2017).docx">Oral Exam Evaluation</a>
+							</li>
+							<li>
+								<a href="/api/storage/forms/4th Year Elective Eval 2012-13.doc">4th Year Elective Evaluation</a>
+							</li>
+						</ul>
+					</div>
+				</div>
 			</section>
 		);
 	}

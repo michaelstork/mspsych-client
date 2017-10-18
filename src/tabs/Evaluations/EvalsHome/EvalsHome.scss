@@ -42,6 +42,10 @@
 .eval-types-panel-item {
 	font-size:0.85rem;
 
+	& > p {
+		margin-bottom:18px;
+	}
+
 	li + li {
 		margin-top:8px;
 	}
