@@ -2,10 +2,12 @@ import React from 'react';
 import './EvalForm.css';
 import axios from '../../../connection/axios';
 
+import InpatientForm from '../../../evals/Inpatient';
+
 class EvalForm extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log(props);
+
 		this.state = {
 			form: null
 		};
@@ -15,31 +17,32 @@ class EvalForm extends React.Component {
 
 	componentDidMount() {
 		const {evalId, typeId} = this.props.match.params;
-		console.log(this.props.match.params);
 
 		axios.get(
 			'/api/evaluations/'+ (evalId ? evalId : 'type/'+typeId)
 		).then(response => {
 			this.setState(Object.assign({}, this.state, {form:response.data}));
-			console.log(this.state);
 		}).catch(error => {
 			console.log(error);
 		});
 	}
 
-	renderForm() {
-		return (
-			<div>
-				<h2>{this.state.form.type.title}</h2>
-			</div>
-		);
+	renderForm(typeId) {
+		switch (typeId) {
+			case 1:
+				return <InpatientForm form={this.state.form} user={this.props.user} />
+			case 2:
+				return <InpatientForm form={this.state.form} user={this.props.user} />
+			default:
+				return null;
+		}
 	}
 
 	render() {
 		return (
 			<section>
 				<div className="panel-content">
-					{this.state.form && this.renderForm()}
+					{this.state.form && this.renderForm(this.state.form.type.id)}
 				</div>
 			</section>
 		);

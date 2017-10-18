@@ -113,6 +113,10 @@ button {
 			opacity:0.4;
 			cursor:default;
 		}
+
+		&[readonly] {
+			color:#999;
+		}
 	}
 
 	& + .input-container {

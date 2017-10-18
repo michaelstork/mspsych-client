@@ -139,10 +139,10 @@
 
 
 /**
- * Panel header
+ * List Panel header
  */
 
- .panel header {
+ .list-panel-item header {
  	width:100%;
  	height:46px;
  	display:flex;
@@ -152,7 +152,7 @@
  	background-color:#EFEFEF;
  }
 
- .panel header input[type="text"] {
+ .list-panel-item header input[type="text"] {
  	font-size:0.8em;
  	box-sizing:border-box;
  	padding:0 6px;

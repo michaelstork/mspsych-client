@@ -1,0 +1,125 @@
+@import '../../../includes/variables';
+
+.eval-form header {
+
+}
+
+.eval-form .panel-item.eval-info {
+	width:100%;
+	flex-direction:row;
+	justify-content:space-between;
+	align-items:center;
+}
+
+form[name="eval"] {
+	width:100%;
+
+	.input-container {
+		flex:0 0 32%;
+		margin-top:0;
+	}
+
+	.input-container label {
+		margin-right:12px;
+	}
+
+	.input-container input {
+		flex:1 0 auto;
+	}
+
+	button[type="submit"] {
+		margin:24px auto;
+	}
+}
+
+.eval-form .panel-item.item-category {
+	padding:0;
+
+	header {
+		width:100%;
+		height:46px;
+		background-color:$blue;
+		color:#FFF;
+		display:flex;
+		align-items:center;
+		padding:0 12px;
+		box-sizing:border-box;
+		border-bottom:1px solid $gray;
+	}
+
+	header h5 {
+		font-size:0.85em;
+	}
+}
+
+.eval-form .panel-item.item-category .eval-item {
+	font-size:0.8em;
+	width:100%;
+
+	.eval-item-title {
+		height:40px;
+		display:flex;
+		align-items:center;
+		padding:0 12px;
+		border-bottom:1px solid $gray;
+		background-color:#EFEFEF;
+	}
+
+	.eval-item-title .input-container {
+		margin-left:auto;
+		flex:0 0 auto;
+		font-size:0.8em;
+
+		input {
+			flex:0 0 auto;
+			margin-right:8px;
+		}
+	}
+
+	.eval-item-options {
+		display:flex;
+		position:relative;
+		border-bottom:1px solid $gray;
+	}
+
+	.eval-item-option {
+		font-size:0.8em;
+		padding:12px 18px;
+		box-sizing:border-box;
+		text-align:center;
+		cursor:pointer;
+		transition:color 0.15s ease-out, background-color 0.15s ease-out;
+
+		display:flex;
+		align-items:center;
+		justify-content:center;
+
+		flex:0 0 20%;
+		min-height:96px;
+
+
+		&:hover {
+			color:$blue;
+		}
+
+		&.selected {
+			background-color:$blue;
+			color:#FFF;
+		}
+
+	}
+	
+	.eval-item-textarea {
+		padding:12px;
+
+		textarea {
+			width:100%;
+			height:96px;
+			resize:vertical;
+		}
+	}
+
+	.eval-item-option + .eval-item-option {
+		border-left:1px solid $gray;
+	}
+}
