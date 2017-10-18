@@ -30,6 +30,7 @@ class EvalsHome extends React.Component {
 				{},
 				this.state,
 				{
+					types: response.data.types,
 					completedCount: response.data.completedCount,
 					assigned: response.data.assigned
 				}
@@ -42,7 +43,7 @@ class EvalsHome extends React.Component {
 	render() {
 		return (
 			<section>
-				<h2>Your Evaluations</h2>
+				<h2>Assigned Evaluations</h2>
 				<div className="panel-content">
 					<div className="assigned-evals">
 						{this.state.assigned.map(evaluation =>
@@ -58,11 +59,11 @@ class EvalsHome extends React.Component {
 				<div className="panel-content">
 					<div className="panel-item eval-types-panel-item">
 						<ul>
-							<li><Link to={this.props.match.url + '/form/' + 1}>Inpatient (Attending)</Link></li>
-							<li><Link to={this.props.match.url + '/form/' + 2}>Inpatient (Fellow/Resdient)</Link></li>
-							<li><Link to={this.props.match.url + '/form/' + 3}>Selective</Link></li>
-							<li><Link to={this.props.match.url + '/form/' + 4}>Oral Exam</Link></li>
-							<li><Link to={this.props.match.url + '/form/' + 5}>4th Year Elective</Link></li>
+							{this.state.types.map(type =>
+								<li key={type.id}>
+									<Link to={this.props.match.url + '/form/' + type.id}>{type.name}</Link>
+								</li>
+							)}
 						</ul>
 					</div>
 				</div>
