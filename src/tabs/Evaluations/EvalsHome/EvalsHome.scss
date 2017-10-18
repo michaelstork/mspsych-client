@@ -14,7 +14,6 @@
 	
 	box-shadow:$panelShadow;
 	background-color:#FFF;
-	margin-bottom:2%;
 
 	flex:0 0 23.5%;
 	height:240px;
@@ -33,6 +32,10 @@
 		height:164px;
 		margin:12px auto;
 	}
+}
+
+.eval-card:nth-of-type(n+5) {
+	margin-top:2%;
 }
 
 .eval-card + .eval-card:not(:nth-of-type(4n+1)) {
