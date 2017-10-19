@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import axios from '../connection/axios';
+import {withRouter} from 'react-router';
 
 class Inpatient extends React.Component {
 	constructor(props) {
@@ -54,6 +55,7 @@ class Inpatient extends React.Component {
 			data
 		).then(response => {
 			console.log(response.data);
+			this.props.history.push('/evaluations');
 		}).catch(error => {
 			console.log(error);
 		});
@@ -159,4 +161,4 @@ function validateResponsesCount(categories, responses) {
 	return (Object.keys(responses).length === itemIds.length);
 }
 
-export default Inpatient;
+export default withRouter(Inpatient);
