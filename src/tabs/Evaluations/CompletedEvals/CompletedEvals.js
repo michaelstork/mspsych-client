@@ -41,11 +41,14 @@ class CompletedEvals extends React.Component {
 				<div className="panel-content completed-evals">
 					{this.state.evals.map(evaluation =>
 						<Link to={this.props.match.url + '/' + evaluation.id} key={evaluation.id} className="panel-item completed-eval-panel-item">
-							<div>
+							<div className="eval-info-container">
 								<p className="student-name">{evaluation.student.name}</p>
-								<p className="eval-date">{formatDate(evaluation.created_at)}</p>
+								<p className="eval-type-date">{evaluation.type.name} - {formatDate(evaluation.created_at)}</p>
 							</div>
-							<p className="eval-type">{evaluation.type.name}</p>
+							<div className="average-score-container">
+								<p>Average Score:</p>
+								<div className="counter">{evaluation.average.toFixed(3)}</div>
+							</div>
 						</Link>
 					)}
 				</div>

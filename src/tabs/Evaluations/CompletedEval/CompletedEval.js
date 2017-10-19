@@ -24,7 +24,6 @@ class CompletedEval extends React.Component {
 		axios.get(
 			'/api/evaluations/'+this.props.match.params.evalId+'/results'
 		).then(response => {
-			console.log(response.data);
 			this.setState(Object.assign({}, this.state, {evaluation: response.data}));
 		}).catch(error => {
 			console.log(error);

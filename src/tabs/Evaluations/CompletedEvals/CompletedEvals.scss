@@ -1,21 +1,45 @@
 
 .completed-evals {
+	
+	.panel-item {
+		flex-direction:row;
+	}
 
-	a > div {
+	.panel-item > div {
 		display:flex;
+		flex:0 0 50%;
+		height:48px;
+	}
+
+	.eval-info-container {
+		flex-direction:column;
+		justify-content:center;
+	}
+
+	.average-score-container {
+		justify-content:flex-end;
 		align-items:center;
-		justify-content:space-between;
-		width:100%;
-		margin-bottom:8px;
+	}
+
+	p {
+		font-size:0.8em;
+	}
+
+	p + p {
+		margin-top:8px;
 	}
 
 	.student-name {
 		font-weight:bold;
 		-webkit-font-smoothing:antialiased;
+		font-size:1rem;
 	}
 
-	.eval-date,
-	.eval-type {
-		font-size:0.8em;
+	.counter {
+		margin-left:12px;
+		width:46px;
+		height:46px;
+		line-height:46px;
+		border-radius:23px;
 	}
 }
