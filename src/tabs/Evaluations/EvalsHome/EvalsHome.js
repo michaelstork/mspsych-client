@@ -13,6 +13,8 @@ class EvalsHome extends React.Component {
 			assigned: [],
 			stats: {}
 		};
+
+		this.getPercentOfTotalEvals = this.getPercentOfTotalEvals.bind(this);
 	}
 
 	componentDidUpdate(props) {
@@ -41,6 +43,10 @@ class EvalsHome extends React.Component {
 		});
 	}
 
+	getPercentOfTotalEvals(count) {
+		return parseFloat((count / this.state.stats.completedCount).toFixed(2)) * 100;
+	}
+
 	render() {
 		return (
 			<section>
@@ -58,16 +64,16 @@ class EvalsHome extends React.Component {
 						{this.state.stats.completedCount >= 4 &&
 							<div>
 								<span>Evaluations Marked top 25%:</span>
-								<div className={(this.state.stats.top25Percent > 25 ? 'warning ' : '') + 'counter'}>1</div>
-								<label><span>{this.state.stats.top25Percent}%</span> - Should not exceed 25%</label>
+								<div className={(this.getPercentOfTotalEvals(this.state.stats.top25Count) > 25 ? 'warning ' : '') + 'counter'}>{this.state.stats.top25Count}</div>
+								<label><span>{this.getPercentOfTotalEvals(this.state.stats.top25Count)}%</span> - Should not exceed 25%</label>
 							</div>
 						}
 
 						{this.state.stats.completedCount >= 10 &&
 							<div>
 								<span>Evaluations Marked top 10%:</span>
-								<div className={(this.state.stats.top10Percent > 10 ? 'warning ' : '') + 'counter'}>1</div>
-								<label><span>{this.state.stats.top10Percent}%</span> - Should not exceed 10%</label>
+								<div className={(this.getPercentOfTotalEvals(this.state.stats.top10Count) > 10 ? 'warning ' : '') + 'counter'}>{this.state.stats.top10Count}</div>
+								<label><span>{this.getPercentOfTotalEvals(this.state.stats.top10Count)}%</span> - Should not exceed 10%</label>
 							</div>
 						}
 						
