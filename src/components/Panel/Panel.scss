@@ -55,6 +55,20 @@
 	}
 }
 
+.panel .back-link {
+	position:relative;
+	top:-24px;
+	display:flex;
+	align-items:center;
+	font-size:0.75rem;
+	color:$blue;
+
+	i {
+		margin-right:6px;
+		font-size:18px;
+	}
+}
+
 .panel-content {
 	position:relative;
 

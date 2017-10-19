@@ -38,6 +38,10 @@ class CompletedEvals extends React.Component {
 	render() {
 		return (
 			<section>
+				<Link to={'/evaluations'} className="back-link">
+					<i className="material-icons">arrow_back</i>
+					<span>Evaluations</span>
+				</Link>
 				<div className="panel-content completed-evals">
 					{this.state.evals.map(evaluation =>
 						<Link to={this.props.match.url + '/' + evaluation.id} key={evaluation.id} className="panel-item completed-eval-panel-item">
