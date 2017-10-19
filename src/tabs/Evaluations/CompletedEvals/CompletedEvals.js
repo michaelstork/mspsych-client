@@ -47,7 +47,7 @@ class CompletedEvals extends React.Component {
 							</div>
 							<div className="average-score-container">
 								<p>Average Score:</p>
-								<div className="counter">{evaluation.average.toFixed(3)}</div>
+								<div className="counter">{parseFloat(evaluation.average.toFixed(3))}</div>
 							</div>
 						</Link>
 					)}
