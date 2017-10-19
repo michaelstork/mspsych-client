@@ -63,7 +63,7 @@ class CompletedEval extends React.Component {
 								<p className="eval-item-title">
 									{item.content}
 								</p>
-								{item.type === 'numerical' &&
+								{item.type === 'numerical' && item.responses[0].value !== null &&
 									<p className="eval-item-response counter">
 										{item.responses[0].value}
 									</p>
