@@ -5,6 +5,8 @@ import moment from 'moment';
 import {withRouter} from 'react-router';
 
 import InpatientForm from '../../../evals/Inpatient';
+import SelectiveForm from '../../../evals/Selective';
+import OralExamForm from '../../../evals/OralExam';
 
 class EvalForm extends React.Component {
 	constructor(props) {
@@ -69,6 +71,10 @@ class EvalForm extends React.Component {
 				return <InpatientForm form={this.state.form} evaluator={this.props.user.email} date={this.state.date} submitEval={this.submitEval} />
 			case 2:
 				return <InpatientForm form={this.state.form} evaluator={this.props.user.email} date={this.state.date} submitEval={this.submitEval} />
+			case 3:
+				return <SelectiveForm form={this.state.form} evaluator={this.props.user.email} date={this.state.date} submitEval={this.submitEval} />
+			case 4:
+				return <OralExamForm form={this.state.form} evaluator={this.props.user.email} date={this.state.date} submitEval={this.submitEval} />
 			default:
 				return null;
 		}
