@@ -1,6 +1,8 @@
 import React from 'react';
 import './EvalForm.css';
 import axios from '../../../connection/axios';
+import moment from 'moment';
+import {withRouter} from 'react-router';
 
 import InpatientForm from '../../../evals/Inpatient';
 
@@ -8,11 +10,15 @@ class EvalForm extends React.Component {
 	constructor(props) {
 		super(props);
 
+		const date = moment();
+
 		this.state = {
-			form: null
+			form: null,
+			date: date.format('M/D/YY')
 		};
 
 		this.renderForm = this.renderForm.bind(this);
+		this.submitEval = this.submitEval.bind(this);
 	}
 
 	componentDidMount() {
@@ -27,12 +33,42 @@ class EvalForm extends React.Component {
 		});
 	}
 
+	submitEval(info, items) {
+
+		if (!validateResponsesCount(this.state.form.type.item_categories, items)) {
+			alert('Please fill out the entire form');
+			return;
+		}
+
+		const data = Object.assign(
+			{},
+			{
+				evalId: (this.state.form.id || null),
+				evalTypeId: this.state.form.type.id,
+				userId: this.props.user.id,
+				date: this.state.date,
+				items: items
+			},
+			info
+		);
+
+		axios.post(
+			'/api/evaluations',
+			data
+		).then(response => {
+			console.log(response.data);
+			this.props.history.push('/evaluations');
+		}).catch(error => {
+			console.log(error);
+		});
+	}
+
 	renderForm(typeId) {
 		switch (typeId) {
 			case 1:
-				return <InpatientForm form={this.state.form} user={this.props.user} />
+				return <InpatientForm form={this.state.form} evaluator={this.props.user.email} date={this.state.date} submitEval={this.submitEval} />
 			case 2:
-				return <InpatientForm form={this.state.form} user={this.props.user} />
+				return <InpatientForm form={this.state.form} evaluator={this.props.user.email} date={this.state.date} submitEval={this.submitEval} />
 			default:
 				return null;
 		}
@@ -42,11 +78,29 @@ class EvalForm extends React.Component {
 		return (
 			<section>
 				<div className="panel-content">
-					{this.state.form && this.renderForm(this.state.form.type.id)}
+					<div className="eval-form">
+						<header>
+							<h2>{this.state.form && this.state.form.type.title}</h2>
+						</header>
+						{this.state.form && this.renderForm(this.state.form.type.id)}
+					</div>
 				</div>
 			</section>
 		);
 	}
 }
 
-export default EvalForm;
+function validateResponsesCount(categories, responses) {
+	const itemIds = categories.reduce((itemIds, category) => {
+		return itemIds.concat(
+			category.items.reduce((categoryItemIds, item) => {
+				categoryItemIds.push(item.id);
+				return categoryItemIds;
+			}, [])
+		);
+	}, []);
+
+	return (Object.keys(responses).length === itemIds.length);
+}
+
+export default withRouter(EvalForm);

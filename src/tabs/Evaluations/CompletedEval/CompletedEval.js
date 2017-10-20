@@ -74,7 +74,7 @@ class CompletedEval extends React.Component {
 											{item.responses[0].value}
 										</p>
 									}
-									{item.type === 'text' &&
+									{item.type === 'textarea' &&
 										<p className="eval-item-response">
 											{item.responses[0].value}
 										</p>
