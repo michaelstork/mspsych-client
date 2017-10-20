@@ -48,9 +48,6 @@ class CompletedEvals extends React.Component {
 							<div className="eval-info-container">
 								<p className="student-name">{evaluation.student.name}</p>
 								<p className="eval-type-date">{evaluation.type.name} - {formatDate(evaluation.updated_at)}</p>
-								{evaluation.additional_fields && Object.keys(evaluation.additional_fields).map(field =>
-									<p className="eval-additional-field" key={field}><b>{field}:</b> {evaluation.additional_fields[field]}</p>
-								)}
 							</div>
 							<div className="average-score-container">
 								<p>Average Score:</p>

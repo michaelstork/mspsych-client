@@ -26,6 +26,22 @@
 	}
 }
 
+.completed-eval .additional-fields {
+	
+	p + p {
+		margin-top:6px;
+	}
+
+	& > div:not(:only-child) {
+		flex-direction:column;
+	}
+
+	& > div:only-child p + p {
+		margin-left:6px;
+		margin-top:0;
+	}
+}
+
 .completed-eval .panel-item.item-category {
 	padding:0;
 
@@ -69,7 +85,6 @@
 	}
 
 	.eval-item-title {
-		// height:40px;
 		display:flex;
 		align-items:center;
 	}

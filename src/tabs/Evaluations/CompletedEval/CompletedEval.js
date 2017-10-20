@@ -59,6 +59,16 @@ class CompletedEval extends React.Component {
 							<p>{formatDate(evaluation.created_at)}</p>
 						</div>
 					</div>
+					{evaluation.additional_fields &&
+						<div className="panel-item eval-info additional-fields">
+							{Object.keys(evaluation.additional_fields).map(field =>
+								<div className="eval-additional-field" key={field}>
+									<p>{field}:</p>
+									<p>{evaluation.additional_fields[field]}</p>
+								</div>
+							)}
+						</div>
+					}
 					{evaluation.type.item_categories.map(category =>
 						<div className="panel-item item-category" key={category.id}>
 							<header>
