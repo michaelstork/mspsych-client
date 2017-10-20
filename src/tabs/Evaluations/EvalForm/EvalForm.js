@@ -7,6 +7,7 @@ import {withRouter} from 'react-router';
 import InpatientForm from '../../../evals/Inpatient';
 import SelectiveForm from '../../../evals/Selective';
 import OralExamForm from '../../../evals/OralExam';
+import FourthYearElectiveForm from '../../../evals/FourthYearElective';
 
 class EvalForm extends React.Component {
 	constructor(props) {
@@ -75,6 +76,8 @@ class EvalForm extends React.Component {
 				return <SelectiveForm form={this.state.form} evaluator={this.props.user.email} date={this.state.date} submitEval={this.submitEval} />
 			case 4:
 				return <OralExamForm form={this.state.form} evaluator={this.props.user.email} date={this.state.date} submitEval={this.submitEval} />
+			case 5:
+				return <FourthYearElectiveForm form={this.state.form} evaluator={this.props.user.email} date={this.state.date} submitEval={this.submitEval} />
 			default:
 				return null;
 		}
