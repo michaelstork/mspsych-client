@@ -44,7 +44,7 @@ class Selective extends React.Component {
 		const form = this.props.form;
 
 		return (
-			<form name="eval" onSubmit={this.handleSubmit} className="selective-form">
+			<form name="eval" onSubmit={this.handleSubmit}>
 				<EvalFormInfo handleInfoItemChange={this.handleInfoItemChange} student={this.state.student} {...this.props}>
 					<div className="panel-item eval-info-panel-item">
 						<div className="input-container">
