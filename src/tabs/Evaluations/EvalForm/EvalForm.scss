@@ -75,6 +75,16 @@ form[name="eval"] {
 		background-color:#EFEFEF;
 	}
 
+	.eval-item-description {
+		font-size:0.75rem;
+		margin-top:12px;
+		padding:0 12px;
+
+		p {
+			margin-top:6px;
+		}
+	}
+
 	.eval-item-title .input-container {
 		margin-left:auto;
 		flex:0 0 auto;

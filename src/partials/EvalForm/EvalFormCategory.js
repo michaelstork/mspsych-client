@@ -11,6 +11,9 @@ const EvalFormCategory = (props) => (
 		{props.category.items.map(item => 
 			<div className="eval-item" key={item.id}>
 				<EvalItemTitle item={item} formValue={props.items[item.id]} handleItemChange={props.handleItemChange} />
+				{item.description &&
+					<div className="eval-item-description" dangerouslySetInnerHTML={{__html: item.description}} />
+				}
 				{item.type === 'numerical' &&
 					<EvalItemNumerical item={item} formValue={props.items[item.id]} handleItemChange={props.handleItemChange} />
 				}
