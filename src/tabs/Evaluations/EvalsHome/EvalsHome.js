@@ -56,9 +56,11 @@ class EvalsHome extends React.Component {
 						<div>
 							<span>Total Evaluations Completed:</span>
 							<div className="counter">{this.state.stats.completedCount}</div>
-							<Link to={this.props.match.url + '/completed'}>
-								<span>View Completed Evaluations</span>
-							</Link>
+							{(this.state.stats.completedCount > 0) &&
+								<Link to={this.props.match.url + '/completed'}>
+									<span>View Completed Evaluations</span>
+								</Link>
+							}
 						</div>
 
 						{this.state.stats.completedCount >= 4 &&

@@ -26,6 +26,10 @@
 		margin:0 24px;
 	}
 
+	.counter:last-child {
+		margin-right:209px;
+	}
+
 	.counter.warning + label,
 	.counter.warning + a {
 		color:$pink;
