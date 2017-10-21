@@ -7,10 +7,13 @@ import CreateDocument from '../../partials/Residents/CreateDocument';
 import FileGroup from '../../partials/Residents/FileGroup';
 import './Residents.css';
 import axios from '../../connection/axios';
+import cloneDeep from 'lodash/cloneDeep';
 
 class Residents extends React.Component {
+	
 	constructor(props) {
 		super(props);
+		
 		this.state = {
 			categories: [],
 			showUpload: false,
@@ -25,6 +28,8 @@ class Residents extends React.Component {
 		this.createLink           = this.createLink.bind(this);
 		this.deleteFile           = this.deleteFile.bind(this);
 
+		this.handleCreateCategoryClick    = this.handleCreateCategoryClick.bind(this);
+		this.handleCreateDocumentClick    = this.handleCreateDocumentClick.bind(this);
 		this.handleCreateDocumentResponse = this.handleCreateDocumentResponse.bind(this);
 	}
 
@@ -65,37 +70,43 @@ class Residents extends React.Component {
 					'Content-Type': 'multipart/form-data'
 				}
 			}
-		).then(this.handleCreateDocumentResponse).catch(error => {
+		)
+		.then(this.handleCreateDocumentResponse)
+		.catch(error => {
 			console.log(error);
 		});
 	}
 
 	handleCreateDocumentResponse(response) {
 		const document = response.data;
-		const categories = this.state.categories.slice();
-		const category = categories.find(category => category.id === document.category_id);
-		
-		category.document.push(document);
-		this.setState(Object.assign({}, this.state, {categories: categories, showUpload: false}));
+		const state = cloneDeep(this.state);
 
+		const category = state.categories.find(
+			category => category.id === document.category_id
+		);
+		category.document.push(document);
+		state.showUpload = false;
+
+		this.setState(state);
 		this.props.notify('Document created');
 	}
 
 	deleteFile(id) {
 		if (!window.confirm('Are you sure you want to delete this file?')) return;
 
-		axios.delete('/api/documents/'+id).then(response => {
-			const categories = this.state.categories.slice();
+		axios.delete(
+			'/api/documents/'+id
+		).then(response => {
+			const state = cloneDeep(this.state);
 
-			this.setState(Object.assign(
-				{},
-				this.state,
-				{categories: categories.map(category => {
-					category.document = category.document.filter(file => file.id !== id);
-					return category;
-				})}
-			));
+			state.categories = state.categories.map(category => {
+				category.document = category.document.filter(
+					file => file.id !== id
+				);
+				return category;
+			});
 
+			this.setState(state);
 			this.props.notify('Document deleted');
 
 		}).catch(error => {
@@ -104,15 +115,20 @@ class Residents extends React.Component {
 	}
 
 	deleteCategory(id) {
-		if (!window.confirm('Are you sure you want to delete this category and all its files?')) return;
+		if (!window.confirm(
+			'Are you sure you want to delete this category and all its files?'
+		)) return;
 
-		axios.delete('/api/document-categories/'+id).then(response => {
-			this.setState(Object.assign(
-				{},
-				this.state,
-				{categories: this.state.categories.filter(category => category.id !== id)}
-			));
+		axios.delete(
+			'/api/document-categories/'+id
+		).then(response => {
+			const state = cloneDeep(this.state);
 
+			state.categories = state.categories.filter(
+				category => category.id !== id
+			);
+
+			this.setState(state);
 			this.props.notify('Category deleted');
 
 		}).catch(error => {
@@ -125,11 +141,12 @@ class Residents extends React.Component {
 			'/api/document-categories',
 			{title: title}
 		).then(response => {
-			const categories = this.state.categories.slice();
-			categories.unshift(response.data);
-			
-			this.setState(Object.assign({}, this.state, {categories: categories, showCreateCategory: false}));
+			const state = cloneDeep(this.state);
 
+			state.categories.unshift(response.data);
+			state.showCreateCategory = false;
+
+			this.setState(state);
 			this.props.notify('Category created');
 
 		}).catch(error => {
@@ -138,16 +155,33 @@ class Residents extends React.Component {
 	}
 
 	toggleUpload() {
-		this.setState(Object.assign({}, this.state, {showUpload: !this.state.showUpload,}));
+		const state = cloneDeep(this.state);
+		state.showUpload = !state.showUpload;
+		this.setState(state);
 	}
 
 	toggleCreateCategory() {
-		this.setState(Object.assign({}, this.state, {showCreateCategory: !this.state.showCreateCategory,}));
+		const state = cloneDeep(this.state);
+		state.showCreateCategory = !state.showCreateCategory;
+		this.setState(state);
+	}
+
+	handleCreateCategoryClick() {
+		if (!this.state.showUpload) this.toggleCreateCategory();
+	}
+
+	handleCreateDocumentClick() {
+		if (!this.state.showCreateCategory) this.toggleUpload();
 	}
 
 	renderUploadButton() {
+		if (!(this.props.user && this.props.user.isAdmin)) {
+			return null;
+		}
+
 		return (
-			<div onClick={() => {!this.state.showCreateCategory && this.toggleUpload()}} disabled={this.state.showCreateCategory}>
+			<div onClick={this.handleCreateDocumentClick}
+				disabled={this.state.showCreateCategory}>
 				<span>Create Document</span>
 				<i className="material-icons">
 					{this.state.showUpload
@@ -160,8 +194,13 @@ class Residents extends React.Component {
 	}
 
 	renderCreateCategoryButton() {
+		if (!(this.props.user && this.props.user.isAdmin)) {
+			return null;
+		}
+
 		return (
-			<div onClick={() => {!this.state.showUpload && this.toggleCreateCategory()}} disabled={this.state.showUpload}>
+			<div onClick={this.handleCreateCategoryClick}
+				disabled={this.state.showUpload}>
 				<span>Create Category</span>
 				<i className="material-icons">
 					{this.state.showCreateCategory
@@ -178,8 +217,8 @@ class Residents extends React.Component {
 			<Panel className="residents-panel with-items">
 				<h2>
 					<span>Documents for Residents</span>
-					{this.props.user && this.props.user.isAdmin && this.renderCreateCategoryButton()}
-					{this.props.user && this.props.user.isAdmin && this.renderUploadButton()}
+					{this.renderCreateCategoryButton()}
+					{this.renderUploadButton()}
 				</h2>
 				<div className="residents-panel-content panel-content">
 					<CSSTransition
@@ -188,7 +227,9 @@ class Residents extends React.Component {
 						mountOnEnter={true}
 						unmountOnExit={true}
 						timeout={500}>
-						<CreateCategory create={this.createCategory} cancel={this.toggleCreateCategory} />
+						<CreateCategory
+							create={this.createCategory}
+							cancel={this.toggleCreateCategory} />
 					</CSSTransition>
 
 					<CSSTransition
@@ -197,13 +238,24 @@ class Residents extends React.Component {
 						mountOnEnter={true}
 						unmountOnExit={true}
 						timeout={500}>
-						<CreateDocument upload={this.uploadFile} createLink={this.createLink} cancel={this.toggleUpload} categories={this.state.categories} />
+						<CreateDocument
+							upload={this.uploadFile}
+							createLink={this.createLink}
+							cancel={this.toggleUpload}
+							categories={this.state.categories} />
 					</CSSTransition>
 
 					<TransitionGroup>
 						{this.state.categories.map(category => 
-							<CSSTransition timeout={200} classNames="fade" key={category.id}>
-								<FileGroup category={category} user={this.props.user} deleteCategory={this.deleteCategory} deleteFile={this.deleteFile} />
+							<CSSTransition
+								timeout={200}
+								classNames="fade"
+								key={category.id}>
+								<FileGroup
+									category={category}
+									user={this.props.user}
+									deleteCategory={this.deleteCategory}
+									deleteFile={this.deleteFile} />
 							</CSSTransition>
 						)}
 					</TransitionGroup>
