@@ -6,6 +6,7 @@ import Panel from '../../components/Panel/Panel';
 import CreateNews from '../../partials/News/CreateNews';
 import NewsItem from '../../partials/News/NewsItem';
 import axios from '../../connection/axios';
+import cloneDeep from 'lodash/cloneDeep';
 import './Home.css';
 
 class Home extends React.Component {
@@ -22,26 +23,38 @@ class Home extends React.Component {
 	}
 
 	componentDidMount() {
-		axios.get('/api/news').then(response => {
-			this.setState({
-				news: response.data
-			});
-		}).catch(error => {
+		axios.get(
+			'/api/news'
+		)
+		.then(response => {
+			const state = cloneDeep(this.state);
+			state.news = response.data;
+			this.setState(state);
+		})
+		.catch(error => {
 			console.log(error.message);
 		});
 	}
 
 	deleteNews(id) {
-		if (!window.confirm('Are you sure you want to delete this item?')) return;
+		if (!window.confirm(
+			'Are you sure you want to delete this item?'
+		)) return;
 
-		axios.delete('/api/news/'+id).then(response => {
-			this.setState(Object.assign(
-				{},
-				this.state,
-				{news: this.state.news.filter(item => item.id !== id)}
-			));
+		axios.delete(
+			'/api/news/'+id
+		)
+		.then(response => {
+			const state = cloneDeep(this.state);
+			state.news = state.news.filter(
+				item => item.id !== id
+			);
+
+			this.setState(state);
 			this.props.notify('News item deleted');
-		}).catch(error => {
+
+		})
+		.catch(error => {
 			console.log(error);
 		})
 	}
@@ -53,23 +66,35 @@ class Home extends React.Component {
 				title: title,
 				content: content
 			}
-		).then(response => {
-			const news = this.state.news.slice();
-			news.unshift(response.data);
-			this.setState(Object.assign({}, this.state, {news: news, showCreate: false}));
+		)
+		.then(response => {
+			const state = cloneDeep(this.state);
+			state.news.unshift(response.data);
+			state.showCreate = false;
+
+			this.setState(state);
 			this.props.notify('News item created');
-		}).catch(error => {
+
+		})
+		.catch(error => {
 			console.log(error);
 		});
 	}
 
 	toggleCreate() {
-		this.setState(Object.assign({}, this.state, {showCreate: !this.state.showCreate}));
+		const state = cloneDeep(this.state);
+		state.showCreate = !state.showCreate;
+		this.setState(state);
 	}
 
 	renderCreateButton() {
+		if (!(this.props.user && this.props.user.isAdmin)) {
+			return null;
+		}
+
 		return (
-			<i onClick={this.toggleCreate} className="material-icons">
+			<i onClick={this.toggleCreate}
+				className="material-icons">
 				{this.state.showCreate
 					? 'remove_circle'
 					: 'add_circle'
@@ -83,7 +108,7 @@ class Home extends React.Component {
 			<Panel className="with-items">
 				<h2>
 					<span>News &amp; Information</span>
-					{this.props.user && this.props.user.isAdmin && this.renderCreateButton()}
+					{this.renderCreateButton()}
 				</h2>
 				<div className="news-panel-content panel-content">
 					<CSSTransition
@@ -92,13 +117,21 @@ class Home extends React.Component {
 						mountOnEnter={true}
 						unmountOnExit={true}
 						timeout={500}>
-						<CreateNews create={this.createNews} cancel={this.toggleCreate} />
+						<CreateNews
+							create={this.createNews}
+							cancel={this.toggleCreate} />
 					</CSSTransition>
 
 					<TransitionGroup>
 						{this.state.news.map((item) =>
-							<CSSTransition timeout={250} classNames="fade" key={item.id}>
-								<NewsItem item={item} user={this.props.user} delete={this.deleteNews} />
+							<CSSTransition
+								timeout={250}
+								classNames="fade"
+								key={item.id}>
+								<NewsItem
+									item={item}
+									user={this.props.user}
+									delete={this.deleteNews} />
 							</CSSTransition>
 						)}
 					</TransitionGroup>
