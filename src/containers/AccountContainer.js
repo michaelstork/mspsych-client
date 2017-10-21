@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import actions from '../actions/authActions';
+import actions from '../actions/auth';
 import Account from '../tabs/Account/Account';
 
 class AccountContainer extends React.Component {
