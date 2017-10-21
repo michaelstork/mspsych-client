@@ -10,15 +10,24 @@ const EvalFormCategory = (props) => (
 		</header>
 		{props.category.items.map(item => 
 			<div className="eval-item" key={item.id}>
-				<EvalItemTitle item={item} formValue={props.items[item.id]} handleItemChange={props.handleItemChange} />
+				<EvalItemTitle
+					item={item}
+					formValue={props.items[item.id]}
+					handleItemChange={props.handleItemChange} />
 				{item.description &&
-					<div className="eval-item-description" dangerouslySetInnerHTML={{__html: item.description}} />
+					<div className="eval-item-description"
+						dangerouslySetInnerHTML={{__html: item.description}} />
 				}
 				{item.type === 'numerical' &&
-					<EvalItemNumerical item={item} formValue={props.items[item.id]} handleItemChange={props.handleItemChange} />
+					<EvalItemNumerical
+						item={item}
+						formValue={props.items[item.id]}
+						handleItemChange={props.handleItemChange} />
 				}
 				{item.type === 'textarea' &&
-					<EvalItemTextarea item={item} handleItemChange={props.handleItemChange} />
+					<EvalItemTextarea
+						item={item}
+						handleItemChange={props.handleItemChange} />
 				}
 			</div>
 		)}

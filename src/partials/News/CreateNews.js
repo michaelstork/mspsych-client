@@ -1,4 +1,5 @@
 import React from 'react';
+import cloneDeep from 'lodash/cloneDeep';
 
 class CreateNews extends React.Component {
 	constructor(props) {
@@ -13,21 +14,17 @@ class CreateNews extends React.Component {
 	}
 
 	handleChange(event) {
-		switch (event.target.name) {
-			case 'title':
-				this.setState(Object.assign({}, this.state, {title: event.target.value}));
-				break;
-			case 'content':
-				this.setState(Object.assign({}, this.state, {content: event.target.value}));
-				break;
-			default:
-				return;
-		}
+		const state = cloneDeep(this.state);
+		state[event.target.name] = event.target.value;
+		this.setState(state);
 	}
 
 	handleSubmit(event) {
 		event.preventDefault();
-		this.props.create(this.state.title, this.state.content);
+		this.props.create(
+			this.state.title,
+			this.state.content
+		);
 	}
 
 	render() {
@@ -36,15 +33,31 @@ class CreateNews extends React.Component {
 				<form onSubmit={this.handleSubmit} name="createNews">
 					<div className="input-container">
 						<label>Title:</label>
-						<input type="text" name="title" onChange={this.handleChange} tabIndex="1" />
+						<input
+							type="text"
+							name="title"
+							onChange={this.handleChange}
+							tabIndex="1" />
 					</div>
 					<div className="input-container textarea">
 						<label>Content:</label>
-						<textarea name="content" onChange={this.handleChange} tabIndex="2"></textarea>
+						<textarea
+							name="content"
+							onChange={this.handleChange}
+							tabIndex="2">
+						</textarea>
 					</div>
 					<div className="button-container">
-						<button onClick={this.props.cancel} className="cancel" type="button">Cancel</button>
-						<button type="submit" disabled={!this.state.title.length}>Create</button>
+						<button
+							onClick={this.props.cancel}
+							className="cancel"
+							type="button">
+							Cancel
+						</button>
+						<button type="submit"
+							disabled={!this.state.title.length}>
+							Create
+						</button>
 					</div>
 				</form>
 			</div>

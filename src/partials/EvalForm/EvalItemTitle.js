@@ -6,7 +6,11 @@ const EvalItemTitle = (props) => (
 		{props.item.options.filter(option => option.value === null).map(option =>
 			<label className="input-container" key={option.id}>
 				<input type="radio"
-					onChange={() => props.handleItemChange(props.item.id, option.value)}
+					onChange={
+						() => props.handleItemChange(
+							props.item.id, option.value
+						)
+					}
 					checked={props.formValue === option.value} />
 				<span>{option.content}</span>
 			</label>
