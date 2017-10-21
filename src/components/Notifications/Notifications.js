@@ -8,9 +8,7 @@ class Notifications extends React.Component {
 		super(props);
 
 		this.timers = {};
-		this.duration = 10000;
-
-		this.closeNotification = this.closeNotification.bind(this);
+		this.duration = 3500;
 	}
 
 	componentWillReceiveProps(props) {

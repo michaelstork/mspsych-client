@@ -1,16 +1,18 @@
 import cloneDeep from 'lodash/cloneDeep';
+import findLastIndex from 'lodash/findLastIndex';
+import findLast from 'lodash/findLast';
 
 const initialState = [];
 
 function notifications(state = initialState, action) {
 	switch (action.type) {
 		case 'ADD_NOTIFICATION':
-			const existing = state.find(notification => notification.content === action.payload);
+			const existing = findLast(state, notification => notification.content === action.payload);
 
 			if (existing && state.indexOf(existing) === (state.length - 1)) {
 				// increment notification if already exists and nothing else has been added after
 				const notifications = cloneDeep(state);
-				const index = notifications.findIndex(item => item.id === existing.id);
+				const index = findLastIndex(notifications, item => item.content === action.payload);
 				notifications[index].count++;
 				return notifications;
 
