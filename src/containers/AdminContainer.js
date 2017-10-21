@@ -6,9 +6,13 @@ import Admin from '../tabs/Admin/Admin';
 class AdminContainer extends React.Component {
 
 	render() {
+		const isAdmin = this.props.user && this.props.user.isAdmin;
 		return (
-			((this.props.user && this.props.user.isAdmin) || this.props.inProgress)
-				? <Admin user={this.props.user} inProgress={this.props.inProgress} match={this.props.match} />
+			(isAdmin || this.props.inProgress)
+				? <Admin
+					user={this.props.user}
+					inProgress={this.props.inProgress}
+					match={this.props.match} />
 				: <Redirect to="/account" />
 		);
 	}

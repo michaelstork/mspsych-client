@@ -20,7 +20,7 @@ class AppContainer extends React.Component {
 	        .then(response => {
 	            console.log('reauthentication successful');
 	        }).catch(response => {
-	            console.log('reauthentication failed:', response.data.message);
+	            console.log('reauthentication failed');
 	        });
 	}
 
@@ -43,8 +43,14 @@ const mapStateToProps = state => {
 
 function mapDispatchToProps(dispatch) {
     return {
-        authActions: bindActionCreators(authActions, dispatch),
-        notificationsActions: bindActionCreators(notificationsActions, dispatch)
+        authActions: bindActionCreators(
+        	authActions,
+        	dispatch
+        ),
+        notificationsActions: bindActionCreators(
+        	notificationsActions,
+        	dispatch
+        )
     }
 }
 
