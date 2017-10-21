@@ -67,7 +67,12 @@ class Notifications extends React.Component {
 						{this.props.notifications.map((notification) =>
 							<CSSTransition timeout={300} classNames="item-slide" key={notification.id}>
 								<div className="notification-item">
-									<p>{notification.content} ({notification.count})</p>
+									<p>
+										<span className="notification-content">{notification.content}</span>
+										{notification.count > 1 &&
+											<span className="notification-count">({notification.count})</span>
+										}
+									</p>
 									<i onClick={() => this.closeNotification(notification.id)} className="material-icons">clear</i>
 								</div>
 							</CSSTransition>
