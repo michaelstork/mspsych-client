@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from '../../connection/axios';
+import cloneDeep from 'lodash/cloneDeep';
 import {Link} from 'react-router-dom';
 
 class AccountUpdate extends React.Component {
@@ -17,19 +18,9 @@ class AccountUpdate extends React.Component {
 	}
 
 	handleChange(event) {
-		switch (event.target.name) {
-			case 'current':
-				this.setState(Object.assign({}, this.state, {current: event.target.value}));
-				break;
-			case 'password':
-				this.setState(Object.assign({}, this.state, {password: event.target.value}));
-				break;
-			case 'confirm':
-				this.setState(Object.assign({}, this.state, {confirm: event.target.value}));
-				break;
-			default:
-				return;
-		}
+		const state = cloneDeep(this.state);
+		state[event.target.name] = event.target.value;
+		this.setState(state);
 	}
 
 	handleSubmit(event) {
@@ -46,7 +37,9 @@ class AccountUpdate extends React.Component {
 			this.props.logout(response.data.message);
 		})
 		.catch(error => {
-			this.setState(Object.assign({}, this.state, {message: error.response.data.message}));
+			const state = cloneDeep(this.state);
+			state.message = error.response.data.message;
+			this.setState(state);
 		})
 	}
 
@@ -59,19 +52,32 @@ class AccountUpdate extends React.Component {
 				<form onSubmit={this.handleSubmit} name="passwordUpdate">
 					<div className="input-container">
 						<label>Current Password</label>
-						<input onChange={this.handleChange} value={this.state.current} name="current" type="password" />
+						<input
+							onChange={this.handleChange}
+							value={this.state.current}
+							name="current"
+							type="password" />
 					</div>
 					<div className="input-container">
 						<label>New Password</label>
-						<input onChange={this.handleChange} value={this.state.password} name="password" type="password" />
+						<input
+							onChange={this.handleChange}
+							value={this.state.password}
+							name="password"
+							type="password" />
 					</div>
 					<div className="input-container">
 						<label>Confirm Password</label>
-						<input onChange={this.handleChange} value={this.state.confirm} name="confirm" type="password" />
+						<input
+							onChange={this.handleChange}
+							value={this.state.confirm}
+							name="confirm"
+							type="password" />
 					</div>
 					<div className="button-container">
 						<Link to='/account'>
-							<button type="button" className="cancel">Cancel</button>
+							<button type="button"
+								className="cancel">Cancel</button>
 						</Link>
 						<button type="submit">Submit</button>
 					</div>
