@@ -14,11 +14,14 @@ const App = (props) => (
     <Router>
         <div>
             <Header user={props.user} />
-            <Notifications notifications={props.notifications} clearNotification={props.clearNotification} incrementNotification={props.incrementNotification} />
+            <Notifications
+                notifications={props.notifications}
+                clearNotification={props.clearNotification}
+                incrementNotification={props.incrementNotification} />
             <div className="app-container">
                 <Switch>
                     <Route path="/" exact render={() => <Home user={props.user} notify={props.notify} />} />
-                    <Route path="/residents" render={() => <Residents user={props.user} />} />
+                    <Route path="/residents" render={() => <Residents user={props.user} notify={props.notify} />} />
                     <Route path="/evaluations" component={EvaluationsContainer} />
                     <Route path="/account" component={AccountContainer} />
                     <Route path="/admin" component={AdminContainer} />

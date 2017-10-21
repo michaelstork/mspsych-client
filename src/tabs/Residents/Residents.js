@@ -74,8 +74,11 @@ class Residents extends React.Component {
 		const document = response.data;
 		const categories = this.state.categories.slice();
 		const category = categories.find(category => category.id === document.category_id);
+		
 		category.document.push(document);
 		this.setState(Object.assign({}, this.state, {categories: categories, showUpload: false}));
+
+		this.props.notify('Document created');
 	}
 
 	deleteFile(id) {
@@ -92,6 +95,9 @@ class Residents extends React.Component {
 					return category;
 				})}
 			));
+
+			this.props.notify('Document deleted');
+
 		}).catch(error => {
 			console.log(error);
 		})
@@ -100,13 +106,16 @@ class Residents extends React.Component {
 	deleteCategory(id) {
 		if (!window.confirm('Are you sure you want to delete this category and all its files?')) return;
 
-		axios.delete('/api/document-categories/'+id).then(response =>
+		axios.delete('/api/document-categories/'+id).then(response => {
 			this.setState(Object.assign(
 				{},
 				this.state,
 				{categories: this.state.categories.filter(category => category.id !== id)}
-			))
-		).catch(error => {
+			));
+
+			this.props.notify('Category deleted');
+
+		}).catch(error => {
 			console.log(error);
 		})
 	}
@@ -118,7 +127,11 @@ class Residents extends React.Component {
 		).then(response => {
 			const categories = this.state.categories.slice();
 			categories.unshift(response.data);
+			
 			this.setState(Object.assign({}, this.state, {categories: categories, showCreateCategory: false}));
+
+			this.props.notify('Category created');
+
 		}).catch(error => {
 			console.log(error);
 		});
