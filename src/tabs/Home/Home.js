@@ -40,7 +40,7 @@ class Home extends React.Component {
 				this.state,
 				{news: this.state.news.filter(item => item.id !== id)}
 			));
-			this.props.notify('News item has been deleted');
+			this.props.notify('News item deleted');
 		}).catch(error => {
 			console.log(error);
 		})
@@ -57,7 +57,7 @@ class Home extends React.Component {
 			const news = this.state.news.slice();
 			news.unshift(response.data);
 			this.setState(Object.assign({}, this.state, {news: news, showCreate: false}));
-			this.props.notify('News item has been created');
+			this.props.notify('News item created');
 		}).catch(error => {
 			console.log(error);
 		});
