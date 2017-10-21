@@ -34,7 +34,10 @@ class Notifications extends React.Component {
 	}
 
 	setTimer(id) {
-		this.timers[id] = setTimeout(() => this.expireNotification(id), this.duration);
+		this.timers[id] = setTimeout(
+			() => this.expireNotification(id),
+			this.duration
+		);
 	}
 
 	expireNotification(id) {
