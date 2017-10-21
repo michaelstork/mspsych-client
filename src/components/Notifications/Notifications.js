@@ -8,31 +8,48 @@ class Notifications extends React.Component {
 		super(props);
 
 		this.timers = {};
-		this.stopTimer = this.stopTimer.bind(this);
-		this.setTimer = this.setTimer.bind(this);
+		this.duration = 10000;
+
+		this.closeNotification = this.closeNotification.bind(this);
 	}
 
 	componentWillReceiveProps(props) {
 
 		if (props.notifications.length > this.props.notifications.length) {
-			// remove new notification after timeout
-			const id = props.notifications.slice().pop().id;
-			this.setTimer(id);
+			// if first notification, set to remove after timeout
+			if (!this.props.notifications.length) {
+				this.setTimer(props.notifications[0].id);
+			}
+
 		} else {
-			// reset timer on any incremented notifications
+			// reset timer on current notification if it's been incremented
 			props.notifications.forEach((notification, index) => {
 				if (notification.count > this.props.notifications.find(item => item.id === notification.id).count) {
-					this.stopTimer(notification.id);
-					this.setTimer(notification.id);
+					if (this.props.notifications[0].id === notification.id) {
+						this.stopTimer(notification.id);
+						this.setTimer(notification.id);
+					}
 				}
 			});
 		}
 	}
 
 	setTimer(id) {
-		this.timers[id] = setTimeout(() => {
-			this.props.clearNotification(id);
-		}, 5000);
+		this.timers[id] = setTimeout(() => this.expireNotification(id), this.duration);
+	}
+
+	expireNotification(id) {
+		// set timer on next notification
+		if (this.props.notifications.length > 1) {
+			this.setTimer(this.props.notifications[1].id);
+		}
+
+		this.props.clearNotification(id);
+	}
+
+	closeNotification(id) {
+		clearTimeout(this.timers[id]);
+		this.expireNotification(id);
 	}
 
 	stopTimer(id) {
@@ -41,17 +58,25 @@ class Notifications extends React.Component {
 
 	render() {
 		return (
-			<div className="notifications-container">
-				<TransitionGroup>
-					{this.props.notifications.map((notification) =>
-						<CSSTransition timeout={300} classNames="slide" key={notification.id}>
-							<div className="notification-item" onClick={() => this.stopTimer(notification.id)}>
-								<p>{notification.content} ({notification.count})</p>
-							</div>
-						</CSSTransition>
-					)}
-				</TransitionGroup>
-			</div>
+			<CSSTransition
+				in={this.props.notifications.length > 0}
+				classNames="container-slide"
+				mountOnEnter={true}
+				unmountOnExit={true}
+				timeout={300}>
+				<div className="notifications-container">
+					<TransitionGroup>
+						{this.props.notifications.map((notification) =>
+							<CSSTransition timeout={300} classNames="item-slide" key={notification.id}>
+								<div className="notification-item">
+									<p>{notification.content} ({notification.count})</p>
+									<i onClick={() => this.closeNotification(notification.id)} className="material-icons">clear</i>
+								</div>
+							</CSSTransition>
+						)}
+					</TransitionGroup>
+				</div>
+			</CSSTransition>
 		);
 	}
 }

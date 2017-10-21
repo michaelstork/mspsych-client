@@ -1,60 +1,76 @@
 @import '../../includes/variables';
 
 .notifications-container {
+	height:36px;
 	position:absolute;
-	top:80px;
+	top:68px;
+	left:0;
 	right:0;
 	z-index:2;
-	overflow-x:hidden;
-	overflow-y:visible;
-	padding-bottom:8px;
-	padding-left:8px;
 
+	display:flex;
+	justify-content:center;
+
+	background-color:$pink;
+	box-shadow:$panelShadow;
 	font-size:0.75em;
+
+
+	& > div {
+		overflow:hidden;
+	}
 }
 
 .notifications-container .notification-item {
 	display:flex;
 	align-items:center;
+	justify-content:space-between;
 
+	width:900px;
 	height:36px;
-	padding:6px 12px;
-	box-sizing:border-box;
-	background-color:#FFF;
-	white-space:nowrap;
-	border-top-left-radius:2px;
-	border-bottom-left-radius:2px;
-	border-left:4px solid $pink;
 
-	box-shadow:$panelShadow;
+	p {
+		white-space:nowrap;
+		color:#FFF;
+	}
 
-	& + .notification-item {
-		margin-top:8px;
+	i {
+		color:#FFF;
+		cursor:pointer;
+	}
+}
+
+.notifications-container {
+	&.container-slide-enter {
+		transform:translateY(-100%);
+	}
+
+	&.container-slide-enter.container-slide-enter-active {
+		transform:translateY(0);
+		transition:transform 300ms $standardCurve;
+	}
+
+	&.container-slide-exit {
+		transform:translateY(0);
+	}
+
+	&.container-slide-exit.container-slide-exit-active {
+		transform:translateY(-100%);
+		transition:transform 300ms $standardCurve;
 	}
 }
 
 .notifications-container .notification-item {
-	&.slide-enter {
-		transform:translateX(100%);
+	&.item-slide-exit {
+		transform:translateY(0);		
 	}
-
-	&.slide-enter.slide-enter-active {
-		transform:translateX(0);
-		transition:transform 300ms $standardCurve;
-	}
-
-	&.slide-exit {
-		transform:translateX(0);
-	}
-
-	&.slide-exit.slide-exit-active {
-		transform:translateX(100%);
+	
+	&.item-slide-exit.item-slide-exit-active {
+		transform:translateY(-100%);
 		transition:transform 300ms $standardCurve;
 
-		& ~ .notification-item {
-			// position:relative;
-			// top:44px;
-			transform:translateY(-44px);
+		& + .notification-item {
+			transform:translateY(-100%);
 			transition:transform 300ms $standardCurve;
 		}
 	}

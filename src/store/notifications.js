@@ -7,7 +7,8 @@ function notifications(state = initialState, action) {
 		case 'ADD_NOTIFICATION':
 			const existing = state.find(notification => notification.content === action.payload);
 
-			if (existing) { // increment notification if already exists
+			if (existing && state.indexOf(existing) === (state.length - 1)) {
+				// increment notification if already exists and nothing else has been added after
 				const notifications = cloneDeep(state);
 				const index = notifications.findIndex(item => item.id === existing.id);
 				notifications[index].count++;
