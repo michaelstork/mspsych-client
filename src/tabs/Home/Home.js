@@ -32,7 +32,7 @@ class Home extends React.Component {
 	}
 
 	deleteNews(id) {
-		// if (!window.confirm('Are you sure you want to delete this item?')) return;
+		if (!window.confirm('Are you sure you want to delete this item?')) return;
 
 		axios.delete('/api/news/'+id).then(response => {
 			this.setState(Object.assign(
