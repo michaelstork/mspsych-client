@@ -8,9 +8,6 @@ import NewsItem from '../../partials/News/NewsItem';
 import axios from '../../connection/axios';
 import './Home.css';
 
-
-
-
 class Home extends React.Component {
 	constructor(props) {
 		super(props);
@@ -35,7 +32,7 @@ class Home extends React.Component {
 	}
 
 	deleteNews(id) {
-		if (!window.confirm('Are you sure you want to delete this item?')) return;
+		// if (!window.confirm('Are you sure you want to delete this item?')) return;
 
 		axios.delete('/api/news/'+id).then(response => {
 			this.setState(Object.assign(
@@ -43,6 +40,7 @@ class Home extends React.Component {
 				this.state,
 				{news: this.state.news.filter(item => item.id !== id)}
 			));
+			this.props.notify('News item has been deleted');
 		}).catch(error => {
 			console.log(error);
 		})
@@ -59,6 +57,7 @@ class Home extends React.Component {
 			const news = this.state.news.slice();
 			news.unshift(response.data);
 			this.setState(Object.assign({}, this.state, {news: news, showCreate: false}));
+			this.props.notify('News item has been created');
 		}).catch(error => {
 			console.log(error);
 		});

@@ -21,7 +21,10 @@ class AccountContainer extends React.Component {
 }
 
 const mapStateToProps = state => {
-    return state;
+    return {
+    	user: state.auth.user,
+    	logoutMessage: state.auth.logoutMessage
+    };
 }
 
 function mapDispatchToProps(dispatch) {

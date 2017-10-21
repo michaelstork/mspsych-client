@@ -1,7 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import actions from '../actions/authActions';
+import authActions from '../actions/authActions';
+import notificationsActions from '../actions/notificationsActions';
 import App from '../App';
 
 class AppContainer extends React.Component {
@@ -10,11 +11,11 @@ class AppContainer extends React.Component {
 	    const token = localStorage.getItem('mspsychToken');
 	    
 	    if (!token) {
-	    	this.props.actions.logout();
+	    	this.props.authActions.logout();
 	    	return;
 	    }
 	    
-	    this.props.actions
+	    this.props.authActions
 	        .reauthenticate()
 	        .then(response => {
 	            console.log('reauthentication successful');
@@ -24,17 +25,26 @@ class AppContainer extends React.Component {
 	}
 
 	render() {
-		return <App user={this.props.user} />
+		return <App
+			user={this.props.user}
+			notifications={this.props.notifications}
+			notify={this.props.notificationsActions.notify}
+			clearNotification={this.props.notificationsActions.clear}
+			incrementNotification={this.props.notificationsActions.increment} />
 	}
 }
 
 const mapStateToProps = state => {
-    return state;
+    return {
+    	user: state.auth.user,
+    	notifications: state.notifications
+    };
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators(actions, dispatch)
+        authActions: bindActionCreators(authActions, dispatch),
+        notificationsActions: bindActionCreators(notificationsActions, dispatch)
     }
 }
 
