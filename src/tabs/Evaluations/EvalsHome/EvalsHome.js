@@ -66,16 +66,24 @@ class EvalsHome extends React.Component {
 						{this.state.stats.completedCount >= 4 &&
 							<div>
 								<span>Evaluations Marked top 25%:</span>
-								<div className={(this.getPercentOfTotalEvals(this.state.stats.top25Count) > 25 ? 'warning ' : '') + 'counter'}>{this.state.stats.top25Count}</div>
-								<label><span>{this.getPercentOfTotalEvals(this.state.stats.top25Count)}%</span> - Should not exceed 25%</label>
+								<div className={(this.getPercentOfTotalEvals(this.state.stats.top25Count) > 25 ? 'warning ' : '') + 'counter'}>
+									{this.state.stats.top25Count}
+								</div>
+								<label>
+									<span>{this.getPercentOfTotalEvals(this.state.stats.top25Count)}%</span> - Should not exceed 25%
+								</label>
 							</div>
 						}
 
 						{this.state.stats.completedCount >= 10 &&
 							<div>
 								<span>Evaluations Marked top 10%:</span>
-								<div className={(this.getPercentOfTotalEvals(this.state.stats.top10Count) > 10 ? 'warning ' : '') + 'counter'}>{this.state.stats.top10Count}</div>
-								<label><span>{this.getPercentOfTotalEvals(this.state.stats.top10Count)}%</span> - Should not exceed 10%</label>
+								<div className={(this.getPercentOfTotalEvals(this.state.stats.top10Count) > 10 ? 'warning ' : '') + 'counter'}>
+									{this.state.stats.top10Count}
+								</div>
+								<label>
+									<span>{this.getPercentOfTotalEvals(this.state.stats.top10Count)}%</span> - Should not exceed 10%
+								</label>
 							</div>
 						}
 						
@@ -85,7 +93,8 @@ class EvalsHome extends React.Component {
 				<div className="panel-content">
 					<div className="assigned-evals">
 						{this.state.assigned.map(evaluation =>
-							<Link to={this.props.match.url + '/assigned/' + evaluation.id} key={evaluation.id} className="eval-card">
+							<Link className="eval-card"
+								to={this.props.match.url + '/assigned/' + evaluation.id} key={evaluation.id}>
 								<p>{evaluation.student.name}</p>
 								<StudentPhoto student={evaluation.student} />
 								<p>{evaluation.type.name}</p>
@@ -111,19 +120,29 @@ class EvalsHome extends React.Component {
 						<p>For download and submission by email OR printing</p>
 						<ul>
 							<li>
-								<a href="/api/storage/forms/Inpatient Attending Eval (2015-2016) (Word 97-2003).doc">Inpatient (Attending)</a>
+								<a href="/api/storage/forms/Inpatient Attending Eval (2015-2016) (Word 97-2003).doc">
+									Inpatient (Attending)
+								</a>
 							</li>
 							<li>
-								<a href="/api/storage/forms/Inpatient Resident Eval (2015-2016) (Word 97-2003).doc">Inpatient (Fellow/Resident)</a>
+								<a href="/api/storage/forms/Inpatient Resident Eval (2015-2016) (Word 97-2003).doc">
+									Inpatient (Fellow/Resident)
+								</a>
 							</li>
 							<li>
-								<a href="/api/storage/forms/Selective Eval (2015-2016) (Word 97-2003).doc">Selective</a>
+								<a href="/api/storage/forms/Selective Eval (2015-2016) (Word 97-2003).doc">
+									Selective
+								</a>
 							</li>
 							<li>
-								<a href="/api/storage/forms/Oral Exam FINAL (2016-2017).docx">Oral Exam</a>
+								<a href="/api/storage/forms/Oral Exam FINAL (2016-2017).docx">
+									Oral Exam
+								</a>
 							</li>
 							<li>
-								<a href="/api/storage/forms/4th Year Elective Eval 2012-13.doc">4th Year Elective</a>
+								<a href="/api/storage/forms/4th Year Elective Eval 2012-13.doc">
+									4th Year Elective
+								</a>
 							</li>
 						</ul>
 					</div>

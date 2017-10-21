@@ -4,6 +4,32 @@ function isAdmin(user) {
 	return (user && user.isAdmin);
 }
 
+function renderClearCategory(props) {
+	if (!isAdmin(props.user)) {
+		return null;
+	}
+
+	return (
+		<i className="material-icons"
+			onClick={() => props.deleteCategory(props.category.id)}>
+			clear
+		</i>
+	);
+}
+
+function renderClearItem(props, file) {
+	if (!isAdmin(props.user)) {
+		return null;
+	}
+
+	return (
+		<i className="material-icons"
+			onClick={() => props.deleteFile(file.id)}>
+			clear
+		</i>
+	);
+}
+
 function renderLink(file) {
 	return file.url
 		? (
@@ -12,7 +38,8 @@ function renderLink(file) {
 				<span>{file.title}</span>
 			</a>
 		) : (
-			<a target="_blank" href={'/api/storage/documents/' + file.filename}>
+			<a target="_blank"
+				href={'/api/storage/documents/' + file.filename}>
 				<i className="material-icons">description</i>
 				<span>{file.title}</span>
 			</a>
@@ -21,14 +48,12 @@ function renderLink(file) {
 
 const FileGroup = (props) => (
 	<div className="file-group panel-item">
-		{isAdmin(props.user)
-			&& <i onClick={() => props.deleteCategory(props.category.id)} className="material-icons">clear</i>}
+		{renderClearCategory(props)}
 		<h4>{props.category.title}</h4>
 		<ul>
 			{props.category.document.map(file =>
 				<li key={file.id}>
-					{isAdmin(props.user)
-						&& <i onClick={() => props.deleteFile(file.id)} className="material-icons">clear</i>}
+					{renderClearItem(props, file)}
 					{renderLink(file)}
 				</li>
 			)}

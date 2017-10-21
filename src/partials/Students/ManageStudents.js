@@ -1,4 +1,5 @@
 import React from 'react';
+import cloneDeep from 'lodash/cloneDeep';
 import StudentsList from './StudentsList';
 import StudentsListActions from './StudentsListActions';
 
@@ -16,7 +17,9 @@ class ManageStudents extends React.Component {
 	}
 
 	selectStudent(student) {
-		this.setState(Object.assign({}, this.state, {selectedStudent: student}));
+		const state = cloneDeep(this.state);
+		state.selectedStudent = student;
+		this.setState(state);
 	}
 
 	handleDelete() {
@@ -27,13 +30,17 @@ class ManageStudents extends React.Component {
 		if (!promise) return;
 
 		promise.then(response => {
-			this.setState(Object.assign({}, this.state, {selectedStudent: null}));
+			const state = cloneDeep(this.state);
+			state.selectedStudent = null;
+			this.setState(state);
 		});
 	}
 
 	handleUpload(id, file) {
 		return this.props.upload(id, file).then(response => {
-			const selected = this.props.students.find(student => student.id === response.data.id);
+			const selected = this.props.students.find(
+				student => student.id === response.data.id
+			);
 			this.selectStudent(selected);
 		});
 	}

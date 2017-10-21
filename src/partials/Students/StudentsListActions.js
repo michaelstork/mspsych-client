@@ -2,13 +2,27 @@ import React from 'react';
 import PhotoUpload from './PhotoUpload';
 import StudentPhoto from '../../components/StudentPhoto';
 
+function renderDelete(props) {
+	if (!props.student) {
+		return null;
+	}
+
+	return (
+		<i className="material-icons delete"
+			onClick={
+				() => props.delete()
+			}>
+			delete
+		</i>
+	);
+}
+
 function renderSelectedStudent(props) {
 	return (
 		<div className="selected-item">
 			<i className="material-icons">school</i>
 			<span>{props.student ? props.student.name : 'Select Student'}</span>
-			{props.student
-				&& <i onClick={() => props.delete()} className="material-icons delete">delete</i>}
+			{renderDelete(props)}
 		</div>
 	);
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from '../../connection/axios';
+import cloneDeep from 'lodash/cloneDeep';
 import UsersList from './UsersList';
 import UsersListActions from './UsersListActions';
 
@@ -20,16 +21,22 @@ class ManageUsers extends React.Component {
 	}
 
 	selectUser(user) {
-		this.setState(Object.assign({}, this.state, {selectedUser: user}));
+		const state = cloneDeep(this.state);
+		state.selectedUser = user;
+		this.setState(state);
 	}
 
 	resetPassword(id, password) {
 		return axios.put(
 			'/api/users/'+id,
 			{password: password}
-		).then(response => {
-			this.setState(Object.assign({}, this.state, {defaultPassword: ''}));
-		}).catch(error => {
+		)
+		.then(response => {
+			const state = cloneDeep(this.state);
+			state.defaultPassword = '';
+			this.setState(state);
+		})
+		.catch(error => {
 			console.log(error);
 		});
 	}
@@ -44,7 +51,9 @@ class ManageUsers extends React.Component {
 	}
 
 	handleChange(event) {
-		this.setState(Object.assign({}, this.state, {defaultPassword: event.target.value}));
+		const state = cloneDeep(this.state);
+		state.defaultPassword = event.target.value;
+		this.setState(state);
 	}
 
 	handleDelete() {
@@ -55,7 +64,9 @@ class ManageUsers extends React.Component {
 		if (!promise) return;
 
 		promise.then(response => {
-			this.setState(Object.assign({}, this.state, {selectedUser: null}));
+			const state = cloneDeep(this.state);
+			state.selectedUser = null;
+			this.setState(state);
 		});
 	}
 

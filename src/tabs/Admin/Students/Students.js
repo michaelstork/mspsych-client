@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from '../../../connection/axios';
+import cloneDeep from 'lodash/cloneDeep';
 import './Students.css';
 
 import ManageStudents from '../../../partials/Students/ManageStudents';
@@ -34,9 +35,10 @@ class Students extends React.Component {
 			'/api/students' + (search ? '?name='+search : '')
 		)
 		.then(response => {
-			const state = {students: response.data};
+			const state = cloneDeep(this.state);
+			state.students = response.data;
 			if (search === null) state.search = '';
-			this.setState(Object.assign({}, this.state, state));
+			this.setState(state);
 		})
 		.catch(error => {
 			console.log(error);
@@ -58,19 +60,22 @@ class Students extends React.Component {
 	}
 
 	deleteStudent(id) {
-		if (!window.confirm('Are you sure you want to delete this student?')) return;
+		if (!window.confirm(
+			'Are you sure you want to delete this student?'
+		)) return;
 
 		return axios.delete(
 			'/api/students/'+id
-		).then(response => {
-			this.setState(Object.assign(
-				{},
-				this.state,
-				{students: this.state.students.filter(student => student.id !== id)}
-			));
-
+		)
+		.then(response => {
+			const state = cloneDeep(this.state);
+			state.students = state.students.filter(
+				student => student.id !== id
+			);
+			this.setState(state);
 			return response;
-		}).catch(error => {
+		})
+		.catch(error => {
 			console.log(error);
 		});
 	}
@@ -116,16 +121,23 @@ class Students extends React.Component {
 	}
 
 	updatePhoto(updated) {
-		const students = this.state.students.slice();
-		const student = students.find(student => student.id === updated.id);
+		const state = cloneDeep(this.state);
+		const student = state.students.find(
+			student => student.id === updated.id
+		);
+
 		student.photo = updated.photo;
-		this.setState(Object.assign({}, this.state, {students: students}));
+
+		this.setState(state);
 	}
 
 	handleSearch(event) {
 		window.clearTimeout(this.searchTimeout);
-		this.setState(Object.assign({}, this.state, {search: event.target.value}));
-		
+
+		const state = cloneDeep(this.state);
+		state.search = event.target.value;
+		this.setState(state);
+
 		this.searchTimeout = window.setTimeout(() => {
 			this.getStudents(this.state.search);
 		}, 350);
@@ -138,7 +150,11 @@ class Students extends React.Component {
 				<div className="panel-content">
 					<div className="panel-item list-panel-item">
 						<header>
-							<input type="text" onChange={this.handleSearch} value={this.state.search} placeholder="Search" />
+							<input
+								type="text"
+								onChange={this.handleSearch}
+								value={this.state.search}
+								placeholder="Search" />
 						</header>
 						<ManageStudents
 							students={this.state.students}

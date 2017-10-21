@@ -1,5 +1,6 @@
 import React from 'react';
 import './Users.css';
+import cloneDeep from 'lodash/cloneDeep';
 import axios from '../../../connection/axios';
 
 import CreateUsers from '../../../partials/Users/CreateUsers';
@@ -30,9 +31,11 @@ class Users extends React.Component {
 			'/api/users' + (search ? '?email='+search : '')
 		)
 		.then(response => {
-			const state = {users: response.data};
+			const state = cloneDeep(this.state);
+			state.users = response.data;
+
 			if (search === null) state.search = '';
-			this.setState(Object.assign({}, this.state, state));
+			this.setState(state);
 		})
 		.catch(error => {
 			console.log(error);
@@ -47,10 +50,9 @@ class Users extends React.Component {
 			{users: users}
 		)
 		.then(response => {
-			const users = this.state.users;
-			Array.prototype.push.apply(users, response.data); 
-			this.setState(Object.assign({}, this.state, {users: users}));
-
+			const state = cloneDeep(this.state);
+			Array.prototype.push.apply(state.users, response.data);
+			this.setState(state);
 			return response;
 		})
 		.catch(error => {
@@ -59,24 +61,33 @@ class Users extends React.Component {
 	}
 
 	deleteUser(id) {
-		if (!window.confirm('Are you sure you want to delete this user?')) return;
+		if (!window.confirm(
+			'Are you sure you want to delete this user?'
+		)) return;
 
-		return axios.delete('/api/users/'+id).then(response => {
-			this.setState(Object.assign(
-				{},
-				this.state,
-				{users: this.state.users.filter(user => user.id !== id)}
-			));
+		return axios.delete(
+			'/api/users/'+id
+		)
+		.then(response => {
+			const state = cloneDeep(this.state);
+			state.users = state.users.filter(
+				user => user.id !== id
+			);
+			this.setState(state);
 
 			return response;
-		}).catch(error => {
+		})
+		.catch(error => {
 			console.log(error);
 		});
 	}
 
 	handleSearch(event) {
 		window.clearTimeout(this.searchTimeout);
-		this.setState(Object.assign({}, this.state, {search: event.target.value}));
+
+		const state = cloneDeep(this.state);
+		state.search = event.target.value;
+		this.setState(state);
 		
 		this.searchTimeout = window.setTimeout(() => {
 			this.getUsers(this.state.search);
@@ -90,9 +101,15 @@ class Users extends React.Component {
 				<div className="panel-content">
 					<div className="panel-item list-panel-item">
 						<header>
-							<input type="text" onChange={this.handleSearch} value={this.state.search} placeholder="Search" />
+							<input
+								type="text"
+								onChange={this.handleSearch}
+								value={this.state.search}
+								placeholder="Search" />
 						</header>
-						<ManageUsers users={this.state.users} deleteUser={this.deleteUser} />
+						<ManageUsers
+							users={this.state.users}
+							deleteUser={this.deleteUser} />
 					</div>
 					<CreateUsers create={this.createUsers} />
 				</div>

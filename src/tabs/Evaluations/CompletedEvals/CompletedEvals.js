@@ -3,6 +3,7 @@ import './CompletedEvals.css';
 import {Link} from 'react-router-dom'
 import axios from '../../../connection/axios';
 import moment from 'moment';
+import cloneDeep from 'lodash/cloneDeep';
 
 class CompletedEvals extends React.Component {
 	constructor(props) {
@@ -14,23 +15,27 @@ class CompletedEvals extends React.Component {
 	}
 
 	componentDidUpdate(props) {
-		if (!props.user && this.props.user) this.getUserCompletedEvals();
+		if (!props.user && this.props.user) {
+			this.getUserCompletedEvals();
+		}
 	}
 
 	componentDidMount() {
-		if (this.props.user) this.getUserCompletedEvals();
+		if (this.props.user) {
+			this.getUserCompletedEvals();
+		}
 	}
 
 	getUserCompletedEvals() {
 		return axios.get(
 			'/api/evaluations/user/'+this.props.user.id+'/completed'
-		).then(response => {
-			this.setState(Object.assign(
-				{},
-				this.state,
-				{evals: response.data}
-			));
-		}).catch(error => {
+		)
+		.then(response => {
+			const state = cloneDeep(this.state);
+			state.evals = response.data;
+			this.setState(state);
+		})
+		.catch(error => {
 			console.log(error);
 		});
 	}
@@ -44,14 +49,22 @@ class CompletedEvals extends React.Component {
 				</Link>
 				<div className="panel-content completed-evals">
 					{this.state.evals.map(evaluation =>
-						<Link to={this.props.match.url + '/' + evaluation.id} key={evaluation.id} className="panel-item completed-eval-panel-item">
+						<Link className="panel-item completed-eval-panel-item"
+							to={
+								this.props.match.url + '/' + evaluation.id
+							}
+							key={evaluation.id}>
 							<div className="eval-info-container">
 								<p className="student-name">{evaluation.student.name}</p>
-								<p className="eval-type-date">{evaluation.type.name} - {formatDate(evaluation.updated_at)}</p>
+								<p className="eval-type-date">
+									{evaluation.type.name} - {formatDate(evaluation.updated_at)}
+								</p>
 							</div>
 							<div className="average-score-container">
 								<p>Average Score:</p>
-								<div className="counter">{parseFloat(evaluation.average.toFixed(2))}</div>
+								<div className="counter">
+									{parseFloat(evaluation.average.toFixed(2))}
+								</div>
 							</div>
 						</Link>
 					)}

@@ -1,11 +1,26 @@
 import React from 'react';
 
+function renderDelete(props) {
+	if (!props.selectedUser) {
+		return null;
+	}
+
+	return (
+		<i className="material-icons delete"
+			onClick={
+				() => props.handleDelete()
+			}>
+			delete
+		</i>
+	);	
+}
+
 function renderSelectedUser(props) {
 	return (
 		<div className="selected-item">
 			<i className="material-icons">account_circle</i>
 			<span>{props.selectedUser ? props.selectedUser.email : 'Select User'}</span>
-			{props.selectedUser && <i onClick={() => props.handleDelete()} className="material-icons delete">delete</i>}
+			{renderDelete(props)}
 		</div>
 	);
 }
@@ -15,7 +30,12 @@ function renderPasswordReset(props) {
 		<form name="resetUserPassword" onSubmit={props.handleSubmit}>
 			<div className="input-container">
 				<label>Reset Password:</label>
-				<input type="text" placeholder="New Password" value={props.defaultPassword} onChange={props.handleChange} required />
+				<input
+					type="text"
+					placeholder="New Password"
+					value={props.defaultPassword}
+					onChange={props.handleChange}
+					required />
 			</div>
 			<button type="submit">Reset</button>
 		</form>

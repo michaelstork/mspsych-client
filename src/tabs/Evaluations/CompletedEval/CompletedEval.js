@@ -3,6 +3,7 @@ import './CompletedEval.css';
 import {Link} from 'react-router-dom'
 import axios from '../../../connection/axios';
 import moment from 'moment';
+import cloneDeep from 'lodash/cloneDeep';
 
 class CompletedEval extends React.Component {
 	constructor(props) {
@@ -24,9 +25,13 @@ class CompletedEval extends React.Component {
 	getCompletedEval() {
 		axios.get(
 			'/api/evaluations/'+this.props.match.params.evalId+'/results'
-		).then(response => {
-			this.setState(Object.assign({}, this.state, {evaluation: response.data}));
-		}).catch(error => {
+		)
+		.then(response => {
+			const state = cloneDeep(this.state);
+			state.evaluation = response.data;
+			this.setState(state);
+		})
+		.catch(error => {
 			console.log(error);
 		})
 	}
@@ -37,7 +42,8 @@ class CompletedEval extends React.Component {
 
 		return (
 			<section>
-				<Link to={'/evaluations/completed'} className="back-link">
+				<Link className="back-link"
+					to={'/evaluations/completed'}>
 					<i className="material-icons">arrow_back</i>
 					<span>Completed Evaluations</span>
 				</Link>
@@ -75,7 +81,8 @@ class CompletedEval extends React.Component {
 								<h5>{category.title}</h5>
 							</header>
 							{category.items.map(item => 
-								<div className={'eval-item-'+item.type + ' eval-item'} key={item.id}>
+								<div key={item.id}
+									className={'eval-item-'+item.type + ' eval-item'}>
 									<p className="eval-item-title">
 										{item.content}
 									</p>

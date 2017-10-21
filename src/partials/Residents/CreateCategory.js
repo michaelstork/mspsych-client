@@ -1,4 +1,5 @@
 import React from 'react';
+import cloneDeep from 'lodash/cloneDeep';
 
 class CreateCategory extends React.Component {
 	constructor(props) {
@@ -12,7 +13,9 @@ class CreateCategory extends React.Component {
 	}
 
 	handleChange(event) {
-		this.setState(Object.assign({}, this.state, {title: event.target.value}));
+		const state = cloneDeep(this.state);
+		state.title = event.target.value;
+		this.setState(state);
 	}
 
 	handleSubmit(event) {
@@ -26,11 +29,22 @@ class CreateCategory extends React.Component {
 				<form onSubmit={this.handleSubmit} name="createCategory">
 					<div className="input-container">
 						<label>Title:</label>
-						<input type="text" name="title" onChange={this.handleChange} tabIndex="1" />
+						<input
+							type="text"
+							name="title"
+							onChange={this.handleChange}
+							tabIndex="1" />
 					</div>
 					<div className="button-container">
-						<button onClick={this.props.cancel} className="cancel" type="button">Cancel</button>
-						<button type="submit" disabled={!this.state.title.length}>Create</button>
+						<button type="button"
+							className="cancel"
+							onClick={this.props.cancel}>
+							Cancel
+						</button>
+						<button type="submit"
+							disabled={!this.state.title.length}>
+							Create
+						</button>
 					</div>
 				</form>
 			</div>

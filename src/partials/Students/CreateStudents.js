@@ -1,4 +1,5 @@
 import React from 'react';
+import cloneDeep from 'lodash/cloneDeep';
 
 class CreateStudents extends React.Component {
 	constructor(props) {
@@ -12,7 +13,9 @@ class CreateStudents extends React.Component {
 	}
 
 	handleChange(event) {
-		this.setState(Object.assign({}, this.state, {students: event.target.value}));
+		const state = cloneDeep(this.state);
+		state.students = event.target.value;
+		this.setState(state);
 	}
 
 	handleSubmit(event) {
@@ -21,7 +24,9 @@ class CreateStudents extends React.Component {
 			this.state.students
 		)
 		.then(response => {
-			this.setState(Object.assign({}, this.state, {students: []}));
+			const state = cloneDeep(this.state);
+			state.students = [];
+			this.setState(state);
 		});
 	}
 
@@ -32,7 +37,12 @@ class CreateStudents extends React.Component {
 					<p>Enter a list of comma-separated student names</p>
 					<div className="input-container textarea">
 						<label>Add Students:</label>
-						<textarea name="students" value={this.state.students} onChange={this.handleChange} required></textarea>
+						<textarea
+							name="students"
+							value={this.state.students}
+							onChange={this.handleChange}
+							required>
+						</textarea>
 					</div>
 					<div className="button-container">
 						<button type="submit">Submit</button>

@@ -34,7 +34,10 @@ class Residents extends React.Component {
 	}
 
 	componentDidMount() {
-		axios.get('/api/document-categories').then(response => {
+		axios.get(
+			'/api/document-categories'
+		)
+		.then(response => {
 			this.setState({
 				categories: response.data
 			});
@@ -92,11 +95,14 @@ class Residents extends React.Component {
 	}
 
 	deleteFile(id) {
-		if (!window.confirm('Are you sure you want to delete this file?')) return;
+		if (!window.confirm(
+			'Are you sure you want to delete this file?'
+		)) return;
 
 		axios.delete(
 			'/api/documents/'+id
-		).then(response => {
+		)
+		.then(response => {
 			const state = cloneDeep(this.state);
 
 			state.categories = state.categories.map(category => {
@@ -109,7 +115,8 @@ class Residents extends React.Component {
 			this.setState(state);
 			this.props.notify('Document deleted');
 
-		}).catch(error => {
+		})
+		.catch(error => {
 			console.log(error);
 		})
 	}
@@ -121,7 +128,8 @@ class Residents extends React.Component {
 
 		axios.delete(
 			'/api/document-categories/'+id
-		).then(response => {
+		)
+		.then(response => {
 			const state = cloneDeep(this.state);
 
 			state.categories = state.categories.filter(
@@ -131,7 +139,8 @@ class Residents extends React.Component {
 			this.setState(state);
 			this.props.notify('Category deleted');
 
-		}).catch(error => {
+		})
+		.catch(error => {
 			console.log(error);
 		})
 	}
@@ -140,7 +149,8 @@ class Residents extends React.Component {
 		axios.post(
 			'/api/document-categories',
 			{title: title}
-		).then(response => {
+		)
+		.then(response => {
 			const state = cloneDeep(this.state);
 
 			state.categories.unshift(response.data);
@@ -149,7 +159,8 @@ class Residents extends React.Component {
 			this.setState(state);
 			this.props.notify('Category created');
 
-		}).catch(error => {
+		})
+		.catch(error => {
 			console.log(error);
 		});
 	}

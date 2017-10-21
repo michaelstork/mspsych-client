@@ -1,4 +1,5 @@
 import React from 'react';
+import cloneDeep from 'lodash/cloneDeep';
 
 class CreateUsers extends React.Component {
 	constructor(props) {
@@ -12,14 +13,18 @@ class CreateUsers extends React.Component {
 	}
 
 	handleChange(event) {
-		this.setState(Object.assign({}, this.state, {users: event.target.value}));
+		const state = cloneDeep(this.state);
+		state.users = event.target.value;
+		this.setState(state);
 	}
 
 	handleSubmit(event) {
 		event.preventDefault();
 		this.props.create(this.state.users)
 			.then(response => {
-				this.setState(Object.assign({}, this.state, {users: []}));
+				const state = cloneDeep(this.state);
+				state.users = [];
+				this.setState(state);
 			});
 	}
 
@@ -30,7 +35,12 @@ class CreateUsers extends React.Component {
 					<p>Enter a list of comma-separated email addresses</p>
 					<div className="input-container textarea">
 						<label>Add Users:</label>
-						<textarea name="users" value={this.state.users} onChange={this.handleChange} required></textarea>
+						<textarea
+							name="users"
+							value={this.state.users}
+							onChange={this.handleChange}
+							required>
+						</textarea>
 					</div>
 					<div className="button-container">
 						<button type="submit">Submit</button>

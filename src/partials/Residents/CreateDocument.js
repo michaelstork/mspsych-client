@@ -1,4 +1,5 @@
 import React from 'react';
+import cloneDeep from 'lodash/cloneDeep';
 
 class CreateDocument extends React.Component {
 	constructor(props) {
@@ -18,23 +19,15 @@ class CreateDocument extends React.Component {
 	}
 
 	handleChange(event) {
-		switch (event.target.name) {
-			case 'title':
-				this.setState(Object.assign({}, this.state, {title: event.target.value}));
-				break;
-			case 'categoryId':
-				this.setState(Object.assign({}, this.state, {categoryId: event.target.value}));
-				break;
-			case 'url':
-				this.setState(Object.assign({}, this.state, {url: event.target.value}));
-				break;
-			default:
-				return;
-		}
+		const state = cloneDeep(this.state);
+		state[event.target.name] = event.target.value;
+		this.setState(state);
 	}
 
 	handleFileSelect(event) {
-		this.setState(Object.assign({}, this.state, {file: this.fileInput.files[0]}));
+		const state = cloneDeep(this.state);
+		state.file = this.fileInput.files[0];
+		this.setState(state);
 	}
 
 	handleSubmit(event) {
@@ -62,20 +55,34 @@ class CreateDocument extends React.Component {
 				<form onSubmit={this.handleSubmit} name="uploadFile">
 					<div className="input-container">
 						<label>File Title:</label>
-						<input type="text" name="title" onChange={this.handleChange} tabIndex="1" />
+						<input
+							type="text"
+							name="title"
+							onChange={this.handleChange}
+							tabIndex="1" />
 					</div>
 					<div className="input-container">
 						<label>Category:</label>
-						<select name="categoryId" onChange={this.handleChange} tabIndex="2">
+						<select
+							name="categoryId"
+							onChange={this.handleChange}
+							tabIndex="2">
 							<option value={null}>Select Category</option>
 							{this.props.categories.map(category =>
-								<option value={category.id} key={category.id}>{category.title}</option>
+								<option value={category.id} key={category.id}>
+									{category.title}
+								</option>
 							)}
 						</select>
 					</div>
 					<div className="input-container">
 						<label>URL:</label>
-						<input type="url" name="url" onChange={this.handleChange} disabled={this.state.file} tabIndex="4" />
+						<input
+							type="url"
+							name="url"
+							onChange={this.handleChange}
+							disabled={this.state.file}
+							tabIndex="4" />
 					</div>
 					<div className="input-container">
 						<label>Select File:</label>
@@ -88,7 +95,11 @@ class CreateDocument extends React.Component {
 							tabIndex="3" />
 					</div>
 					<div className="button-container">
-						<button onClick={this.props.cancel} className="cancel" type="button">Cancel</button>
+						<button type="button"
+							onClick={this.props.cancel}
+							className="cancel">
+							Cancel
+						</button>
 						<button type="submit"
 							disabled={
 								(!this.state.file && !this.state.url.length)

@@ -11,18 +11,36 @@ import Students from './Students/Students';
 const Admin = ({match}) => (
 	<div className="admin-panel-container">
 		<nav className="admin-nav">
-			<NavLink activeClassName="active-nav-item" to={match.url + '/overview'}>Evals Overview</NavLink>
-			<NavLink activeClassName="active-nav-item" to={match.url + '/assign-evals'}>Assign Evals</NavLink>
-			<NavLink activeClassName="active-nav-item" to={match.url + '/users'}>User Management</NavLink>
-			<NavLink activeClassName="active-nav-item" to={match.url + '/students'}>Students</NavLink>
+			<NavLink activeClassName="active-nav-item"
+				to={match.url + '/overview'}>
+				Evals Overview
+			</NavLink>
+			<NavLink activeClassName="active-nav-item"
+				to={match.url + '/assign-evals'}>
+				Assign Evals
+			</NavLink>
+			<NavLink activeClassName="active-nav-item"
+				to={match.url + '/users'}>
+				User Management
+			</NavLink>
+			<NavLink activeClassName="active-nav-item"
+				to={match.url + '/students'}>
+				Students
+			</NavLink>
 		</nav>
 		<Panel className="admin-panel with-items">
 			<Switch>
-				<Route exact path={match.url + '/overview'} component={Overview} />
-				<Route path={match.url + '/users'} component={Users} />
-				<Route path={match.url + '/assign-evals'} component={Assignments} />
-				<Route path={match.url + '/students'} component={Students} />
-				<Redirect from={match.url} to={match.url + '/overview'} />
+				<Route exact 
+					path={match.url + '/overview'}
+					component={Overview} />
+				<Route component={Users}
+					path={match.url + '/users'} />
+				<Route component={Assignments}
+					path={match.url + '/assign-evals'} />
+				<Route component={Students}
+					path={match.url + '/students'} />
+				<Redirect from={match.url}
+					to={match.url + '/overview'} />
 			</Switch>
 		</Panel>
 	</div>

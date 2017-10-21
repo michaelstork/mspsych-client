@@ -1,4 +1,5 @@
 import React from 'react';
+import cloneDeep from 'lodash/cloneDeep';
 
 class BatchCreateStudents extends React.Component {
 	constructor(props) {
@@ -15,14 +16,18 @@ class BatchCreateStudents extends React.Component {
 	}
 
 	handleFileSelect(event) {
-		this.setState(Object.assign({}, this.state, {file: this.fileInput.files[0]}));
+		const state = cloneDeep(this.state);
+		state.file = this.fileInput.files[0];
+		this.setState(state);
 	}
 
 	handleSubmit(event) {
 		event.preventDefault();
 		this.props.upload(this.state.file)
 			.then(response => {
-				this.setState(Object.assign({}, this.state, {file: null}));
+				const state = cloneDeep(this.state);
+				state.file = null;
+				this.setState(state);
 				this.form.reset();
 			});
 	}
@@ -30,7 +35,9 @@ class BatchCreateStudents extends React.Component {
 	render() {
 		return (
 			<div className="upload-zip panel-item">
-				<form onSubmit={this.handleSubmit} name="uploadZip" ref={(ref) => this.form = ref}>
+				<form name="uploadZip"
+					onSubmit={this.handleSubmit}
+					ref={(ref) => this.form = ref}>
 					<p>Upload a .zip file containing student photos, with filenames corresponding to the students' names.</p>
 					<div className="input-container">
 						<label>Upload Photo Archive:</label>
@@ -41,7 +48,10 @@ class BatchCreateStudents extends React.Component {
 							onChange={this.handleFileSelect} />
 					</div>
 					<div className="button-container">
-						<button type="submit" disabled={!this.state.file}>Upload</button>
+						<button type="submit"
+							disabled={!this.state.file}>
+							Upload
+						</button>
 					</div>
 				</form>
 			</div>
