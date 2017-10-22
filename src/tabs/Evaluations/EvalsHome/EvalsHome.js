@@ -1,4 +1,6 @@
 import React from 'react';
+import CSSTransition from 'react-transition-group/CSSTransition';
+import TransitionGroup from 'react-transition-group/TransitionGroup';
 import axios from '../../../connection/axios';
 import {Link} from 'react-router-dom'
 import './EvalsHome.css';
@@ -91,16 +93,21 @@ class EvalsHome extends React.Component {
 				</div>
 				<h2>Assigned Evaluations</h2>
 				<div className="panel-content">
-					<div className="assigned-evals">
+					<TransitionGroup className="assigned-evals">
 						{this.state.assigned.map(evaluation =>
-							<Link className="eval-card"
-								to={this.props.match.url + '/assigned/' + evaluation.id} key={evaluation.id}>
-								<p>{evaluation.student.name}</p>
-								<StudentPhoto student={evaluation.student} />
-								<p>{evaluation.type.name}</p>
-							</Link>
+							<CSSTransition
+								timeout={200}
+								classNames="fade"
+								key={evaluation.id}>
+								<Link className="eval-card"
+									to={this.props.match.url + '/assigned/' + evaluation.id}>
+									<p>{evaluation.student.name}</p>
+									<StudentPhoto student={evaluation.student} />
+									<p>{evaluation.type.name}</p>
+								</Link>
+							</CSSTransition>
 						)}
-					</div>
+					</TransitionGroup>
 				</div>
 				<h2>Online Evaluations</h2>
 				<div className="panel-content">
