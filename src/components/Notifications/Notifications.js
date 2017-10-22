@@ -1,4 +1,5 @@
 import React from 'react';
+import rafScroll from 'raf-scroll';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
 import './Notifications.css';
@@ -9,27 +10,44 @@ class Notifications extends React.Component {
 
 		this.timers = {};
 		this.duration = 3500;
+		this.container = null;
+		this.isFixed = false;
+		this.headerHeight = 68;
+	}
+
+	componentDidMount() {
+		rafScroll.add(event => this.handleScroll(event.scrollY));
+		this.setTimer(this.props.notifications[0].id);
+	}
+
+	componentWillUnmount() {
+		rafScroll.remove();
 	}
 
 	componentWillReceiveProps(props) {
 		if (!props.notifications.length) return;
+		// reset timer on current notification if it's been incremented
+		const currentItem = this.props.notifications[0];
+		const currentItemUpdated = props.notifications.find(
+			item => item.id === currentItem.id
+		);
 
-		if (!this.props.notifications.length) {
-			// if first notification, set to remove after timeout
-			this.setTimer(props.notifications[0].id);
-		} else {
-			// reset timer on current notification if it's been incremented
-			const currentItem = this.props.notifications[0];
-			const currentItemUpdated = props.notifications.find(
-				item => item.id === currentItem.id
-			);
+		if (!currentItemUpdated) return;
 
-			if (!currentItemUpdated) return;
+		if (currentItemUpdated.count > currentItem.count) {
+			this.stopTimer(currentItem.id);
+			this.setTimer(currentItem.id);
+		}
+	}
 
-			if (currentItemUpdated.count > currentItem.count) {
-				this.stopTimer(currentItem.id);
-				this.setTimer(currentItem.id);
-			}
+	handleScroll(scroll) {
+		if (scroll > this.headerHeight && !this.isFixed) {
+			this.container.classList.add('fixed')
+			this.isFixed = true;
+		}
+		if (scroll < this.headerHeight && this.isFixed) {
+			this.container.classList.remove('fixed')
+			this.isFixed = false;
 		}
 	}
 
@@ -86,20 +104,14 @@ class Notifications extends React.Component {
 
 	render() {
 		return (
-			<CSSTransition
-				in={this.props.notifications.length > 0}
-				classNames="container-slide"
-				mountOnEnter={true}
-				unmountOnExit={true}
-				timeout={300}>
-				<div className="notifications-container">
-					<TransitionGroup>
-						{this.props.notifications.map((notification) =>
-							this.renderItem(notification)
-						)}
-					</TransitionGroup>
-				</div>
-			</CSSTransition>
+			<div className="notifications-container"
+				ref={(ref) => this.container = ref}>
+				<TransitionGroup>
+					{this.props.notifications.map((notification) =>
+						this.renderItem(notification)
+					)}
+				</TransitionGroup>
+			</div>
 		);
 	}
 }

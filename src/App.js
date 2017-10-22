@@ -1,5 +1,6 @@
 import React from 'react';
 import {HashRouter as Router, Route, Switch, Redirect} from 'react-router-dom'
+import CSSTransition from 'react-transition-group/CSSTransition';
 
 import './App.css';
 import Header from './partials/Header/Header';
@@ -14,10 +15,16 @@ const App = (props) => (
     <Router>
         <div>
             <Header user={props.user} />
-            <Notifications
-                notifications={props.notifications}
-                clearNotification={props.clearNotification}
-                incrementNotification={props.incrementNotification} />
+            <CSSTransition
+                in={props.notifications.length > 0}
+                classNames="container-slide"
+                mountOnEnter={true}
+                unmountOnExit={true}
+                timeout={250}>
+                <Notifications
+                    notifications={props.notifications}
+                    clearNotification={props.clearNotification} />
+            </CSSTransition>
             <div className="app-container">
                 <Switch>
                     <Route path="/" exact
