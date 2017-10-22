@@ -52,7 +52,10 @@ class Users extends React.Component {
 		.then(response => {
 			const state = cloneDeep(this.state);
 			Array.prototype.push.apply(state.users, response.data);
+			
 			this.setState(state);
+			this.props.notify('Users added');
+			
 			return response;
 		})
 		.catch(error => {
@@ -73,7 +76,9 @@ class Users extends React.Component {
 			state.users = state.users.filter(
 				user => user.id !== id
 			);
+
 			this.setState(state);
+			this.props.notify('User deleted');
 
 			return response;
 		})

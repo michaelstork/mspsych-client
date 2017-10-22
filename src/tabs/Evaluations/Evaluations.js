@@ -16,24 +16,41 @@ class Evaluations extends React.Component {
 				<Switch>
 					<Route exact path={this.props.match.url}
 						render={(props) => 
-							<EvalsHome match={props.match} user={this.props.user} />
-						} />
+							<EvalsHome
+								match={props.match}
+								user={this.props.user} />
+						}
+					/>
 					<Route path={this.props.match.url + '/assigned/:evalId'}
 						render={(props) =>
-							<EvalForm match={props.match} user={this.props.user} />
-						} />
+							<EvalForm
+								match={props.match}
+								user={this.props.user}
+								notify={this.props.notify} />
+						}
+					/>
 					<Route path={this.props.match.url + '/form/:typeId'}
 						render={(props) =>
-							<EvalForm match={props.match} user={this.props.user} />
-						} />
+							<EvalForm
+								match={props.match}
+								user={this.props.user}
+								notify={this.props.notify} />
+						}
+					/>
 					<Route path={this.props.match.url + '/completed/:evalId'}
 						render={(props) =>
-							<CompletedEval match={props.match} user={this.props.user} />
-						} />
+							<CompletedEval
+								match={props.match}
+								user={this.props.user} />
+						}
+					/>
 					<Route path={this.props.match.url + '/completed'}
 						render={(props) =>
-							<CompletedEvals match={props.match} user={this.props.user} />
-						} />
+							<CompletedEvals
+								match={props.match}
+								user={this.props.user} />
+						}
+					/>
 				</Switch>
 			</Panel>
 		);

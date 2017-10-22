@@ -1,6 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import {Redirect} from 'react-router-dom'
+import notificationsActions from '../actions/notifications';
 import Evaluations from '../tabs/Evaluations/Evaluations';
 
 class EvaluationsContainer extends React.Component {
@@ -11,7 +13,8 @@ class EvaluationsContainer extends React.Component {
 				? <Evaluations
 					user={this.props.user}
 					inProgress={this.props.inProgress}
-					match={this.props.match} />
+					match={this.props.match}
+					notify={this.props.notificationsActions.notify} />
 				: <Redirect to="/account" />
 		);
 	}
@@ -24,4 +27,13 @@ const mapStateToProps = state => {
     };
 }
 
-export default connect(mapStateToProps)(EvaluationsContainer);
+function mapDispatchToProps(dispatch) {
+    return {
+        notificationsActions: bindActionCreators(
+        	notificationsActions,
+        	dispatch
+        )
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EvaluationsContainer);

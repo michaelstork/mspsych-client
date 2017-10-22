@@ -31,14 +31,17 @@ class Students extends React.Component {
 	}
 
 	getStudents(search = null) {
-		axios.get(
+		return axios.get(
 			'/api/students' + (search ? '?name='+search : '')
 		)
 		.then(response => {
 			const state = cloneDeep(this.state);
 			state.students = response.data;
+
 			if (search === null) state.search = '';
 			this.setState(state);
+
+			return response;
 		})
 		.catch(error => {
 			console.log(error);
@@ -51,7 +54,10 @@ class Students extends React.Component {
 			{students: students}
 		)
 		.then(response => {
-			this.getStudents();
+			this.getStudents().then(() => {
+				this.props.notify('Students created');
+			});
+
 			return response;
 		})
 		.catch(error => {
@@ -72,7 +78,10 @@ class Students extends React.Component {
 			state.students = state.students.filter(
 				student => student.id !== id
 			);
+
 			this.setState(state);
+			this.props.notify('Student deleted');
+
 			return response;
 		})
 		.catch(error => {
@@ -94,6 +103,7 @@ class Students extends React.Component {
 			}
 		).then(response => {
 			this.updatePhoto(response.data);
+			this.props.notify('Photo uploaded');
 			return response;
 		}).catch(error => {
 			console.log(error);
@@ -113,7 +123,9 @@ class Students extends React.Component {
 				}
 			}
 		).then(response => {
-			this.getStudents();
+			this.getStudents().then(() => {
+				this.props.notify('Students created');
+			});
 			return response;
 		}).catch(error => {
 			console.log(error);

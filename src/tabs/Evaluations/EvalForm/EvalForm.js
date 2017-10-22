@@ -59,7 +59,7 @@ class EvalForm extends React.Component {
 			'/api/evaluations',
 			data
 		).then(response => {
-			console.log(response.data);
+			this.props.notify('Evaluation submitted');
 			this.props.history.push('/evaluations');
 		}).catch(error => {
 			console.log(error);

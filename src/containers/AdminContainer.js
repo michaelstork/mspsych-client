@@ -1,6 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import {Redirect} from 'react-router-dom'
+import notificationsActions from '../actions/notifications';
 import Admin from '../tabs/Admin/Admin';
 
 class AdminContainer extends React.Component {
@@ -12,7 +14,8 @@ class AdminContainer extends React.Component {
 				? <Admin
 					user={this.props.user}
 					inProgress={this.props.inProgress}
-					match={this.props.match} />
+					match={this.props.match}
+					notify={this.props.notificationsActions.notify} />
 				: <Redirect to="/account" />
 		);
 	}
@@ -25,4 +28,13 @@ const mapStateToProps = state => {
     };
 }
 
-export default connect(mapStateToProps)(AdminContainer);
+function mapDispatchToProps(dispatch) {
+    return {
+        notificationsActions: bindActionCreators(
+        	notificationsActions,
+        	dispatch
+        )
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminContainer);
