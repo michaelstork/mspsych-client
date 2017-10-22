@@ -9,7 +9,7 @@ function renderAccountContent(props) {
 		return (
 			<LoginForm
 				authenticate={props.authenticate}
-				logoutMessage={props.logoutMessage} />
+				notify={props.notify} />
 		);
 	}
 
@@ -17,7 +17,8 @@ function renderAccountContent(props) {
 		<AccountContent
 			logout={props.logout}
 			email={props.user.email}
-			match={props.match} />
+			match={props.match}
+			notify={props.notify} />
 	);
 }
 

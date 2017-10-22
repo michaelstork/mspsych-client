@@ -9,8 +9,7 @@ class AccountUpdate extends React.Component {
 		this.state = {
 			current: '',
 			password: '',
-			confirm: '',
-			message: null
+			confirm: ''
 		};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -34,21 +33,17 @@ class AccountUpdate extends React.Component {
 			}
 		)
 		.then(response => {
-			this.props.logout(response.data.message);
+			this.props.notify('Password has been updated');
+			this.props.logout();
 		})
 		.catch(error => {
-			const state = cloneDeep(this.state);
-			state.message = error.response.data.message;
-			this.setState(state);
+			this.props.notify(error.response.data.message);
 		})
 	}
 
 	render() {
 		return (
 			<div className="account-update">
-				{this.state.message
-					? <p className="message">{this.state.message}</p>
-					: ''}
 				<form onSubmit={this.handleSubmit} name="passwordUpdate">
 					<div className="input-container">
 						<label>Current Password</label>

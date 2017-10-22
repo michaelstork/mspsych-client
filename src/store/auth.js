@@ -2,22 +2,19 @@
 
 const initialState = {
 	user: null,
-	inProgress: true,
-	logoutMessage: ''
+	inProgress: true
 };
 
 function auth(state = initialState, action) {
 	switch (action.type) {
 		case 'REQUEST_AUTH':
-			return Object.assign({}, state, {inProgress: true, logoutMessage: ''});
+			return Object.assign({}, state, {inProgress: true});
 		case 'RECEIVE_AUTH':
 			return Object.assign({}, state, {inProgress: false, user: action.payload});
 		case 'AUTH_ERROR':
 			return Object.assign({}, state, {inProgress: false, user: null});
 		case 'LOGOUT':
-			return Object.assign({}, state, {inProgress: false, user: null, logoutMessage: action.payload});
-		case 'CLEAR_LOGOUT_MESSAGE':
-			return Object.assign({}, state, {logoutMessage: null});
+			return Object.assign({}, state, {inProgress: false, user: null});
 		default:
 			return state;
 	}

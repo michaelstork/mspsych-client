@@ -10,8 +10,7 @@ class LoginForm extends React.Component {
 
 		this.state = {
 			email: '',
-			password: '',
-			message: ''
+			password: ''
 		};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -34,21 +33,17 @@ class LoginForm extends React.Component {
 			this.props.history.push('/');
 		})
 		.catch(response => {
-			const state = cloneDeep(this.state);
-			state.message = response.status === 404
-				? 'Invalid email or password'
-				: 'Something went wrong, please try again';
-
-			this.setState(state);
+			this.props.notify(
+				response.status === 404
+					? 'Invalid email or password'
+					: 'Something went wrong, please try again'
+			);
 		});
 	}
 
 	render() {
 		return (
 			<form onSubmit={this.handleSubmit} name="login">
-				<p className="message">
-					{this.props.logoutMessage || this.state.message}
-				</p>
 				<div className="input-container">
 					<label>Email:</label>
 					<input

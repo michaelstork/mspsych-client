@@ -13,7 +13,7 @@ const AccountContent = (props) => (
 				match={props.match} />
 		} />
 		<Route path={props.match.url + '/update'} render={() =>
-			<AccountUpdate logout={props.logout} />
+			<AccountUpdate logout={props.logout} notify={props.notify} />
 		} />
 	</Switch>
 )
