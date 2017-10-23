@@ -5,6 +5,7 @@ import axios from '../../../connection/axios';
 import {Link} from 'react-router-dom'
 import './EvalsHome.css';
 import StudentPhoto from '../../../components/StudentPhoto';
+import cloneDeep from 'lodash/cloneDeep';
 
 class EvalsHome extends React.Component {
 	constructor(props) {
@@ -31,15 +32,12 @@ class EvalsHome extends React.Component {
 		return axios.get(
 			'/api/evaluations/user/'+this.props.user.id
 		).then(response => {
-			this.setState(Object.assign(
-				{},
-				this.state,
-				{
-					types: response.data.types,
-					stats: response.data.stats,
-					assigned: response.data.assigned
-				}
-			));
+			const state = cloneDeep(this.state);
+			state.types = response.data.types;
+			state.stats = response.data.stats;
+			state.assigned = response.data.assigned;
+
+			this.setState(state);
 		}).catch(error => {
 			console.log(error);
 		});
@@ -47,6 +45,34 @@ class EvalsHome extends React.Component {
 
 	getPercentOfTotalEvals(count) {
 		return parseFloat((count / this.state.stats.completedCount).toFixed(2)) * 100;
+	}
+
+	renderAssignedEvals() {
+		if (!this.state.assigned.length) {
+			return (
+				<div className="assigned-evals">
+					<p>You have no assigned evaluations</p>
+				</div>
+			);
+		}
+
+		return (
+			<TransitionGroup className="assigned-evals">
+				{this.state.assigned.map(evaluation =>
+					<CSSTransition
+						timeout={200}
+						classNames="fade"
+						key={evaluation.id}>
+						<Link className="eval-card"
+							to={this.props.match.url + '/assigned/' + evaluation.id}>
+							<p>{evaluation.student.name}</p>
+							<StudentPhoto student={evaluation.student} />
+							<p>{evaluation.type.name}</p>
+						</Link>
+					</CSSTransition>
+				)}
+			</TransitionGroup>
+		);
 	}
 
 	render() {
@@ -93,21 +119,7 @@ class EvalsHome extends React.Component {
 				</div>
 				<h2>Assigned Evaluations</h2>
 				<div className="panel-content">
-					<TransitionGroup className="assigned-evals">
-						{this.state.assigned.map(evaluation =>
-							<CSSTransition
-								timeout={200}
-								classNames="fade"
-								key={evaluation.id}>
-								<Link className="eval-card"
-									to={this.props.match.url + '/assigned/' + evaluation.id}>
-									<p>{evaluation.student.name}</p>
-									<StudentPhoto student={evaluation.student} />
-									<p>{evaluation.type.name}</p>
-								</Link>
-							</CSSTransition>
-						)}
-					</TransitionGroup>
+					{this.renderAssignedEvals()}
 				</div>
 				<h2>Online Evaluations</h2>
 				<div className="panel-content">

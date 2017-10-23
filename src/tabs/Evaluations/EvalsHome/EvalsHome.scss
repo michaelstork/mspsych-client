@@ -5,6 +5,11 @@
 	flex-wrap:wrap;
 }
 
+.assigned-evals p:only-child {
+	font-size:0.8em;
+	margin:0 auto;
+}
+
 .eval-stats-panel-item {
 
 	& > div {
