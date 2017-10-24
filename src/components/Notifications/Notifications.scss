@@ -56,7 +56,7 @@
 
 	&.container-slide-enter.container-slide-enter-active {
 		transform:translateY(0);
-		transition:transform 250ms $standardCurve;
+		transition:transform 350ms $standardCurve;
 	}
 
 	&.container-slide-exit {
@@ -65,7 +65,7 @@
 
 	&.container-slide-exit.container-slide-exit-active {
 		transform:translateY(-100%);
-		transition:transform 250ms $standardCurve;
+		transition:transform 350ms $standardCurve;
 	}
 }
 

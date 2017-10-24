@@ -20,7 +20,7 @@ const App = (props) => (
                 classNames="container-slide"
                 mountOnEnter={true}
                 unmountOnExit={true}
-                timeout={250}>
+                timeout={350}>
                 <Notifications
                     notifications={props.notifications}
                     clearNotification={props.clearNotification} />
