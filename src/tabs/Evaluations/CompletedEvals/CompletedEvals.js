@@ -1,6 +1,7 @@
 import React from 'react';
 import './CompletedEvals.css';
 import {Link} from 'react-router-dom'
+import CSSTransition from 'react-transition-group/CSSTransition';
 import axios from '../../../connection/axios';
 import moment from 'moment';
 import cloneDeep from 'lodash/cloneDeep';
@@ -47,28 +48,36 @@ class CompletedEvals extends React.Component {
 					<i className="material-icons">arrow_back</i>
 					<span>Evaluations</span>
 				</Link>
-				<div className="panel-content completed-evals">
-					{this.state.evals.map(evaluation =>
-						<Link className="panel-item completed-eval-panel-item"
-							to={
-								this.props.match.url + '/' + evaluation.id
-							}
-							key={evaluation.id}>
-							<div className="eval-info-container">
-								<p className="student-name">{evaluation.student.name}</p>
-								<p className="eval-type-date">
-									{evaluation.type.name} - {formatDate(evaluation.updated_at)}
-								</p>
-							</div>
-							<div className="average-score-container">
-								<p>Average Score:</p>
-								<div className="counter">
-									{parseFloat(evaluation.average.toFixed(2))}
+
+				<CSSTransition
+	                in={this.state.evals.length > 0}
+	                classNames="fade"
+	                mountOnEnter={true}
+	                unmountOnExit={true}
+	                timeout={350}>
+					<div className="panel-content completed-evals">
+						{this.state.evals.map(evaluation =>
+							<Link className="panel-item completed-eval-panel-item"
+								to={
+									this.props.match.url + '/' + evaluation.id
+								}
+								key={evaluation.id}>
+								<div className="eval-info-container">
+									<p className="student-name">{evaluation.student.name}</p>
+									<p className="eval-type-date">
+										{evaluation.type.name} - {formatDate(evaluation.updated_at)}
+									</p>
 								</div>
-							</div>
-						</Link>
-					)}
-				</div>
+								<div className="average-score-container">
+									<p>Average Score:</p>
+									<div className="counter">
+										{parseFloat(evaluation.average.toFixed(2))}
+									</div>
+								</div>
+							</Link>
+						)}
+					</div>
+				</CSSTransition>
 			</section>
 		);
 	}

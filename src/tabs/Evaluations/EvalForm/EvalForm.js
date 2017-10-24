@@ -1,6 +1,7 @@
 import React from 'react';
 import './EvalForm.css';
 import axios from '../../../connection/axios';
+import CSSTransition from 'react-transition-group/CSSTransition';
 import moment from 'moment';
 import {withRouter} from 'react-router';
 
@@ -87,12 +88,19 @@ class EvalForm extends React.Component {
 		return (
 			<section>
 				<div className="panel-content">
-					<div className="eval-form">
-						<header>
-							<h2>{this.state.form && this.state.form.type.title}</h2>
-						</header>
-						{this.state.form && this.renderForm(this.state.form.type.id)}
-					</div>
+					<CSSTransition
+		                in={this.state.form !== null}
+		                classNames="fade"
+		                mountOnEnter={true}
+		                unmountOnExit={true}
+		                timeout={250}>
+						<div className="eval-form">
+							<header>
+								<h2>{this.state.form && this.state.form.type.title}</h2>
+							</header>
+							{this.state.form && this.renderForm(this.state.form.type.id)}
+						</div>
+					</CSSTransition>
 				</div>
 			</section>
 		);
