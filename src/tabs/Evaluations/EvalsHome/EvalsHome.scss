@@ -1,11 +1,11 @@
 @import '../../../includes/variables';
 
-.assigned-evals {
+.evaluations-panel .assigned-evals {
 	display:flex;
 	flex-wrap:wrap;
 }
 
-.assigned-evals p:only-child {
+.evaluations-panel .assigned-evals p:only-child {
 	font-size:0.8em;
 	margin:0 auto;
 }

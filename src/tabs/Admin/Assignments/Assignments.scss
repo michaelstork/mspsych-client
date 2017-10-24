@@ -1,0 +1,73 @@
+@import '../../../includes/variables';
+
+.assignments-list-actions {
+	padding-bottom:0;
+}
+
+.assignments-list-actions header {
+	display:flex;
+	align-items:center;
+	padding:6px 12px;
+	font-size:0.8em;
+	border-bottom:1px solid $gray;
+	font-weight:600;
+	-webkit-font-smoothing:antialiased;
+	background-color:#EFEFEF;
+}
+
+.assignments-list-actions header,
+.assignments-list-actions .assigned-item {
+	.student {
+		width:140px;		
+	}
+
+	.type {
+		width:180px;
+		margin-left:18px;
+	}
+	
+	.date {
+		margin-left:auto;
+	}
+}
+
+.assignments-list-actions .assigned-items {
+	height:168px;
+	overflow-y:auto;
+}
+
+.assignments-list-actions .assigned-item {
+	display:flex;
+	align-items:center;
+	padding:12px;
+	font-size:0.75em;
+	border-bottom:1px solid $gray;
+	
+	.student span {
+		white-space:nowrap;
+		text-overflow:ellipsis;
+		overflow:hidden;
+	}
+}
+
+form[name="assignEval"] {
+	width:100%;
+	padding:12px;
+	box-sizing:border-box;
+	margin-top:auto;
+
+	label {
+		flex:0 0 25%;
+	}
+
+	.autocomplete-container,
+	select {
+		flex:0 0 75%;
+	}
+
+	button {
+		margin-top:32px;
+		margin-left:auto;
+		width:180px;
+	}
+}
