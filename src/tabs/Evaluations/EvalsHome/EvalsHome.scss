@@ -3,11 +3,11 @@
 .evaluations-panel .assigned-evals {
 	display:flex;
 	flex-wrap:wrap;
+	min-height:240px;
 }
 
 .evaluations-panel .assigned-evals p:only-child {
-	font-size:0.8em;
-	margin:0 auto;
+	margin:48px auto;
 }
 
 .eval-stats-panel-item {
