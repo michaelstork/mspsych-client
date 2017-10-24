@@ -3,6 +3,7 @@ import axios from '../../../connection/axios';
 import cloneDeep from 'lodash/cloneDeep';
 import './Students.css';
 
+import Loader from '../../../components/Loader/Loader';
 import ManageStudents from '../../../partials/Students/ManageStudents';
 import CreateStudents from '../../../partials/Students/CreateStudents';
 import BatchCreateStudents from '../../../partials/Students/BatchCreateStudents';
@@ -13,7 +14,8 @@ class Students extends React.Component {
 
 		this.state = {
 			students: [],
-			search: ''
+			search: '',
+			inProgress: false
 		};
 
 		this.createStudents = this.createStudents.bind(this);
@@ -31,12 +33,17 @@ class Students extends React.Component {
 	}
 
 	getStudents(search = null) {
+		const state = cloneDeep(this.state);
+		state.inProgress = true;
+		this.setState(state);
+
 		return axios.get(
 			'/api/students' + (search ? '?name='+search : '')
 		)
 		.then(response => {
 			const state = cloneDeep(this.state);
 			state.students = response.data;
+			state.inProgress = false;
 
 			if (search === null) state.search = '';
 			this.setState(state);
@@ -45,10 +52,17 @@ class Students extends React.Component {
 		})
 		.catch(error => {
 			console.log(error);
+			const state = cloneDeep(this.state);
+			state.inProgress = false;
+			this.setState(state);
 		});
 	}
 
 	createStudents(students) {
+		const state = cloneDeep(this.state);
+		state.inProgress = true;
+		this.setState(state);
+
 		return axios.post(
 			'/api/students',
 			{students: students}
@@ -62,6 +76,15 @@ class Students extends React.Component {
 		})
 		.catch(error => {
 			console.log(error);
+			const state = cloneDeep(this.state);
+			state.inProgress = false;
+			this.setState(state);
+
+			if (error.response.status === 400) {
+				this.props.notify(error.response.data.message);
+			}
+
+			return error.response;
 		})
 	}
 
@@ -70,11 +93,16 @@ class Students extends React.Component {
 			'Are you sure you want to delete this student?'
 		)) return;
 
+		const state = cloneDeep(this.state);
+		state.inProgress = true;
+		this.setState(state);
+
 		return axios.delete(
 			'/api/students/'+id
 		)
 		.then(response => {
 			const state = cloneDeep(this.state);
+			state.inProgress = false;
 			state.students = state.students.filter(
 				student => student.id !== id
 			);
@@ -93,6 +121,10 @@ class Students extends React.Component {
 		const formData = new FormData();
 		formData.append('photo', file);
 
+		const state = cloneDeep(this.state);
+		state.inProgress = true;
+		this.setState(state);
+
 		return axios.post(
 			'/api/students/'+id,
 			formData,
@@ -102,8 +134,13 @@ class Students extends React.Component {
 				}
 			}
 		).then(response => {
+			const state = cloneDeep(this.state);
+			state.inProgress = false;
+			this.setState(state);
+
 			this.updatePhoto(response.data);
 			this.props.notify('Photo uploaded');
+
 			return response;
 		}).catch(error => {
 			console.log(error);
@@ -113,6 +150,10 @@ class Students extends React.Component {
 	uploadZip(file) {
 		const formData = new FormData();
 		formData.append('zip', file);
+
+		const state = cloneDeep(this.state);
+		state.inProgress = true;
+		this.setState(state);
 
 		return axios.post(
 			'/api/students/batch',
@@ -158,7 +199,10 @@ class Students extends React.Component {
 	render() {
 		return (
 			<section>
-				<h2>Students</h2>
+				<h2>
+					<span>Students</span>
+					<Loader loading={this.state.inProgress} />
+				</h2>
 				<div className="panel-content">
 					<div className="panel-item list-panel-item">
 						<header>

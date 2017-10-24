@@ -1,6 +1,8 @@
 import React from 'react';
 import Moment from 'react-moment';
 import Autocomplete from '../../components/Autocomplete/Autocomplete';
+import Loader from '../../components/Loader/Loader';
+
 
 function renderSelectedUser(props) {
 	return (
@@ -12,6 +14,7 @@ function renderSelectedUser(props) {
 					: 'Select User'
 				}
 			</span>
+			<Loader loading={props.inProgress} />
 		</div>
 	);
 }

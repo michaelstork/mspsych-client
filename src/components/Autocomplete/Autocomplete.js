@@ -1,5 +1,6 @@
 import React from 'react';
 import './Autocomplete.css';
+import Loader from '../Loader/Loader';
 import axios from '../../connection/axios';
 import cloneDeep from 'lodash/cloneDeep';
 
@@ -10,7 +11,8 @@ class Autocomplete extends React.Component {
 		this.state = {
 			search: '',
 			results: [],
-			value: null
+			value: null,
+			inProgress: false
 		}
 
 		this.handleSearch = this.handleSearch.bind(this);
@@ -19,9 +21,17 @@ class Autocomplete extends React.Component {
 
 	getResults(search = '') {
 		if (!search.length) {
-			this.setState({search: search, results: []});
+			this.setState({
+				search: search,
+				results: [],
+				value: null
+			});
 			return;
 		}
+
+		const state = cloneDeep(this.state);
+		state.inProgress = true;
+		this.setState(state);
 
 		axios.get(
 			this.props.resultBase + search
@@ -29,10 +39,14 @@ class Autocomplete extends React.Component {
 		.then(response => {
 			const state = cloneDeep(this.state);
 			state.results = response.data;
+			state.inProgress = false;
 			this.setState(state);
 		})
 		.catch(error => {
 			console.log(error);
+			const state = cloneDeep(this.state);
+			state.inProgress = false;
+			this.setState(state);
 		});
 	}
 
@@ -68,6 +82,7 @@ class Autocomplete extends React.Component {
 					placeholder="Search..."
 					onChange={this.handleSearch}
 					value={this.state.search} />
+				<Loader loading={this.state.inProgress} />
 				<div className={
 					[
 						'autocomplete-results',

@@ -37,6 +37,14 @@
 	color:$blue;
 }
 
+.panel h2 > .loader {
+	margin-left:auto;
+	position:relative;
+	top:4px;
+	width:22px;
+	height:22px;
+}
+
 .panel h2 > div {
 	display:flex;
 	align-items:center;
@@ -262,6 +270,12 @@
  		text-overflow:ellipsis;
  		height:100%;
  		line-height:40px;
+ 	}
+
+ 	.loader {
+ 		margin-left:auto;
+ 		width:22px;
+ 		height:22px;
  	}
  }
 

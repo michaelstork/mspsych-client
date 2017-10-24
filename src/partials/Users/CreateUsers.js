@@ -22,8 +22,10 @@ class CreateUsers extends React.Component {
 		event.preventDefault();
 		this.props.create(this.state.users)
 			.then(response => {
+				if (response.status === 400) return;
+
 				const state = cloneDeep(this.state);
-				state.users = [];
+				state.users = '';
 				this.setState(state);
 			});
 	}

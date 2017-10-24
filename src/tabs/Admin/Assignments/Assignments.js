@@ -3,6 +3,7 @@ import './Assignments.css';
 import axios from '../../../connection/axios';
 import cloneDeep from 'lodash/cloneDeep';
 
+import Loader from '../../../components/Loader/Loader';
 import ManageAssignments from '../../../partials/Assignments/ManageAssignments';
 
 class Assignments extends React.Component {
@@ -12,7 +13,8 @@ class Assignments extends React.Component {
 		this.state = {
 			users: [],
 			search: '',
-			types: []
+			types: [],
+			inProgress: false
 		};
 
 		this.handleSearch = this.handleSearch.bind(this);
@@ -21,33 +23,51 @@ class Assignments extends React.Component {
 	}
 
 	componentDidMount() {
-		this.getUsers()
-			.then(this.getTypes());
+		this.getUsers().then(this.getTypes());
 	}
 
 	getUsers(search = null) {
+		const state = cloneDeep(this.state);
+		state.inProgress = true;
+		this.setState(state);
+
 		return axios.get(
 			'/api/users' + (search ? '?email='+search : '')
 		)
 		.then(response => {
 			const state = cloneDeep(this.state);
 			state.users = response.data;
+			state.inProgress = false;
 
 			if (search === null) state.search = '';
 			this.setState(state);
 		})
 		.catch(error => {
 			console.log(error);
+			const state = cloneDeep(this.state);
+			state.inProgress = false;
+			this.setState(state);
 		})
 	}
 
 	getTypes() {
+		const state = cloneDeep(this.state);
+		state.inProgress = true;
+		this.setState(state);
+
 		return axios.get(
 			'/api/evaluations/types'
 		)
 		.then(response => {
 			const state = cloneDeep(this.state);
 			state.types = response.data;
+			state.inProgress = false;
+			this.setState(state);
+		})
+		.catch(error => {
+			console.log(error);
+			const state = cloneDeep(this.state);
+			state.inProgress = false;
 			this.setState(state);
 		});
 	}
@@ -67,7 +87,10 @@ class Assignments extends React.Component {
 	render() {
 		return (
 			<section>
-				<h2>Assign Evaluations</h2>
+				<h2>
+					<span>Assign Evaluations</span>
+					<Loader loading={this.state.inProgress} />
+				</h2>
 				<div className="panel-content">
 					<div className="panel-item list-panel-item">
 						<header>

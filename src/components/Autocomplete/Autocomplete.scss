@@ -8,6 +8,15 @@
 		position:relative;
 		z-index:2;
 	}
+
+	.loader {
+		position:absolute;
+		right:8px;
+		top:6px;
+		height:20px;
+		width:20px;
+		z-index:3;
+	}
 }
 
 .autocomplete-container .autocomplete-results {

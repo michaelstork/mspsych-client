@@ -3,6 +3,7 @@ import './Users.css';
 import cloneDeep from 'lodash/cloneDeep';
 import axios from '../../../connection/axios';
 
+import Loader from '../../../components/Loader/Loader';
 import CreateUsers from '../../../partials/Users/CreateUsers';
 import ManageUsers from '../../../partials/Users/ManageUsers';
 
@@ -12,7 +13,8 @@ class Users extends React.Component {
 
 		this.state = {
 			users: [],
-			search: ''
+			search: '',
+			inProgress: false
 		};
 
 		this.createUsers  = this.createUsers.bind(this);
@@ -27,39 +29,58 @@ class Users extends React.Component {
 	}
 
 	getUsers(search = null) {
-		axios.get(
+		const state = cloneDeep(this.state);
+		state.inProgress = true;
+		this.setState(state);
+
+		return axios.get(
 			'/api/users' + (search ? '?email='+search : '')
 		)
 		.then(response => {
 			const state = cloneDeep(this.state);
 			state.users = response.data;
+			state.inProgress = false;
 
 			if (search === null) state.search = '';
 			this.setState(state);
+
+			return response;
 		})
 		.catch(error => {
 			console.log(error);
+			const state = cloneDeep(this.state);
+			state.inProgress = false;
+			this.setState(state);
 		})
 	}
 
 	createUsers(users) {
-		this.getUsers();
+		const state = cloneDeep(this.state);
+		state.inProgress = true;
+		this.setState(state);
 
 		return axios.post(
 			'/api/users',
 			{users: users}
 		)
 		.then(response => {
-			const state = cloneDeep(this.state);
-			Array.prototype.push.apply(state.users, response.data);
-			
-			this.setState(state);
-			this.props.notify('Users added');
-			
+			this.getUsers().then(() => {
+				this.props.notify('Users added');
+			});
+
 			return response;
 		})
 		.catch(error => {
 			console.log(error);
+			const state = cloneDeep(this.state);
+			state.inProgress = false;
+			this.setState(state);
+
+			if (error.response.status === 400) {
+				this.props.notify(error.response.data.message);
+			}
+
+			return error.response;
 		})
 	}
 
@@ -68,11 +89,16 @@ class Users extends React.Component {
 			'Are you sure you want to delete this user?'
 		)) return;
 
+		const state = cloneDeep(this.state);
+		state.inProgress = true;
+		this.setState(state);
+
 		return axios.delete(
 			'/api/users/'+id
 		)
 		.then(response => {
 			const state = cloneDeep(this.state);
+			state.inProgress = false;
 			state.users = state.users.filter(
 				user => user.id !== id
 			);
@@ -84,6 +110,9 @@ class Users extends React.Component {
 		})
 		.catch(error => {
 			console.log(error);
+			const state = cloneDeep(this.state);
+			state.inProgress = false;
+			this.setState(state);
 		});
 	}
 
@@ -102,7 +131,10 @@ class Users extends React.Component {
 	render() {
 		return (
 			<section>
-				<h2>User Management</h2>
+				<h2>
+					<span>User Management</span>
+					<Loader loading={this.state.inProgress} />
+				</h2>
 				<div className="panel-content">
 					<div className="panel-item list-panel-item">
 						<header>

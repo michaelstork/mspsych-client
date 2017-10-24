@@ -24,8 +24,10 @@ class CreateStudents extends React.Component {
 			this.state.students
 		)
 		.then(response => {
+			if (response.status === 400) return;
+			
 			const state = cloneDeep(this.state);
-			state.students = [];
+			state.students = '';
 			this.setState(state);
 		});
 	}
