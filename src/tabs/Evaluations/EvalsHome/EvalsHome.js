@@ -4,6 +4,7 @@ import TransitionGroup from 'react-transition-group/TransitionGroup';
 import axios from '../../../connection/axios';
 import {Link} from 'react-router-dom'
 import './EvalsHome.css';
+import Loader from '../../../components/Loader/Loader';
 import StudentPhoto from '../../../components/StudentPhoto';
 import cloneDeep from 'lodash/cloneDeep';
 
@@ -14,7 +15,8 @@ class EvalsHome extends React.Component {
 		this.state = {
 			types: [],
 			assigned: [],
-			stats: {}
+			stats: {},
+			inProgress: true
 		};
 
 		this.getPercentOfTotalEvals = this.getPercentOfTotalEvals.bind(this);
@@ -24,11 +26,15 @@ class EvalsHome extends React.Component {
 		if (!props.user && this.props.user) this.getUserEvalsData();
 	}
 
-	componentDidMount() {
+	componentWillMount() {
 		if (this.props.user) this.getUserEvalsData();
 	}
 
 	getUserEvalsData() {
+		const state = cloneDeep(this.state);
+		state.inProgress = true;
+		this.setState(state);
+
 		return axios.get(
 			'/api/evaluations/user/'+this.props.user.id
 		).then(response => {
@@ -36,10 +42,14 @@ class EvalsHome extends React.Component {
 			state.types = response.data.types;
 			state.stats = response.data.stats;
 			state.assigned = response.data.assigned;
+			state.inProgress = false;
 
 			this.setState(state);
 		}).catch(error => {
 			console.log(error);
+			const state = cloneDeep(this.state);
+			state.inProgress = false;
+			this.setState(state);
 		});
 	}
 
@@ -48,7 +58,7 @@ class EvalsHome extends React.Component {
 	}
 
 	renderAssignedEvals() {
-		if (!this.state.assigned.length) {
+		if (!this.state.assigned.length && !this.state.inProgress) {
 			return (
 				<div className="assigned-evals">
 					<p>You have no assigned evaluations</p>
@@ -117,11 +127,17 @@ class EvalsHome extends React.Component {
 						
 					</div>
 				</div>
-				<h2>Assigned Evaluations</h2>
+				<h2>
+					<span>Assigned Evaluations</span>
+					<Loader loading={this.state.inProgress} />
+				</h2>
 				<div className="panel-content">
 					{this.renderAssignedEvals()}
 				</div>
-				<h2>Online Evaluations</h2>
+				<h2>
+					<span>Online Evaluations</span>
+					<Loader loading={this.state.inProgress} />
+				</h2>
 				<div className="panel-content">
 					<div className="panel-item eval-types-panel-item">
 						<ul>
