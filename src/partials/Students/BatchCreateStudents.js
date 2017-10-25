@@ -38,7 +38,7 @@ class BatchCreateStudents extends React.Component {
 				<form name="uploadZip"
 					onSubmit={this.handleSubmit}
 					ref={(ref) => this.form = ref}>
-					<p>Upload a .zip file containing student photos, with filenames corresponding to the students' names.</p>
+					<p>Upload a .zip file containing student photos, with filenames corresponding to the students' names</p>
 					<div className="input-container">
 						<label>Upload Photo Archive:</label>
 						<input

@@ -3,7 +3,8 @@ import {Route, Switch, Redirect, NavLink} from 'react-router-dom'
 import Panel from '../../components/Panel/Panel';
 import './Admin.css';
 
-import Overview from './Overview/Overview';
+import Outstanding from './Outstanding/Outstanding';
+import Completed from './Completed/Completed';
 import Users from './Users/Users';
 import Assignments from './Assignments/Assignments';
 import Students from './Students/Students';
@@ -12,12 +13,16 @@ const Admin = (props) => (
 	<div className="admin-panel-container">
 		<nav className="admin-nav">
 			<NavLink activeClassName="active-nav-item"
-				to={props.match.url + '/overview'}>
-				Evals Overview
+				to={props.match.url + '/outstanding'}>
+				Outstanding Evals
 			</NavLink>
 			<NavLink activeClassName="active-nav-item"
-				to={props.match.url + '/assign-evals'}>
-				Assign Evals
+				to={props.match.url + '/completed'}>
+				Completed Evals
+			</NavLink>
+			<NavLink activeClassName="active-nav-item"
+				to={props.match.url + '/assign-evaluations'}>
+				Assign Evaluations
 			</NavLink>
 			<NavLink activeClassName="active-nav-item"
 				to={props.match.url + '/users'}>
@@ -30,9 +35,14 @@ const Admin = (props) => (
 		</nav>
 		<Panel className="admin-panel with-items">
 			<Switch>
-				<Route exact path={props.match.url + '/overview'}
+				<Route exact path={props.match.url + '/outstanding'}
 					render={() =>
-						<Overview notify={props.notify} />
+						<Outstanding notify={props.notify} />
+					}
+				/>
+				<Route exact path={props.match.url + '/completed'}
+					render={() =>
+						<Completed notify={props.notify} />
 					}
 				/>
 				<Route path={props.match.url + '/users'}
@@ -40,7 +50,7 @@ const Admin = (props) => (
 						<Users notify={props.notify} />
 					}
 				/>
-				<Route path={props.match.url + '/assign-evals'}
+				<Route path={props.match.url + '/assign-evaluations'}
 					render={() =>
 						<Assignments notify={props.notify} />
 					}
@@ -51,7 +61,7 @@ const Admin = (props) => (
 					}
 				/>
 				<Redirect from={props.match.url}
-					to={props.match.url + '/overview'} />
+					to={props.match.url + '/outstanding'} />
 			</Switch>
 		</Panel>
 	</div>
