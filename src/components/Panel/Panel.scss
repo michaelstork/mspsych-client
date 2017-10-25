@@ -161,10 +161,11 @@
 
 
 /**
- * List Panel header
+ * List/Table Panel header
  */
 
-.list-panel-item > header {
+.list-panel-item > header,
+.table-panel-item > header {
 	width:100%;
 	height:46px;
 	display:flex;
@@ -174,7 +175,8 @@
 	background-color:#EFEFEF;
 }
 
-.list-panel-item > header input[type="text"] {
+.list-panel-item > header input[type="text"],
+.table-panel-item > header input[type="text"] {
 	font-size:0.8em;
 	box-sizing:border-box;
 	padding:0 6px;
@@ -186,10 +188,11 @@
 
 
  /**
-  * List Panel Item
+  * List/Table Panel Item
   */
  
-.list-panel-item {
+.list-panel-item,
+.table-panel-item {
 	padding:0;
 }
 
@@ -230,14 +233,14 @@
 	}
 }
 
-ul + .list-panel-actions {
+.list-panel-item .list-panel-actions {
 	padding:40px 0 18px 0;
 	box-sizing:border-box;
 	flex:0 0 60%;
 	position:relative;
 }
 
-ul + .list-panel-actions .selected-item {
+.list-panel-item .list-panel-actions .selected-item {
 	display:flex;
 	align-items:center;
 	position:absolute;
@@ -279,3 +282,74 @@ ul + .list-panel-actions .selected-item {
 	}
 }
 
+.table-panel-item .table-panel-actions {
+	width:100%;
+	display:flex;
+	align-items:center;
+	padding:8px 12px;
+	box-sizing:border-box;
+
+	a {
+		font-size:0.7em;
+		display:flex;
+		align-items:center;
+	}
+
+	i {
+		color:$blue;
+		font-size:24px;
+		margin-right:4px;
+	}
+
+	.loader {
+		margin-left:auto;
+		width:22px;
+		height:22px;
+	}
+}
+
+.table-panel-container {
+	width:100%;
+}
+
+.table-panel-container header {
+	background-color:#EFEFEF;
+	display:flex;
+	font-size:0.85em;
+	font-weight:600;
+	-webkit-font-smoothing:antialiased;
+}
+
+.table-panel-row {
+	display:flex;
+	font-size:0.75em;
+	border-top:1px solid $gray;		
+	transition:background-color 0.15s ease-out;
+
+	&:hover {
+		background-color:#EFEFEF;
+	}
+
+	& > div {
+		height:44px;
+		display:flex;
+		align-items:center;
+	}
+}
+
+.table-panel-container header,
+.table-panel-row {
+
+	div {
+		padding:8px 12px;
+		box-sizing:border-box;
+		white-space:nowrap;
+	}
+
+	div span {
+		overflow:hidden;
+		text-overflow:ellipsis;
+		height:28px;
+		line-height:28px;
+	}
+}
