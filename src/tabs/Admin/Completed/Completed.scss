@@ -1,4 +1,3 @@
-@import '../../../includes/variables';
 
 .table-panel-item.completed-evals-table-item {
 
@@ -6,8 +5,8 @@
 	.table-panel-row {
 
 		.student {
-			flex:0 0 27%;
-			max-width:27%;
+			flex:0 0 25%;
+			max-width:25%;
 		}
 
 		.evaluator {
@@ -21,8 +20,8 @@
 		}
 
 		.date {
-			flex:0 0 12%;
-			max-width:12%;
+			flex:0 0 14%;
+			max-width:14%;
 		}
 
 		.score {
@@ -33,6 +32,11 @@
 
 	.table-panel-row {
 
+		&:hover {
+			background-color:#EFEFEF;
+		}
+
+		.date,
 		.score {
 			justify-content:center;
 		}

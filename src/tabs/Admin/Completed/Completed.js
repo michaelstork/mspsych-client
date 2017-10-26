@@ -77,7 +77,7 @@ class Completed extends React.Component {
 								placeholder="Search" />
 						</header>
 						<div className="table-panel-actions">
-							<a href="/api/evaluations/export" target="_blank">
+							<a href="/api/evaluations/export/completed" target="_blank">
 								<i className="material-icons">file_download</i>
 								<span>Export</span>
 							</a>
@@ -88,7 +88,7 @@ class Completed extends React.Component {
 								<div className="student">Student</div>
 								<div className="evaluator">Evaluator</div>
 								<div className="type">Type</div>
-								<div className="date">Date</div>
+								<div className="date">Completed</div>
 								<div className="score">Score</div>
 							</header>
 							{this.state.evals.map(evaluation =>

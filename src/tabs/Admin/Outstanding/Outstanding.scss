@@ -1,0 +1,27 @@
+
+.table-panel-item.outstanding-evals-table-item {
+
+	header,
+	.table-panel-row {
+
+		.student {
+			flex:0 0 31%;
+			max-width:31%;
+		}
+
+		.evaluator {
+			flex:0 0 32%;
+			max-width:32%;
+		}
+
+		.type {
+			flex:0 0 25%;
+			max-width:25%;
+		}
+
+		.date {
+			flex:0 0 12%;
+			max-width:12%;
+		}
+	}
+}
