@@ -62,6 +62,35 @@ class Outstanding extends React.Component {
 		}, 350);
 	}
 
+	deleteEval(id) {
+		if (!window.confirm(
+			'Are you sure you want to delete this evaluation?'
+		)) return;
+
+		const state = cloneDeep(this.state);
+		state.inProgress = true;
+		this.setState(state);
+
+		return axios.delete(
+			'/api/evaluations/'+id
+		)
+		.then(response => {
+			const state = cloneDeep(this.state);
+			state.inProgress = false;
+			state.evals = state.evals.filter(
+				evaluation => evaluation.id !== id
+			);
+
+			this.setState(state);
+			this.props.notify('Evaluation deleted');
+
+			return response;
+		})
+		.catch(error => {
+			console.log(error);
+		});
+	}
+
 	render() {
 		return (
 			<section>
@@ -102,6 +131,12 @@ class Outstanding extends React.Component {
 									</div>
 									<div className="date">
 										<span>{formatDate(evaluation.created_at)}</span>
+									</div>
+									<div className="delete">
+										<i className="material-icons"
+											onClick={() => this.deleteEval(evaluation.id)}>
+											clear
+										</i>
 									</div>
 								</div>	
 							)}
