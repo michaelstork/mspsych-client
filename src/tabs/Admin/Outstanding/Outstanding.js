@@ -105,7 +105,11 @@ class Outstanding extends React.Component {
 								placeholder="Search" />
 						</header>
 						<div className="table-panel-actions">
-							<a href="/api/evaluations/export/outstanding" target="_blank">
+							<a href={[
+									'/api/evaluations/export/outstanding',
+									'?token=',
+									localStorage.getItem('mspsychToken')
+								].join('')}>
 								<i className="material-icons">file_download</i>
 								<span>Export</span>
 							</a>

@@ -106,7 +106,11 @@ class Completed extends React.Component {
 								placeholder="Search" />
 						</header>
 						<div className="table-panel-actions">
-							<a href="/api/evaluations/export/completed" target="_blank">
+							<a href={[
+									'/api/evaluations/export/completed',
+									'?token=',
+									localStorage.getItem('mspsychToken')
+								].join('')}>
 								<i className="material-icons">file_download</i>
 								<span>Export</span>
 							</a>
