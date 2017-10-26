@@ -22,11 +22,13 @@
 		.date {
 			flex:0 0 14%;
 			max-width:14%;
+			justify-content:center;
 		}
 
 		.score {
 			flex:0 0 8%;
 			max-width:8%;
+			justify-content:center;
 		}
 	}
 
@@ -34,11 +36,6 @@
 
 		&:hover {
 			background-color:#EFEFEF;
-		}
-
-		.date,
-		.score {
-			justify-content:center;
 		}
 
 		.score .counter {
