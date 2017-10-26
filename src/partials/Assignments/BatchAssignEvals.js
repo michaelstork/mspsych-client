@@ -38,7 +38,7 @@ class BatchAssignEvals extends React.Component {
 				<form name="uploadSpreadsheet"
 					onSubmit={this.handleSubmit}
 					ref={(ref) => this.form = ref}>
-					<p>Upload a spreadsheet (.xlsx, or .csv) with column headers: student, evaluator, type</p>
+					<p>Upload a spreadsheet (.xlsx, .xls, or .csv) with column headers: student, evaluator, type</p>
 					<div className="input-container">
 						<label>Upload Spreadsheet:</label>
 						<input
