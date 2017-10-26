@@ -149,7 +149,10 @@ class Completed extends React.Component {
 									</div>
 									<div className="delete">
 										<i className="material-icons"
-											onClick={(event) => {event.preventDefault(); this.deleteEval(evaluation.id); }}>
+											onClick={(event) => {
+												event.preventDefault();
+												this.deleteEval(evaluation.id);
+											}}>
 											clear
 										</i>
 									</div>
