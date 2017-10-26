@@ -71,3 +71,28 @@ form[name="assignEval"] {
 		width:180px;
 	}
 }
+
+form[name="uploadSpreadsheet"] {
+	width:100%;
+	margin-top:18px;
+
+	label {
+		flex:0 0 24%;
+	}	
+
+	input {
+		flex:0 0 auto;
+	}
+
+	p {
+		font-size:0.75em;
+		color:#888;
+		margin-bottom:24px;
+	}
+
+	.button-container {
+		width:14%;
+		margin-left:auto;
+		margin-top:18px;
+	}
+}

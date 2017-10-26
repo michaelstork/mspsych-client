@@ -5,6 +5,7 @@ import cloneDeep from 'lodash/cloneDeep';
 
 import Loader from '../../../components/Loader/Loader';
 import ManageAssignments from '../../../partials/Assignments/ManageAssignments';
+import BatchAssignEvals from '../../../partials/Assignments/BatchAssignEvals';
 
 class Assignments extends React.Component {
 	constructor(props) {
@@ -18,6 +19,7 @@ class Assignments extends React.Component {
 		};
 
 		this.handleSearch = this.handleSearch.bind(this);
+		this.uploadSpreadsheet = this.uploadSpreadsheet.bind(this);
 
 		this.searchTimeout = null;
 	}
@@ -84,6 +86,36 @@ class Assignments extends React.Component {
 		}, 350);
 	}
 
+	uploadSpreadsheet(file) {
+		const formData = new FormData();
+		formData.append('spreadsheet', file);
+
+		const state = cloneDeep(this.state);
+		state.inProgress = true;
+		this.setState(state);
+
+		return axios.post(
+			'/api/evaluations/import/assignments',
+			formData,
+			{
+				headers: {
+					'Content-Type': 'multipart/form-data'
+				}
+			}
+		).then(response => {
+			this.getUsers().then(() => {
+				this.props.notify(response.data.message);
+			});
+			return response;
+		}).catch(error => {
+			const state = cloneDeep(this.state);
+			state.inProgress = false;
+			this.setState(state);
+
+			this.props.notify(error.response.data.message);
+		})
+	}
+
 	render() {
 		return (
 			<section>
@@ -105,6 +137,7 @@ class Assignments extends React.Component {
 							users={this.state.users}
 							types={this.state.types} />
 					</div>
+					<BatchAssignEvals upload={this.uploadSpreadsheet} />
 				</div>
 			</section>
 		);
