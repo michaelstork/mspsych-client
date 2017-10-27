@@ -91,6 +91,41 @@ class Outstanding extends React.Component {
 		});
 	}
 
+	renderEvals() {
+		if (!this.state.evals.length && !this.state.inProgress) {
+			return (
+				<div className="table-panel-row">
+					<p>No evaluations found</p>
+				</div>
+			);
+		}
+
+		return (
+			this.state.evals.map(evaluation =>
+				<div key={evaluation.id} className="table-panel-row">
+					<div className="student">
+						<span>{evaluation.student.name}</span>
+					</div>
+					<div className="evaluator">
+						<span>{evaluation.user.email}</span>
+					</div>
+					<div className="type">
+						<span>{evaluation.type.name}</span>
+					</div>
+					<div className="date">
+						<span>{formatDate(evaluation.created_at)}</span>
+					</div>
+					<div className="delete">
+						<i className="material-icons"
+							onClick={() => this.deleteEval(evaluation.id)}>
+							clear
+						</i>
+					</div>
+				</div>	
+			)
+		);
+	}
+
 	render() {
 		return (
 			<section>
@@ -122,28 +157,7 @@ class Outstanding extends React.Component {
 								<div className="type">Type</div>
 								<div className="date">Assigned</div>
 							</header>
-							{this.state.evals.map(evaluation =>
-								<div key={evaluation.id} className="table-panel-row">
-									<div className="student">
-										<span>{evaluation.student.name}</span>
-									</div>
-									<div className="evaluator">
-										<span>{evaluation.user.email}</span>
-									</div>
-									<div className="type">
-										<span>{evaluation.type.name}</span>
-									</div>
-									<div className="date">
-										<span>{formatDate(evaluation.created_at)}</span>
-									</div>
-									<div className="delete">
-										<i className="material-icons"
-											onClick={() => this.deleteEval(evaluation.id)}>
-											clear
-										</i>
-									</div>
-								</div>	
-							)}
+							{this.renderEvals()}
 						</div>
 					</div>
 				</div>

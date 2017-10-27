@@ -92,6 +92,53 @@ class Completed extends React.Component {
 		});
 	}
 
+	renderEvals() {
+		if (!this.state.evals.length && !this.state.inProgress) {
+			return (
+				<div className="table-panel-row no-results">
+					<p>No evaluations found</p>
+				</div>
+			);
+		}
+
+		return (
+			this.state.evals.map(evaluation =>
+				<Link key={evaluation.id}
+					className="table-panel-row"
+					to={
+						'/evaluations/completed/' + evaluation.id
+					}>
+					<div className="student">
+						<span>{evaluation.student.name}</span>
+					</div>
+					<div className="evaluator">
+						<span>{evaluation.user.email}</span>
+					</div>
+					<div className="type">
+						<span>{evaluation.type.name}</span>
+					</div>
+					<div className="date">
+						<span>{formatDate(evaluation.updated_at)}</span>
+					</div>
+					<div className="score">
+						<div className="counter">
+							{evaluation.average}
+						</div>
+					</div>
+					<div className="delete">
+						<i className="material-icons"
+							onClick={(event) => {
+								event.preventDefault();
+								this.deleteEval(evaluation.id);
+							}}>
+							clear
+						</i>
+					</div>
+				</Link>	
+			)
+		);
+	}
+
 	render() {
 		return (
 			<section>
@@ -124,40 +171,7 @@ class Completed extends React.Component {
 								<div className="date">Completed</div>
 								<div className="score">Score</div>
 							</header>
-							{this.state.evals.map(evaluation =>
-								<Link key={evaluation.id}
-									className="table-panel-row"
-									to={
-										'/evaluations/completed/' + evaluation.id
-									}>
-									<div className="student">
-										<span>{evaluation.student.name}</span>
-									</div>
-									<div className="evaluator">
-										<span>{evaluation.user.email}</span>
-									</div>
-									<div className="type">
-										<span>{evaluation.type.name}</span>
-									</div>
-									<div className="date">
-										<span>{formatDate(evaluation.updated_at)}</span>
-									</div>
-									<div className="score">
-										<div className="counter">
-											{evaluation.average}
-										</div>
-									</div>
-									<div className="delete">
-										<i className="material-icons"
-											onClick={(event) => {
-												event.preventDefault();
-												this.deleteEval(evaluation.id);
-											}}>
-											clear
-										</i>
-									</div>
-								</Link>	
-							)}
+							{this.renderEvals()}
 						</div>
 					</div>
 				</div>
