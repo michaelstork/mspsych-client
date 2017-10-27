@@ -28,6 +28,8 @@ class EvalForm extends React.Component {
 	}
 
 	componentDidMount() {
+		window.scrollTo(0, 0);
+
 		const {evalId, typeId} = this.props.match.params;
 
 		axios.get(
