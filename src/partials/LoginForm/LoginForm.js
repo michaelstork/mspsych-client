@@ -30,7 +30,7 @@ class LoginForm extends React.Component {
 			this.state.password
 		)
 		.then((response) => {
-			this.props.history.push('/');
+			this.props.history.push('/evaluations');
 		})
 		.catch(response => {
 			this.props.notify(
