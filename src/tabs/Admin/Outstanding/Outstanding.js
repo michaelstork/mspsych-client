@@ -101,16 +101,66 @@ class Outstanding extends React.Component {
 			return response;
 		})
 		.catch(error => {
-			console.log(error);
+			const state = cloneDeep(this.state);
+			state.inProgress = false;
+			this.setState(state);
 		});
 	}
 
 	emailAll() {
-		console.log('email all');
+		if (!window.confirm(
+			'Are you sure you want to send a reminder to all users with outstanding evaluations?'
+		)) return;
+
+		const state = cloneDeep(this.state);
+		state.inProgress = true;
+		this.setState(state);
+
+		return axios.get(
+			'/api/notifications/reminder/all'
+		)
+		.then(response => {
+			const state = cloneDeep(this.state);
+			state.inProgress = false;
+			this.setState(state);
+			this.props.notify(response.data.message);
+
+			return response;
+		})
+		.catch(error => {
+			const state = cloneDeep(this.state);
+			state.inProgress = false;
+			this.setState(state);
+			this.props.notify(error.response.data.message);
+		});
 	}
 
 	sendReminder(id) {
-		console.log(id);
+		if (!window.confirm(
+			'Are you sure you want to send a reminder to this user?'
+		)) return;
+
+		const state = cloneDeep(this.state);
+		state.inProgress = true;
+		this.setState(state);		
+
+		return axios.get(
+			'/api/notifications/reminder/'+id
+		)
+		.then(response => {
+			const state = cloneDeep(this.state);
+			state.inProgress = false;
+			this.setState(state);
+			this.props.notify(response.data.message);
+
+			return response;
+		})
+		.catch(error => {
+			const state = cloneDeep(this.state);
+			state.inProgress = false;
+			this.setState(state);
+			this.props.notify(error.response.data.message);
+		});
 	}
 
 	renderEvals() {
@@ -147,7 +197,7 @@ class Outstanding extends React.Component {
 							clear
 						</i>
 					</div>
-				</div>	
+				</div>
 			)
 		);
 	}
@@ -166,7 +216,7 @@ class Outstanding extends React.Component {
 								placeholder="Search" />
 						</header>
 						<div className="table-panel-actions">
-							<a onClick={this.emailAll}>
+							<a onClick={() => this.emailAll()}>
 								<i className="material-icons">email</i>
 								<span>Email All</span>
 							</a>
