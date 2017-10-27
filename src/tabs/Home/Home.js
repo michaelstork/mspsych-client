@@ -21,19 +21,13 @@ class Home extends React.Component {
 		this.createNews   = this.createNews.bind(this);
 		this.deleteNews   = this.deleteNews.bind(this);
 
-		switch (process.env.REACT_APP_ENV) {
-			case 'development':
-				this.calendarUrl = 'http://mspsych.localhost/api/calendar?src=mspsychclerkship%40gmail.com&mode=WEEK&ctz=America/New_York';
-				break;
-			case 'staging':
-				this.calendarUrl = 'http://mspsych.mstork.info/api/calendar?src=mspsychclerkship%40gmail.com&mode=WEEK&ctz=America/New_York';
-				break;
-			case 'production':
-				this.calendarUrl = 'http://mspsych.mssm.edu/api/calendar?src=mspsychclerkship%40gmail.com&mode=WEEK&ctz=America/New_York';
-				break;
-			default:
-				break;
+		if (process.env.NODE_ENV === 'development') {
+			this.calendarUrl = 'http://mspsych.localhost/api/calendar?src=mspsychclerkship%40gmail.com&mode=WEEK&ctz=America/New_York';
+		} else {
+			this.calendarUrl = '/api/calendar?src=mspsychclerkship%40gmail.com&mode=WEEK&ctz=America/New_York';
 		}
+
+		console.log(this.calendarUri);
 	}
 
 	componentDidMount() {
