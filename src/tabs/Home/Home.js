@@ -26,8 +26,6 @@ class Home extends React.Component {
 		} else {
 			this.calendarUrl = '/api/calendar?src=mspsychclerkship%40gmail.com&mode=WEEK&ctz=America/New_York';
 		}
-
-		console.log(this.calendarUri);
 	}
 
 	componentDidMount() {
