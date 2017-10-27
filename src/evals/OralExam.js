@@ -44,10 +44,17 @@ class OralExam extends React.Component {
 
 		return (
 			<form name="eval" onSubmit={this.handleSubmit}>
-				<EvalFormInfo handleInfoItemChange={this.handleInfoItemChange} student={this.state.student} {...this.props} />
+				<EvalFormInfo
+					handleInfoItemChange={this.handleInfoItemChange}
+					student={this.state.student}
+					{...this.props} />
 
 				{this.props.form.type.item_categories.map(category =>
-					<EvalFormCategory category={category} handleItemChange={this.handleItemChange} items={this.state.items} key={category.id} />
+					<EvalFormCategory
+						category={category}
+						handleItemChange={this.handleItemChange}
+						items={this.state.items}
+						key={category.id} />
 				)}
 
 				<button type="submit">Submit Evaluation</button>
