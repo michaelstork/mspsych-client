@@ -1,4 +1,5 @@
 import React from 'react';
+import assign from 'lodash/assign';
 import EvalFormInfo from '../partials/EvalForm/EvalFormInfo';
 import EvalFormCategory from '../partials/EvalForm/EvalFormCategory';
 
@@ -19,13 +20,13 @@ class Inpatient extends React.Component {
 	handleInfoItemChange(event) {
 		const change = {};
 		change[event.target.name] = event.target.value;
-		this.setState(Object.assign({}, this.state, change));
+		this.setState(assign({}, this.state, change));
 	}
 
 	handleItemChange(id, value) {
-		const items = Object.assign({}, this.state.items);
+		const items = assign({}, this.state.items);
 		items[id] = value;
-		this.setState(Object.assign({}, this.state, {items: items}));
+		this.setState(assign({}, this.state, {items: items}));
 	}
 
 	handleSubmit(event) {

@@ -3,6 +3,8 @@ import './EvalForm.css';
 import axios from '../../../connection/axios';
 import CSSTransition from 'react-transition-group/CSSTransition';
 import moment from 'moment';
+import assign from 'lodash/assign';
+import cloneDeep from 'lodash/cloneDeep';
 import {withRouter} from 'react-router';
 
 import InpatientForm from '../../../evals/Inpatient';
@@ -31,7 +33,9 @@ class EvalForm extends React.Component {
 		axios.get(
 			'/api/evaluations/'+ (evalId ? evalId : 'type/'+typeId)
 		).then(response => {
-			this.setState(Object.assign({}, this.state, {form:response.data}));
+			const state = cloneDeep(this.state);
+			state.form = response.data;
+			this.setState(state);
 		}).catch(error => {
 			console.log(error);
 		});
@@ -44,8 +48,7 @@ class EvalForm extends React.Component {
 			return;
 		}
 
-		const data = Object.assign(
-			{},
+		const data = assign(
 			{
 				evalId: (this.state.form.id || null),
 				evalTypeId: this.state.form.type.id,
