@@ -19,6 +19,20 @@ class Completed extends React.Component {
 		this.handleSearch = this.handleSearch.bind(this);
 
 		this.searchTimeout = null;
+
+		switch (process.env.REACT_APP_ENV) {
+			case 'development':
+				this.exportUrl = 'http://mspsych.localhost/api/evaluations/export/completed';
+				break;
+			case 'staging':
+				this.exportUrl = 'http://mspsych.mstork.info/api/evaluations/export/completed';
+				break;
+			case 'production':
+				this.exportUrl = 'http://mspsych.mssm.edu/api/evaluations/export/completed';
+				break;
+			default:
+				break;
+		}
 	}
 
 	componentDidMount() {
@@ -154,12 +168,12 @@ class Completed extends React.Component {
 						</header>
 						<div className="table-panel-actions">
 							<a href={[
-									'/api/evaluations/export/completed',
+									this.exportUrl,
 									'?token=',
 									localStorage.getItem('mspsychToken')
 								].join('')}>
-								<i className="material-icons">file_download</i>
-								<span>Export</span>
+								<i className="material-icons">description</i>
+								<span>Export Spreadsheet</span>
 							</a>
 							<Loader loading={this.state.inProgress} />
 						</div>

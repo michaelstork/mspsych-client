@@ -1,3 +1,4 @@
+@import '../../../includes/variables';
 
 .table-panel-item.outstanding-evals-table-item {
 
@@ -50,6 +51,15 @@
 			cursor:pointer;
 			transition:opacity 0.15s ease-out;
 			opacity:0;
+		}
+
+		.evaluator i {
+			cursor:pointer;
+			color:$blue;
+			font-size:18px;
+			margin-right:4px;
+			position:relative;
+			top:1px;
 		}
 
 		&:hover .delete i {

@@ -18,6 +18,20 @@ class Outstanding extends React.Component {
 		this.handleSearch = this.handleSearch.bind(this);
 
 		this.searchTimeout = null;
+
+		switch (process.env.REACT_APP_ENV) {
+			case 'development':
+				this.exportUrl = 'http://mspsych.localhost/api/evaluations/export/outstanding';
+				break;
+			case 'staging':
+				this.exportUrl = 'http://mspsych.mstork.info/api/evaluations/export/outstanding';
+				break;
+			case 'production':
+				this.exportUrl = 'http://mspsych.mssm.edu/api/evaluations/export/outstanding';
+				break;
+			default:
+				break;
+		}
 	}
 
 	componentDidMount() {
@@ -91,6 +105,14 @@ class Outstanding extends React.Component {
 		});
 	}
 
+	emailAll() {
+		console.log('email all');
+	}
+
+	sendReminder(id) {
+		console.log(id);
+	}
+
 	renderEvals() {
 		if (!this.state.evals.length && !this.state.inProgress) {
 			return (
@@ -107,6 +129,10 @@ class Outstanding extends React.Component {
 						<span>{evaluation.student.name}</span>
 					</div>
 					<div className="evaluator">
+						<i className="material-icons"
+							onClick={() => this.sendReminder(evaluation.user.id)}>
+							email
+						</i>
 						<span>{evaluation.user.email}</span>
 					</div>
 					<div className="type">
@@ -140,13 +166,17 @@ class Outstanding extends React.Component {
 								placeholder="Search" />
 						</header>
 						<div className="table-panel-actions">
+							<a onClick={this.emailAll}>
+								<i className="material-icons">email</i>
+								<span>Email All</span>
+							</a>
 							<a href={[
-									'/api/evaluations/export/outstanding',
+									this.exportUrl,
 									'?token=',
 									localStorage.getItem('mspsychToken')
 								].join('')}>
-								<i className="material-icons">file_download</i>
-								<span>Export</span>
+								<i className="material-icons">description</i>
+								<span>Export Spreadsheet</span>
 							</a>
 							<Loader loading={this.state.inProgress} />
 						</div>
