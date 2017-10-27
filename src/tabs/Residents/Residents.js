@@ -31,6 +31,19 @@ class Residents extends React.Component {
 		this.handleCreateCategoryClick    = this.handleCreateCategoryClick.bind(this);
 		this.handleCreateDocumentClick    = this.handleCreateDocumentClick.bind(this);
 		this.handleCreateDocumentResponse = this.handleCreateDocumentResponse.bind(this);
+
+		switch (process.env.REACT_APP_ENV) {
+			case 'development':
+				this.calendarUrl = 'http://mspsych.localhost/api/calendar?src=psych.mssm%40gmail.com&mode=WEEK&ctz=America/New_York';
+				break;
+			case 'staging':
+				this.calendarUrl = 'http://mspsych.mstork.info/api/calendar?src=psych.mssm%40gmail.com&mode=WEEK&ctz=America/New_York';
+				break;
+			case 'production':
+				this.calendarUrl = 'http://mspsych.mssm.edu/api/calendar?src=psych.mssm%40gmail.com&mode=WEEK&ctz=America/New_York';
+				break;
+			default:
+		}
 	}
 
 	componentDidMount() {
@@ -269,6 +282,18 @@ class Residents extends React.Component {
 									deleteFile={this.deleteFile} />
 							</CSSTransition>
 						)}
+						<CSSTransition
+							timeout={250}
+							classNames="fade">
+							<div className="calendar-container">
+								<iframe title="Calendar"
+									width="864"
+									height="600"
+									frameBorder="0"
+									scrolling="no"
+									src={this.calendarUrl}></iframe>
+							</div>
+						</CSSTransition>
 					</TransitionGroup>
 				</div>
 			</Panel>

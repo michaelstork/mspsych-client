@@ -20,6 +20,20 @@ class Home extends React.Component {
 		this.toggleCreate = this.toggleCreate.bind(this);
 		this.createNews   = this.createNews.bind(this);
 		this.deleteNews   = this.deleteNews.bind(this);
+
+		switch (process.env.REACT_APP_ENV) {
+			case 'development':
+				this.calendarUrl = 'http://mspsych.localhost/api/calendar?src=mspsychclerkship%40gmail.com&mode=WEEK&ctz=America/New_York';
+				break;
+			case 'staging':
+				this.calendarUrl = 'http://mspsych.mstork.info/api/calendar?src=mspsychclerkship%40gmail.com&mode=WEEK&ctz=America/New_York';
+				break;
+			case 'production':
+				this.calendarUrl = 'http://mspsych.mssm.edu/api/calendar?src=mspsychclerkship%40gmail.com&mode=WEEK&ctz=America/New_York';
+				break;
+			default:
+				break;
+		}
 	}
 
 	componentDidMount() {
@@ -134,8 +148,21 @@ class Home extends React.Component {
 									delete={this.deleteNews} />
 							</CSSTransition>
 						)}
+						<CSSTransition
+							timeout={250}
+							classNames="fade">
+							<div className="calendar-container">
+								<iframe title="Calendar"
+									width="864"
+									height="600"
+									frameBorder="0"
+									scrolling="no"
+									src={this.calendarUrl}></iframe>
+							</div>
+						</CSSTransition>
 					</TransitionGroup>
 				</div>
+
 			</Panel>
 		);
 	}

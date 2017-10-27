@@ -147,3 +147,14 @@ button {
 .counter.warning {
 	background-color:$pink;
 }
+
+.calendar-container {
+	margin-top:24px;
+	padding:18px;
+	background-color:#F9F9F9;
+	box-shadow:$panelShadow;
+
+	iframe {
+		border-with:0;
+	}
+}
