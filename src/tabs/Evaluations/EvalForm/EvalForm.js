@@ -73,15 +73,35 @@ class EvalForm extends React.Component {
 	renderForm(typeId) {
 		switch (typeId) {
 			case 1:
-				return <InpatientForm form={this.state.form} evaluator={this.props.user.email} date={this.state.date} submitEval={this.submitEval} />
+				return <InpatientForm
+					form={this.state.form}
+					evaluator={this.props.user.email}
+					date={this.state.date}
+					submitEval={this.submitEval} />
 			case 2:
-				return <InpatientForm form={this.state.form} evaluator={this.props.user.email} date={this.state.date} submitEval={this.submitEval} />
+				return <InpatientForm
+					form={this.state.form}
+					evaluator={this.props.user.email}
+					date={this.state.date}
+					submitEval={this.submitEval} />
 			case 3:
-				return <SelectiveForm form={this.state.form} evaluator={this.props.user.email} date={this.state.date} submitEval={this.submitEval} />
+				return <SelectiveForm
+					form={this.state.form}
+					evaluator={this.props.user.email}
+					date={this.state.date}
+					submitEval={this.submitEval} />
 			case 4:
-				return <OralExamForm form={this.state.form} evaluator={this.props.user.email} date={this.state.date} submitEval={this.submitEval} />
+				return <OralExamForm
+					form={this.state.form}
+					evaluator={this.props.user.email}
+					date={this.state.date}
+					submitEval={this.submitEval} />
 			case 5:
-				return <FourthYearElectiveForm form={this.state.form} evaluator={this.props.user.email} date={this.state.date} submitEval={this.submitEval} />
+				return <FourthYearElectiveForm
+					form={this.state.form}
+					evaluator={this.props.user.email}
+					date={this.state.date}
+					submitEval={this.submitEval} />
 			default:
 				return null;
 		}
