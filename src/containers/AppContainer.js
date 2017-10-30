@@ -7,7 +7,7 @@ import App from '../App';
 
 class AppContainer extends React.Component {
 
-	componentWillMount() {
+	componentDidMount() {
 	    const token = localStorage.getItem('mspsychToken');
 	    
 	    if (!token) {
@@ -20,7 +20,7 @@ class AppContainer extends React.Component {
 	        .then(response => {
 	            console.log('reauthentication successful');
 	        }).catch(response => {
-	            console.log('reauthentication failed');
+	        	console.log('reauthentication failed');
 	        });
 	}
 

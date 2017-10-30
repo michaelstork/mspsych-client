@@ -24,7 +24,7 @@ instance.interceptors.response.use(function (response) {
 		if (error.response.data.error === 'token_expired') {
 			store.dispatch(
 				notificationsActions.notify(
-					'Your session has expired, please log in again.'
+					'Your session has expired, please log in again'
 				)
 			);
 		}
