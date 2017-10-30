@@ -128,7 +128,7 @@ class Completed extends React.Component {
 					</div>
 					<div className="score">
 						<div className="counter">
-							{evaluation.average}
+							{parseFloat(evaluation.average.toFixed(2))}
 						</div>
 					</div>
 					<div className="delete">
