@@ -50,8 +50,9 @@ button {
 	}
 
 	& > *:only-child {
-		flex:0 0;
-		flex-basis:100%;
+		flex:1 0;
+		flex-basis:calc(100% -36px);
+		box-sizing:content-box;
 	}
 
 	button {
