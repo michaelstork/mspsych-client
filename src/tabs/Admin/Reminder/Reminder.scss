@@ -1,3 +1,4 @@
+@import '../../../includes/variables';
 
 form[name="reminder"] {
 	width:100%;
@@ -20,10 +21,14 @@ form[name="reminder"] {
 		resize:none;
 	}
 
-	.content-input {
-		height:240px;
+	.quill {
+		width:100%;
 	}
 
+	.ql-container {
+		height:240px;
+	}
+	
 	.button-container {
 		width:25%;
 		margin-left:auto;

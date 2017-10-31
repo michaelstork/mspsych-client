@@ -4,6 +4,8 @@ import Loader from '../../../components/Loader/Loader';
 import cloneDeep from 'lodash/cloneDeep';
 import axios from '../../../connection/axios';
 import {withRouter} from 'react-router';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 class Reminder extends React.Component {
 	constructor(props) {
@@ -12,12 +14,13 @@ class Reminder extends React.Component {
 		this.state = {
 			recipients: '',
 			subject: '',
-			template: '',
 			inProgress: false
 		};
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+
+		this.quill = null;
 	}
 
 	componentDidMount() {
@@ -32,9 +35,15 @@ class Reminder extends React.Component {
 			this.setState({
 				recipients: response.data.recipients.join(', '),
 				subject   : response.data.subject,
-				template  : response.data.template,
 				inProgress: false
 			});
+
+			this.quill
+				.getEditor()
+				.clipboard
+				.dangerouslyPasteHTML(
+					response.data.template
+				);
 		})
 		.catch(error => {
 			console.log(error);
@@ -62,7 +71,7 @@ class Reminder extends React.Component {
 			{
 				recipients: this.state.recipients,
 				subject: this.state.subject,
-				template: this.state.template
+				template: this.quill.getEditor().container.firstChild.innerHTML
 			}
 		)
 		.then(response => {
@@ -109,15 +118,11 @@ class Reminder extends React.Component {
 									onChange={this.handleChange}
 									required />
 							</div>
-							<div className="input-container textarea">
+							<div className="input-container quill">
 								<label>Content:</label>
-								<textarea
-									className="content-input"
-									value={this.state.template}
-									name="template"
-									onChange={this.handleChange}
-									required>
-								</textarea>
+								<ReactQuill
+									ref={(ref) => this.quill = ref}
+									defaultValue={''} />
 							</div>
 							<div className="button-container">
 								<button
