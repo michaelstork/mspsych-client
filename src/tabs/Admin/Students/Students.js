@@ -114,6 +114,9 @@ class Students extends React.Component {
 		})
 		.catch(error => {
 			console.log(error);
+			const state = cloneDeep(this.state);
+			state.inProgress = false;
+			this.setState(state);
 		});
 	}
 
