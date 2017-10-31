@@ -100,14 +100,12 @@ class CompletedEval extends React.Component {
 	}
 
 	render() {
-		// if (!evaluation) return null;
-
 		return (
 			<section>
 				<Link className="back-link"
 					to={'/evaluations/completed'}>
 					<i className="material-icons">arrow_back</i>
-					<span>Completed Evaluations</span>
+					<span>My Completed Evaluations</span>
 				</Link>
 				<CSSTransition
 	                in={this.state.evaluation !== null}

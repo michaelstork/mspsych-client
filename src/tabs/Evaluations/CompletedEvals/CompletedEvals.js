@@ -46,7 +46,7 @@ class CompletedEvals extends React.Component {
 			<section>
 				<Link to={'/evaluations'} className="back-link">
 					<i className="material-icons">arrow_back</i>
-					<span>Evaluations</span>
+					<span>My Evaluations</span>
 				</Link>
 
 				<CSSTransition
