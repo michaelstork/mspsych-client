@@ -83,6 +83,9 @@ class Residents extends React.Component {
 		.then(this.handleCreateDocumentResponse)
 		.catch(error => {
 			console.log(error);
+			if (error.response.status === 400) {
+				this.props.notify(error.response.data.message);
+			}
 		});
 	}
 
