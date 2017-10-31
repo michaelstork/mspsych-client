@@ -5,10 +5,11 @@ const EvalItemNumerical = (props) => (
 		{props.item.options.filter(option => option.value !== null).map(option =>
 			<div key={option.id}
 				onClick={() => props.handleItemChange(props.item.id, option.value)}
-				dangerouslySetInnerHTML={{__html: option.content}}
 				className={
 					(props.formValue === option.value ? 'selected ' : '') + 'eval-item-option'
-				} />
+				}>
+				<span dangerouslySetInnerHTML={{__html: option.content}} />
+			</div>
 		)}
 	</div>
 )

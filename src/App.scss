@@ -85,7 +85,7 @@ button {
 		padding:0 6px;
 	}
 
-	input {
+	input:not([type="radio"]) {
 		background-color:#FFF;
 	}
 
