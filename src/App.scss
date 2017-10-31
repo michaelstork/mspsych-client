@@ -45,7 +45,8 @@ button {
 	
 	& > * {
 		flex:0 0;
-		flex-basis:48px;
+		flex-basis:calc(48% - 36px);
+		box-sizing:content-box;
 	}
 
 	& > *:only-child {
