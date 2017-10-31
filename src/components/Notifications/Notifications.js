@@ -28,8 +28,10 @@ class Notifications extends React.Component {
 		if (!props.notifications.length) return;
 		// reset timer on current notification if it's been incremented
 		const currentItem = this.props.notifications[0];
+		if (!currentItem) return;
+		
 		const currentItemUpdated = props.notifications.find(
-			item => item.id === currentItem.id
+			item => item && item.id === currentItem.id
 		);
 
 		if (!currentItemUpdated) return;
