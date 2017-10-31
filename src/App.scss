@@ -49,6 +49,11 @@ button {
 		box-sizing:content-box;
 	}
 
+	& > a {
+		flex:0 0;
+		flex-basis:48%;
+	}
+
 	& > *:only-child {
 		flex:1 0;
 		flex-basis:calc(100% -36px);
