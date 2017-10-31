@@ -10,6 +10,7 @@ form[name="addUsers"] {
 
 	textarea {
 		flex:0 0 85%;
+		max-width:85%;
 		height:64px;
 		resize:none;
 	}
@@ -40,6 +41,7 @@ form[name="resetUserPassword"] {
 
 	input {
 		flex:0 0 70%;
+		max-width:70%;
 	}
 
 	button {
