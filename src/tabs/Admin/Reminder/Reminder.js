@@ -19,6 +19,7 @@ class Reminder extends React.Component {
 
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.backToOutstandingEvaluations = this.backToOutstandingEvaluations.bind(this);
 
 		this.quill = null;
 	}
@@ -90,6 +91,10 @@ class Reminder extends React.Component {
 		});
 	}
 
+	backToOutstandingEvaluations() {
+		this.props.history.push('/admin/outstanding');
+	}
+
 	render() {
 		return (
 			<section>
@@ -125,6 +130,12 @@ class Reminder extends React.Component {
 									defaultValue={''} />
 							</div>
 							<div className="button-container">
+								<button
+									className="cancel"
+									type="button"
+									onClick={this.backToOutstandingEvaluations}>
+									Cancel
+								</button>
 								<button
 									type="submit"
 									onClick={this.handleSubmit}>
