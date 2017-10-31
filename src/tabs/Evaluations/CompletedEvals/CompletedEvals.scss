@@ -1,24 +1,6 @@
 
 .completed-evals {
 
-	&.fade-enter {
-		opacity:0;
-	}
-
-	&.fade-enter.fade-enter-active {
-		opacity:1;
-		transition:opacity 0.25s ease-out;
-	}
-
-	&.fade-exit {
-		opacity:1;
-	}
-
-	&.fade-exit.fade-exit-active {
-		opacity:0;
-		transition:opacity 0.25s ease-out;
-	}
-	
 	.panel-item {
 		flex-direction:row;
 	}
@@ -47,6 +29,10 @@
 		margin-top:8px;
 	}
 
+	p.no-results {
+		text-align:center;
+	}
+
 	.student-name {
 		font-weight:bold;
 		-webkit-font-smoothing:antialiased;
@@ -60,5 +46,25 @@
 		line-height:46px;
 		border-radius:23px;
 		font-size:0.85em;
+	}
+}
+
+.completed-evals > div {
+	&.fade-enter {
+		opacity:0;
+	}
+
+	&.fade-enter.fade-enter-active {
+		opacity:1;
+		transition:opacity 0.25s ease-out;
+	}
+
+	&.fade-exit {
+		opacity:1;
+	}
+
+	&.fade-exit.fade-exit-active {
+		opacity:0;
+		transition:opacity 0.25s ease-out;
 	}
 }
