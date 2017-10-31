@@ -2,6 +2,7 @@ import React from 'react';
 import './Outstanding.css';
 import cloneDeep from 'lodash/cloneDeep';
 import Loader from '../../../components/Loader/Loader';
+import {Link} from 'react-router-dom';
 import moment from 'moment';
 import axios from '../../../connection/axios';
 
@@ -99,61 +100,61 @@ class Outstanding extends React.Component {
 		});
 	}
 
-	emailAll() {
-		if (!window.confirm(
-			'Are you sure you want to send a reminder to all users with outstanding evaluations?'
-		)) return;
+	// emailAll() {
+	// 	if (!window.confirm(
+	// 		'Are you sure you want to send a reminder to all users with outstanding evaluations?'
+	// 	)) return;
 
-		const state = cloneDeep(this.state);
-		state.inProgress = true;
-		this.setState(state);
+	// 	const state = cloneDeep(this.state);
+	// 	state.inProgress = true;
+	// 	this.setState(state);
 
-		return axios.get(
-			'/api/notifications/reminder/all'
-		)
-		.then(response => {
-			const state = cloneDeep(this.state);
-			state.inProgress = false;
-			this.setState(state);
-			this.props.notify(response.data.message);
+	// 	return axios.get(
+	// 		'/api/notifications/reminder/all'
+	// 	)
+	// 	.then(response => {
+	// 		const state = cloneDeep(this.state);
+	// 		state.inProgress = false;
+	// 		this.setState(state);
+	// 		this.props.notify(response.data.message);
 
-			return response;
-		})
-		.catch(error => {
-			const state = cloneDeep(this.state);
-			state.inProgress = false;
-			this.setState(state);
-			this.props.notify(error.response.data.message);
-		});
-	}
+	// 		return response;
+	// 	})
+	// 	.catch(error => {
+	// 		const state = cloneDeep(this.state);
+	// 		state.inProgress = false;
+	// 		this.setState(state);
+	// 		this.props.notify(error.response.data.message);
+	// 	});
+	// }
 
-	sendReminder(id) {
-		if (!window.confirm(
-			'Are you sure you want to send a reminder to this user?'
-		)) return;
+	// sendReminder(id) {
+	// 	if (!window.confirm(
+	// 		'Are you sure you want to send a reminder to this user?'
+	// 	)) return;
 
-		const state = cloneDeep(this.state);
-		state.inProgress = true;
-		this.setState(state);		
+	// 	const state = cloneDeep(this.state);
+	// 	state.inProgress = true;
+	// 	this.setState(state);		
 
-		return axios.get(
-			'/api/notifications/reminder/'+id
-		)
-		.then(response => {
-			const state = cloneDeep(this.state);
-			state.inProgress = false;
-			this.setState(state);
-			this.props.notify(response.data.message);
+	// 	return axios.get(
+	// 		'/api/notifications/reminder/'+id
+	// 	)
+	// 	.then(response => {
+	// 		const state = cloneDeep(this.state);
+	// 		state.inProgress = false;
+	// 		this.setState(state);
+	// 		this.props.notify(response.data.message);
 
-			return response;
-		})
-		.catch(error => {
-			const state = cloneDeep(this.state);
-			state.inProgress = false;
-			this.setState(state);
-			this.props.notify(error.response.data.message);
-		});
-	}
+	// 		return response;
+	// 	})
+	// 	.catch(error => {
+	// 		const state = cloneDeep(this.state);
+	// 		state.inProgress = false;
+	// 		this.setState(state);
+	// 		this.props.notify(error.response.data.message);
+	// 	});
+	// }
 
 	renderEvals() {
 		if (!this.state.evals.length && !this.state.inProgress) {
@@ -171,10 +172,11 @@ class Outstanding extends React.Component {
 						<span>{evaluation.student.name}</span>
 					</div>
 					<div className="evaluator">
-						<i className="material-icons"
-							onClick={() => this.sendReminder(evaluation.user.id)}>
-							email
-						</i>
+						<Link to={'/admin/reminder/' + evaluation.user.id}>
+							<i className="material-icons">
+								email
+							</i>
+						</Link>
 						<span>{evaluation.user.email}</span>
 					</div>
 					<div className="type">
@@ -208,10 +210,10 @@ class Outstanding extends React.Component {
 								placeholder="Search" />
 						</header>
 						<div className="table-panel-actions">
-							<a onClick={() => this.emailAll()}>
+							<Link to={'/admin/reminder/all'}>
 								<i className="material-icons">email</i>
 								<span>Email All</span>
-							</a>
+							</Link>
 							<a href={[
 									this.exportUrl,
 									'?token=',

@@ -1,0 +1,32 @@
+
+form[name="reminder"] {
+	width:100%;
+
+	.input-container {
+		width:100%;
+	}
+
+	label {
+		flex:0 0 15%;
+	}
+
+	input[type="text"],
+	textarea {
+		flex:0 0 85%;
+	}
+
+	textarea {
+		height:42px;
+		resize:none;
+	}
+
+	.content-input {
+		height:240px;
+	}
+
+	.button-container {
+		width:25%;
+		margin-left:auto;
+		margin-top:18px;
+	}
+}

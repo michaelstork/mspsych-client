@@ -8,6 +8,7 @@ import Completed from './Completed/Completed';
 import Users from './Users/Users';
 import Assignments from './Assignments/Assignments';
 import Students from './Students/Students';
+import Reminder from './Reminder/Reminder';
 
 const Admin = (props) => (
 	<div className="admin-panel-container">
@@ -58,6 +59,12 @@ const Admin = (props) => (
 				<Route path={props.match.url + '/students'}
 					render={() =>
 						<Students notify={props.notify} />
+					}
+				/>
+				<Route path={props.match.url + '/reminder/:userId'}
+					render={({match}) =>
+						<Reminder notify={props.notify}
+							userId={match.params.userId} />
 					}
 				/>
 				<Redirect from={props.match.url}
