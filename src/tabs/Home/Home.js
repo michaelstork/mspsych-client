@@ -144,6 +144,7 @@ class Home extends React.Component {
 							timeout={250}
 							classNames="fade">
 							<div className="calendar-container">
+								<h2>Psychiatry Clerkship Calendar</h2>
 								<iframe title="Calendar"
 									width="864"
 									height="600"
